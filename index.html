@@ -1,123 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora Mobile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<title>Nexora Mobile</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f7fb;
-      color: #222;
-    }
+<style>
+* {
+  box-sizing: border-box;
+}
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 30px 20px;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f7fb;
+  color: #222;
+}
 
-    header h1 {
-      margin: 0 0 10px;
-    }
+header {
+  background: #111827;
+  color: white;
+  padding: 28px 20px;
+  text-align: center;
+}
 
-    header p {
-      margin: 0;
-    }
+header h1 {
+  margin: 0;
+  font-size: 30px;
+}
 
-    section {
-      max-width: 900px;
-      margin: 25px auto;
-      padding: 0 15px;
-    }
+header p {
+  margin: 8px 0 0;
+  opacity: 0.9;
+}
 
-    .plans {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
+nav {
+  background: white;
+  padding: 14px;
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+}
 
-    .card {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 3px 12px rgba(0,0,0,0.08);
-    }
+nav a {
+  margin: 0 8px;
+  text-decoration: none;
+  color: #111827;
+  font-weight: bold;
+}
 
-    .card h2 {
-      margin-top: 0;
-    }
+section {
+  padding: 30px 18px;
+  max-width: 1000px;
+  margin: auto;
+}
 
-    .price {
-      font-size: 25px;
-      font-weight: bold;
-      margin: 15px 0;
-    }
+h2 {
+  text-align: center;
+  margin-bottom: 22px;
+}
 
-    .btn {
-      display: inline-block;
-      padding: 13px 18px;
-      background: #111827;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-      margin-top: 8px;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 18px;
+}
 
-    .payment {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-      text-align: center;
-    }
+.card {
+  background: white;
+  padding: 22px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+  text-align: center;
+}
 
-    .payment a {
-      display: inline-block;
-      padding: 13px 18px;
-      margin: 6px;
-      background: #111827;
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-    }
+.card h3 {
+  margin-top: 0;
+}
 
-    .steps {
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-    }
+.price {
+  font-size: 25px;
+  font-weight: bold;
+  margin: 15px 0;
+}
 
-    .step {
-      background: #f1f5f9;
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 10px;
-    }
+.btn {
+  display: inline-block;
+  background: #111827;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 8px;
+}
 
-    .contact {
-      text-align: center;
-      background: white;
-      padding: 25px;
-      border-radius: 15px;
-    }
+.btn:hover {
+  opacity: 0.85;
+}
 
-    footer {
-      background: #111827;
-      color: white;
-      text-align: center;
-      padding: 25px;
-      margin-top: 30px;
-    }
-  </style>
+.contact {
+  background: white;
+  border-radius: 16px;
+  text-align: center;
+  padding: 25px;
+  margin-top: 10px;
+}
+
+footer {
+  background: #111827;
+  color: white;
+  text-align: center;
+  padding: 25px;
+  margin-top: 25px;
+}
+</style>
 </head>
 
 <body>
@@ -127,152 +124,118 @@
   <p>Stay Connected Anywhere</p>
 </header>
 
-<section>
+<nav>
+  <a href="#esim">eSIM</a>
+  <a href="#airtime">Airtime</a>
+  <a href="#data">Data</a>
+  <a href="#contact">Help</a>
+</nav>
+
+<section id="esim">
   <h2>📱 eSIM Plans</h2>
 
-  <div class="plans">
+  <div class="cards">
 
     <div class="card">
-      <h2>🇺🇸 USA eSIM</h2>
+      <h3>🇺🇸 USA eSIM</h3>
       <p>📶 10GB Data</p>
       <p>📅 30 Days</p>
       <p>🌐 Data Only</p>
       <div class="price">$15</div>
 
       <a class="btn"
-         href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20the%20USA%20eSIM"
-         target="_blank">
-        Buy USA eSIM
+      href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20want%20to%20buy%20the%20USA%20eSIM."
+      target="_blank">
+      Buy USA eSIM
       </a>
     </div>
 
     <div class="card">
-      <h2>🇬🇧 UK eSIM</h2>
+      <h3>🇬🇧 UK eSIM</h3>
       <p>📶 10GB Data</p>
       <p>📅 30 Days</p>
       <p>🌐 Data Only</p>
       <div class="price">$15</div>
 
       <a class="btn"
-         href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20the%20UK%20eSIM"
-         target="_blank">
-        Buy UK eSIM
+      href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20want%20to%20buy%20the%20UK%20eSIM."
+      target="_blank">
+      Buy UK eSIM
       </a>
     </div>
 
     <div class="card">
-      <h2>🇨🇦 Canada eSIM</h2>
+      <h3>🇨🇦 Canada eSIM</h3>
       <p>📶 10GB Data</p>
       <p>📅 30 Days</p>
       <p>🌐 Data Only</p>
       <div class="price">$15</div>
 
       <a class="btn"
-         href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20the%20Canada%20eSIM"
-         target="_blank">
-        Buy Canada eSIM
-      </a>
-    </div>
-
-    <div class="card">
-      <h2>🇮🇪 Ireland eSIM</h2>
-      <p>📶 10GB Data</p>
-      <p>📅 30 Days</p>
-      <p>🌐 Data Only</p>
-      <div class="price">$15</div>
-
-      <a class="btn"
-         href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20the%20Ireland%20eSIM"
-         target="_blank">
-        Buy Ireland eSIM
+      href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20want%20to%20buy%20the%20Canada%20eSIM."
+      target="_blank">
+      Buy Canada eSIM
       </a>
     </div>
 
   </div>
 </section>
 
-<section>
-  <div class="payment">
-    <h2>💳 Choose Payment Method</h2>
+<section id="airtime">
+  <h2>📞 Airtime</h2>
 
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20pay%20with%20OPay"
-       target="_blank">
-      🏦 OPay
-    </a>
+  <div class="cards">
 
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20pay%20with%20Bitcoin"
-       target="_blank">
-      ₿ Bitcoin
-    </a>
+    <div class="card">
+      <h3>🇳🇬 Nigeria Airtime</h3>
+      <p>Recharge your Nigerian line quickly.</p>
 
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20pay%20with%20USDT"
-       target="_blank">
-      💵 USDT
-    </a>
+      <a class="btn"
+      href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20want%20to%20buy%20airtime."
+      target="_blank">
+      Buy Airtime
+      </a>
+    </div>
 
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20pay%20with%20a%20bank%20card"
-       target="_blank">
-      💳 Bank Card
-    </a>
   </div>
 </section>
 
-<section>
-  <div class="steps">
-    <h2>📲 How It Works</h2>
+<section id="data">
+  <h2>📶 Data Plans</h2>
 
-    <div class="step">
-      <strong>1️⃣ Choose a plan</strong><br>
-      Select the country you are traveling to.
+  <div class="cards">
+
+    <div class="card">
+      <h3>🇳🇬 Nigeria Data</h3>
+      <p>Affordable mobile data bundles.</p>
+
+      <a class="btn"
+      href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20want%20to%20buy%20Nigeria%20data."
+      target="_blank">
+      Buy Data
+      </a>
     </div>
 
-    <div class="step">
-      <strong>2️⃣ Contact SwiftSIM</strong><br>
-      Tap the Buy button and message us on WhatsApp.
-    </div>
-
-    <div class="step">
-      <strong>3️⃣ Make payment</strong><br>
-      Choose your preferred payment method.
-    </div>
-
-    <div class="step">
-      <strong>4️⃣ Receive your eSIM</strong><br>
-      After payment is confirmed, your eSIM details can be delivered to you.
-    </div>
   </div>
 </section>
 
-<section>
+<section id="contact">
   <div class="contact">
     <h2>Need Help?</h2>
-    <p>Contact SwiftSIM on WhatsApp.</p>
+    <p>Contact Nexora Mobile on WhatsApp.</p>
 
     <a class="btn"
-       href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20need%20help"
-       target="_blank">
-      💬 Chat on WhatsApp
+    href="https://wa.me/2347034761610?text=Hi%20Nexora%20Mobile%2C%20I%20need%20help."
+    target="_blank">
+    💬 Chat on WhatsApp
     </a>
   </div>
 </section>
 
 <footer>
-  <p>© 2026 SwiftSIM</p>
+  <p>© 2026 Nexora Mobile</p>
   <p>Stay Connected Anywhere 🌍</p>
 </footer>
-<section style="padding:30px 20px;text-align:center;">
-  <h2>🇳🇬 Nigeria Airtime & Data</h2>
-  <p>Stay connected with affordable airtime and data.</p>
 
-  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20airtime." target="_blank" style="padding:14px 22px;background:#168de2;color:white;text-decoration:none;border-radius:8px;">
-      📱 Buy Airtime
-    </a>
-
-    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20want%20to%20buy%20data." target="_blank" style="padding:14px 22px;background:#168de2;color:white;text-decoration:none;border-radius:8px;">
-      📶 Buy Data
-    </a>
-  </div>
-</section>
 </body>
 </html>
