@@ -3,183 +3,177 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Nexora Mobile</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#101828;
-  padding-bottom:85px;
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #101828;
+  padding-bottom: 85px;
 }
 
-header{
-  background:#101828;
-  color:white;
-  padding:25px 18px;
+header {
+  background: #101828;
+  color: white;
+  padding: 24px 18px;
 }
 
-.header-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.logo{
-  font-size:24px;
-  font-weight:bold;
+.logo {
+  font-size: 24px;
+  font-weight: bold;
 }
 
-.tagline{
-  color:#d0d5dd;
-  margin-top:8px;
+.tagline {
+  color: #d0d5dd;
+  margin-top: 8px;
 }
 
-.search{
-  width:100%;
-  margin-top:20px;
-  padding:15px;
-  border:0;
-  border-radius:13px;
-  font-size:16px;
+.search {
+  width: 100%;
+  margin-top: 18px;
+  padding: 15px;
+  border: 0;
+  border-radius: 13px;
+  font-size: 16px;
 }
 
-.container{
-  width:92%;
-  max-width:700px;
-  margin:25px auto;
+.container {
+  width: 92%;
+  max-width: 720px;
+  margin: 25px auto;
 }
 
-.card{
-  background:white;
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:22px;
-  box-shadow:0 4px 15px rgba(0,0,0,.07);
+.card {
+  background: white;
+  border-radius: 18px;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 15px rgba(0,0,0,.07);
 }
 
-.card h2{
-  margin-bottom:12px;
+.card h2 {
+  margin-bottom: 12px;
 }
 
-.card p{
-  color:#667085;
-  line-height:1.5;
+.card p {
+  color: #667085;
+  line-height: 1.5;
 }
 
-label{
-  display:block;
-  margin-top:16px;
-  margin-bottom:7px;
-  font-weight:bold;
+label {
+  display: block;
+  margin-top: 16px;
+  margin-bottom: 7px;
+  font-weight: bold;
 }
 
 input,
-select{
-  width:100%;
-  padding:14px;
-  border:1px solid #d0d5dd;
-  border-radius:11px;
-  background:white;
-  font-size:16px;
+select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d0d5dd;
+  border-radius: 11px;
+  background: white;
+  font-size: 16px;
 }
 
-button{
-  width:100%;
-  padding:15px;
-  margin-top:18px;
-  border:0;
-  border-radius:12px;
-  background:#2563eb;
-  color:white;
-  font-size:16px;
-  font-weight:bold;
-  cursor:pointer;
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 18px;
+  border: 0;
+  border-radius: 12px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-button:active{
-  transform:scale(.98);
+button:active {
+  transform: scale(.98);
 }
 
-.payment-choice{
-  background:#f8fafc;
-  color:#101828;
-  border:1px solid #d0d5dd;
-  text-align:left;
+.payment-choice {
+  background: #f8fafc;
+  color: #101828;
+  border: 1px solid #d0d5dd;
+  text-align: left;
 }
 
-.payment-choice:hover{
-  border-color:#2563eb;
+.payment-choice:hover {
+  border-color: #2563eb;
 }
 
-.order-box{
-  display:none;
-  margin-top:18px;
-  padding:15px;
-  background:#ecfdf3;
-  color:#067647;
-  border-radius:12px;
-  line-height:1.7;
+.order-box {
+  display: none;
+  margin-top: 18px;
+  padding: 15px;
+  background: #ecfdf3;
+  color: #067647;
+  border-radius: 12px;
+  line-height: 1.7;
 }
 
-.info{
-  margin-top:15px;
-  padding:14px;
-  background:#eff6ff;
-  color:#1d4ed8;
-  border-radius:11px;
-  line-height:1.5;
+.message {
+  display: none;
+  margin-top: 15px;
+  padding: 15px;
+  background: #eff6ff;
+  color: #174ea6;
+  border-radius: 12px;
+  line-height: 1.5;
 }
 
-footer{
-  background:#101828;
-  color:white;
-  text-align:center;
-  padding:30px 20px;
+footer {
+  background: #101828;
+  color: white;
+  text-align: center;
+  padding: 30px 20px;
 }
 
-.bottom-nav{
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  height:72px;
-  background:white;
-  display:flex;
-  justify-content:space-around;
-  align-items:center;
-  box-shadow:0 -3px 15px rgba(0,0,0,.12);
-  z-index:20;
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background: white;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -3px 15px rgba(0,0,0,.12);
+  z-index: 20;
 }
 
-.bottom-nav a{
-  color:#344054;
-  text-decoration:none;
-  text-align:center;
-  font-size:12px;
+.bottom-nav a {
+  color: #344054;
+  text-decoration: none;
+  text-align: center;
+  font-size: 12px;
 }
 
-.bottom-nav span{
-  display:block;
-  font-size:21px;
-  margin-bottom:3px;
-}
-
-@media(min-width:700px){
-  .container{
-    max-width:900px;
-  }
+.bottom-nav span {
+  display: block;
+  font-size: 21px;
+  margin-bottom: 3px;
 }
 </style>
 </head>
@@ -187,7 +181,6 @@ footer{
 <body>
 
 <header>
-
   <div class="header-row">
     <div class="logo">🌍 Nexora Mobile</div>
     <div>☰</div>
@@ -200,54 +193,44 @@ footer{
     type="search"
     placeholder="Search eSIM, airtime or data..."
   >
-
 </header>
 
 
 <main class="container">
 
   <!-- HOME -->
-
   <section class="card" id="home">
-
     <h2>Everything Connected.</h2>
 
     <p>
       Buy eSIMs, airtime and data quickly from
       Nexora Mobile.
     </p>
-
   </section>
 
 
   <!-- ESIM -->
-
   <section class="card" id="esim">
 
     <h2>📱 eSIM Store</h2>
 
     <p>
-      International eSIM plans will appear here.
+      Choose from available international eSIM plans.
     </p>
 
-    <button
-      type="button"
-      onclick="showNotice('eSIM plans are being prepared.')">
+    <button type="button" onclick="showMessage('eSIM plans will be added here next.')">
       View eSIM Plans
     </button>
 
   </section>
 
 
-  <!-- AIRTIME / DATA -->
-
+  <!-- AIRTIME AND DATA -->
   <section class="card" id="airtime">
 
     <h2>📶 Airtime & Data</h2>
 
-    <label for="network">
-      Choose Network
-    </label>
+    <label for="network">Choose Network</label>
 
     <select id="network">
       <option value="MTN">MTN</option>
@@ -257,9 +240,7 @@ footer{
     </select>
 
 
-    <label for="phone">
-      Phone Number
-    </label>
+    <label for="phone">Phone Number</label>
 
     <input
       id="phone"
@@ -268,9 +249,7 @@ footer{
     >
 
 
-    <label for="service">
-      Choose Service
-    </label>
+    <label for="service">Choose Service</label>
 
     <select id="service">
       <option value="Airtime">Airtime</option>
@@ -278,9 +257,7 @@ footer{
     </select>
 
 
-    <label for="amount">
-      Amount
-    </label>
+    <label for="amount">Amount</label>
 
     <select id="amount">
       <option value="₦100">₦100</option>
@@ -293,12 +270,9 @@ footer{
     </select>
 
 
-    <button
-      type="button"
-      onclick="createOrder()">
+    <button type="button" onclick="continueToPayment()">
       Continue to Payment
     </button>
-
 
     <div id="orderBox" class="order-box"></div>
 
@@ -306,20 +280,15 @@ footer{
 
 
   <!-- PAYMENT -->
-
   <section class="card" id="payment">
 
     <h2>💳 Payment</h2>
 
     <p>
-      Choose how you would like to pay.
+      Choose your preferred payment method.
     </p>
 
-    <div class="info">
-      Bank transfer can be made from
-      <strong>any Nigerian bank</strong>.
-      We don't need to list every bank.
-    </div>
+    <div class="message" id="paymentMessage"></div>
 
 
     <button
@@ -329,7 +298,7 @@ footer{
 
       🏦 Bank Transfer
       <br>
-      <small>Any Nigerian bank</small>
+      <small>Pay from any Nigerian bank</small>
 
     </button>
 
@@ -337,11 +306,11 @@ footer{
     <button
       type="button"
       class="payment-choice"
-      onclick="selectPayment('Debit/Credit Card')">
+      onclick="selectPayment('Debit / Credit Card')">
 
       💳 Debit / Credit Card
       <br>
-      <small>Card payment</small>
+      <small>Pay with your bank card</small>
 
     </button>
 
@@ -353,20 +322,14 @@ footer{
 
       ₿ USDT / Bitcoin
       <br>
-      <small>Crypto payment</small>
+      <small>Pay with cryptocurrency</small>
 
     </button>
-
-
-    <div id="paymentMessage" class="info"
-         style="display:none;">
-    </div>
 
   </section>
 
 
-  <!-- HELP -->
-
+  <!-- SUPPORT -->
   <section class="card" id="help">
 
     <h2>💬 Customer Support</h2>
@@ -378,8 +341,10 @@ footer{
 
     <button
       type="button"
-      onclick="showNotice('WhatsApp support will be connected next.')">
+      onclick="showMessage('WhatsApp support will be connected next.')">
+
       WhatsApp Support
+
     </button>
 
   </section>
@@ -402,8 +367,7 @@ footer{
 </footer>
 
 
-<!-- MOBILE NAVIGATION -->
-
+<!-- BOTTOM NAVIGATION -->
 <nav class="bottom-nav">
 
   <a href="#home">
@@ -436,13 +400,13 @@ footer{
 
 <script>
 
-function createOrder(){
-
-  const network =
-    document.getElementById("network").value;
+function continueToPayment() {
 
   const phone =
     document.getElementById("phone").value.trim();
+
+  const network =
+    document.getElementById("network").value;
 
   const service =
     document.getElementById("service").value;
@@ -454,7 +418,7 @@ function createOrder(){
     document.getElementById("orderBox");
 
 
-  if(phone === ""){
+  if (phone === "") {
 
     alert("Please enter your phone number.");
 
@@ -472,33 +436,31 @@ function createOrder(){
     "Amount: " + amount;
 
 
-  document
-    .getElementById("payment")
-    .scrollIntoView({
-      behavior:"smooth"
-    });
+  document.getElementById("payment").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+
 }
 
 
-function selectPayment(method){
+function selectPayment(method) {
 
-  const paymentMessage =
+  const message =
     document.getElementById("paymentMessage");
 
-  paymentMessage.style.display = "block";
+  message.style.display = "block";
 
-  paymentMessage.innerHTML =
-    "<strong>" +
-    method +
-    " selected.</strong><br>" +
+  message.innerHTML =
+    "<strong>" + method + " selected.</strong><br>" +
     "The real payment gateway will be connected next.";
 
 }
 
 
-function showNotice(message){
+function showMessage(text) {
 
-  alert(message);
+  alert(text);
 
 }
 
