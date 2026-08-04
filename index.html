@@ -159,4 +159,427 @@ input {
 .nav-item span {
   display: block;
   font-size: 24px;
-  margin-bottom: 
+  margin-bottom: 3px;
+}
+
+.nav-item.active {
+  color: #2864e8;
+  font-weight: bold;
+}
+
+.page {
+  display: none;
+}
+
+.page.active {
+  display: block;
+}
+
+.back {
+  background: #e8edf7;
+  color: #111827;
+  margin-bottom: 18px;
+}
+
+.whatsapp {
+  background: #16a34a;
+}
+
+.notice {
+  background: #eef4ff;
+  color: #244b9b;
+  padding: 15px;
+  border-radius: 14px;
+  margin-bottom: 15px;
+}
+
+.amount {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+footer {
+  background: #09101f;
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+  margin-top: 30px;
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">🌍 Nexora Mobile</div>
+  <div class="tagline">Stay Connected Anywhere</div>
+  <input class="search" placeholder="Search eSIM, airtime or data...">
+</header>
+
+
+<!-- HOME -->
+<section id="home" class="page active">
+<div class="container">
+
+  <div class="card">
+    <h1>Everything Connected.</h1>
+    <p>
+      Buy eSIMs, airtime and data quickly from Nexora Mobile.
+    </p>
+  </div>
+
+  <div class="card">
+    <h2>📱 eSIM Store</h2>
+    <p>Choose from available international eSIM plans.</p>
+    <button onclick="openPage('esim')">View eSIM Plans</button>
+  </div>
+
+  <div class="card">
+    <h2>📶 Airtime & Data</h2>
+
+    <label>Choose Network</label>
+    <select>
+      <option>MTN</option>
+      <option>Airtel</option>
+      <option>Glo</option>
+      <option>9mobile</option>
+    </select>
+
+    <label>Phone Number</label>
+    <input type="tel" placeholder="08012345678">
+
+    <label>Amount</label>
+    <input type="number" placeholder="₦ Amount">
+
+    <button onclick="createTransaction('Airtime / Data')">
+      Continue
+    </button>
+  </div>
+
+</div>
+</section>
+
+
+<!-- ESIM -->
+<section id="esim" class="page">
+<div class="container">
+
+  <div class="card">
+    <button class="back" onclick="openPage('home')">← Back</button>
+
+    <h2>📱 eSIM Plans</h2>
+
+    <div class="payment-option">
+      <strong>🇺🇸 USA eSIM</strong>
+      <p>5GB Data • 30 Days</p>
+      <div class="amount">₦12,500</div>
+      <button onclick="createTransaction('USA eSIM')">
+        Buy eSIM
+      </button>
+    </div>
+
+    <div class="payment-option">
+      <strong>🇬🇧 UK eSIM</strong>
+      <p>10GB Data • 30 Days</p>
+      <div class="amount">₦15,000</div>
+      <button onclick="createTransaction('UK eSIM')">
+        Buy eSIM
+      </button>
+    </div>
+
+    <div class="payment-option">
+      <strong>🌍 Global eSIM</strong>
+      <p>5GB Data • 30 Days</p>
+      <div class="amount">₦20,000</div>
+      <button onclick="createTransaction('Global eSIM')">
+        Buy eSIM
+      </button>
+    </div>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- PAYMENT -->
+<section id="payment" class="page">
+<div class="container">
+
+  <div class="card">
+    <h2>💳 Payment</h2>
+
+    <div class="notice">
+      Select your preferred payment method.
+    </div>
+
+    <div class="payment-option"
+         onclick="selectPayment('Bank Transfer')">
+      🏦 <strong>Bank Transfer</strong>
+      <p>Pay from any Nigerian bank</p>
+    </div>
+
+    <div class="payment-option"
+         onclick="selectPayment('Debit / Credit Card')">
+      💳 <strong>Debit / Credit Card</strong>
+      <p>Pay with your bank card</p>
+    </div>
+
+    <div class="payment-option"
+         onclick="selectPayment('USDT / Bitcoin')">
+      ₿ <strong>USDT / Bitcoin</strong>
+      <p>Pay with cryptocurrency</p>
+    </div>
+
+    <div id="paymentMessage"></div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- TRANSACTIONS -->
+<section id="transactions" class="page">
+<div class="container">
+
+  <div class="card">
+    <h2>🧾 Transactions</h2>
+    <p>Your orders and payment history.</p>
+
+    <div id="transactionList">
+
+      <div class="transaction">
+        <strong>TXN-100001</strong>
+        <p>USA eSIM</p>
+        <p>₦12,500</p>
+        <small>Aug 4, 2026 • 1:45 PM</small>
+        <br>
+        <span class="status success">Successful</span>
+        <button style="margin-top:12px"
+                onclick="showTransaction('TXN-100001','USA eSIM','₦12,500','Successful')">
+          View Details
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+</section>
+
+
+<!-- TRANSACTION DETAILS -->
+<section id="transactionDetails" class="page">
+<div class="container">
+
+  <div class="card">
+
+    <button class="back" onclick="openPage('transactions')">
+      ← Back to Transactions
+    </button>
+
+    <h2>Transaction Details</h2>
+
+    <p><strong>Transaction ID</strong></p>
+    <p id="detailId"></p>
+
+    <p><strong>Service</strong></p>
+    <p id="detailService"></p>
+
+    <p><strong>Amount</strong></p>
+    <p id="detailAmount"></p>
+
+    <p><strong>Status</strong></p>
+    <p id="detailStatus"></p>
+
+    <hr>
+
+    <p>
+      Keep your transaction ID for support or future reference.
+    </p>
+
+  </div>
+
+</div>
+</section>
+
+
+<!-- HELP -->
+<section id="help" class="page">
+<div class="container">
+
+  <div class="card">
+    <h2>💬 Nexora Mobile Support</h2>
+
+    <p>
+      Need help with an order, payment, airtime, data or eSIM?
+    </p>
+
+    <!-- REAL WHATSAPP BUTTON -->
+    <button class="whatsapp" onclick="openWhatsApp()">
+      💬 WhatsApp Support
+    </button>
+
+  </div>
+
+</div>
+</section>
+
+
+<footer>
+  🌍 <strong>Nexora Mobile</strong>
+  <p>Stay Connected Anywhere</p>
+  © 2026 Nexora Mobile
+</footer>
+
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+
+  <div class="nav-item active" onclick="openPage('home')">
+    <span>🏠</span>
+    Home
+  </div>
+
+  <div class="nav-item" onclick="openPage('esim')">
+    <span>📱</span>
+    eSIM
+  </div>
+
+  <div class="nav-item" onclick="openPage('home')">
+    <span>📶</span>
+    Airtime
+  </div>
+
+  <div class="nav-item" onclick="openPage('transactions')">
+    <span>🧾</span>
+    Transactions
+  </div>
+
+  <div class="nav-item" onclick="openPage('payment')">
+    <span>💳</span>
+    Payment
+  </div>
+
+  <div class="nav-item" onclick="openPage('help')">
+    <span>💬</span>
+    Help
+  </div>
+
+</nav>
+
+
+<script>
+
+/* =========================
+   PAGE NAVIGATION
+========================= */
+
+function openPage(page) {
+
+  document.querySelectorAll('.page')
+    .forEach(p => p.classList.remove('active'));
+
+  const selected = document.getElementById(page);
+
+  if (selected) {
+    selected.classList.add('active');
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+
+/* =========================
+   WHATSAPP SUPPORT
+========================= */
+
+function openWhatsApp() {
+
+  const phone = "2347079025076";
+
+  const message =
+    "Hello Nexora Mobile Support 👋 I need help with my order.";
+
+  const url =
+    "https://wa.me/" + phone +
+    "?text=" + encodeURIComponent(message);
+
+  window.location.href = url;
+}
+
+
+/* =========================
+   PAYMENT METHOD
+========================= */
+
+function selectPayment(method) {
+
+  document.getElementById("paymentMessage").innerHTML = `
+    <div class="notice">
+      <strong>${method}</strong> selected.
+      <br><br>
+      The real payment gateway will be connected next.
+    </div>
+  `;
+}
+
+
+/* =========================
+   TRANSACTION DETAILS
+========================= */
+
+function showTransaction(id, service, amount, status) {
+
+  document.getElementById("detailId").textContent = id;
+  document.getElementById("detailService").textContent = service;
+  document.getElementById("detailAmount").textContent = amount;
+  document.getElementById("detailStatus").textContent = status;
+
+  openPage("transactionDetails");
+}
+
+
+/* =========================
+   CREATE TRANSACTION
+========================= */
+
+function createTransaction(service) {
+
+  const id =
+    "TXN-" + Math.floor(100000 + Math.random() * 900000);
+
+  const transaction = `
+    <div class="transaction">
+      <strong>${id}</strong>
+      <p>${service}</p>
+      <p>Payment required</p>
+      <span class="status pending">Pending</span>
+
+      <button style="margin-top:12px"
+        onclick="showTransaction(
+          '${id}',
+          '${service}',
+          'Amount to be confirmed',
+          'Pending'
+        )">
+        View Details
+      </button>
+    </div>
+  `;
+
+  document
+    .getElementById("transactionList")
+    .insertAdjacentHTML("afterbegin", transaction);
+
+  openPage("payment");
+}
+
+</script>
+
+</body>
+</html>
