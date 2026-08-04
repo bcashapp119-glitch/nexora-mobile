@@ -1,821 +1,1012 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora Mobile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+<title>Nexora Mobile</title>
 
-    body {
-      background: #f4f6f8;
-      color: #111827;
-    }
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 
-    .app {
-      max-width: 480px;
-      min-height: 100vh;
-      margin: auto;
-      background: white;
-    }
+body {
+  background: #f3f4f6;
+  color: #111827;
+}
 
-    header {
-      background: #111827;
-      color: white;
-      padding: 22px;
-      text-align: center;
-    }
+.app {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: auto;
+  background: white;
+}
 
-    header h1 {
-      font-size: 26px;
-    }
+.header {
+  background: #111827;
+  color: white;
+  padding: 25px 20px;
+  text-align: center;
+}
 
-    header p {
-      margin-top: 5px;
-      opacity: 0.8;
-    }
+.header h1 {
+  font-size: 28px;
+}
 
-    .page {
-      display: none;
-      padding: 20px;
-    }
+.header p {
+  margin-top: 6px;
+  opacity: .8;
+}
 
-    .page.active {
-      display: block;
-    }
+.page {
+  display: none;
+  padding: 20px;
+}
 
-    .welcome {
-      background: #111827;
-      color: white;
-      padding: 22px;
-      border-radius: 16px;
-      margin-bottom: 18px;
-    }
+.page.active {
+  display: block;
+}
 
-    .card {
-      border: 1px solid #e5e7eb;
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 15px;
-    }
+.welcome {
+  background: #111827;
+  color: white;
+  padding: 22px;
+  border-radius: 16px;
+  margin-bottom: 18px;
+}
 
-    .card h3 {
-      margin-bottom: 8px;
-    }
+.card {
+  border: 1px solid #e5e7eb;
+  border-radius: 15px;
+  padding: 18px;
+  margin-bottom: 15px;
+}
 
-    input,
-    select {
-      width: 100%;
-      padding: 13px;
-      margin: 8px 0;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 15px;
-    }
+.card h3 {
+  margin-bottom: 7px;
+}
 
-    button {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 9px;
-      background: #111827;
-      color: white;
-      font-size: 15px;
-      cursor: pointer;
-    }
+button {
+  width: 100%;
+  padding: 14px;
+  margin-top: 10px;
+  border: 0;
+  border-radius: 10px;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+}
 
-    .light-button {
-      background: #e5e7eb;
-      color: #111827;
-    }
+.secondary {
+  background: #e5e7eb;
+  color: #111827;
+}
 
-    .price {
-      font-size: 22px;
-      font-weight: bold;
-      margin: 8px 0 15px;
-    }
+.account-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: left;
+  font-size: 16px;
+}
 
-    .message {
-      display: none;
-      padding: 12px;
-      margin-top: 12px;
-      border-radius: 9px;
-      background: #ecfdf5;
-      border: 1px solid #a7f3d0;
-    }
+.icon {
+  font-size: 25px;
+}
 
-    nav {
-      position: sticky;
-      bottom: 0;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 5px;
-      background: white;
-      padding: 8px;
-      border-top: 1px solid #ddd;
-    }
+input,
+select {
+  width: 100%;
+  padding: 13px;
+  margin-top: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 9px;
+  font-size: 15px;
+}
 
-    nav button {
-      margin: 0;
-      padding: 10px 3px;
-      font-size: 12px;
-      background: white;
-      color: #111827;
-      border: 1px solid #ddd;
-    }
+.amount {
+  font-size: 23px;
+  font-weight: bold;
+  margin: 8px 0;
+}
 
-    .small {
-      font-size: 13px;
-      color: #6b7280;
-      margin-top: 8px;
-    }
-  </style>
+.info {
+  background: #f9fafb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+  line-height: 1.7;
+}
+
+.message {
+  display: none;
+  padding: 12px;
+  margin-top: 12px;
+  border-radius: 9px;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+}
+
+.back {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+nav {
+  position: sticky;
+  bottom: 0;
+  background: white;
+  border-top: 1px solid #e5e7eb;
+  padding: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+}
+
+nav button {
+  margin: 0;
+  padding: 10px 3px;
+  background: white;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  font-size: 12px;
+}
+</style>
 </head>
 
 <body>
 
 <div class="app">
 
-  <header>
-    <h1>NEXORA</h1>
-    <p>Mobile Services</p>
-  </header>
+<!-- HEADER -->
+<div class="header">
+  <h1>NEXORA</h1>
+  <p>Mobile Services</p>
+</div>
 
 
-  <!-- HOME -->
-  <section id="home" class="page active">
+<!-- HOME -->
+<section id="home" class="page active">
 
-    <div class="welcome">
-      <h2>Welcome to Nexora Mobile</h2>
-      <p style="margin-top:8px;">
-        Buy airtime, data and eSIM services.
-      </p>
-    </div>
-
-    <div class="card">
-      <h3>📱 Airtime</h3>
-      <p>Recharge any supported phone number.</p>
-      <button onclick="openPage('airtime')">
-        Buy Airtime
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>📶 Data</h3>
-      <p>Choose a data bundle.</p>
-      <button onclick="openPage('data')">
-        Buy Data
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>🌐 eSIM</h3>
-      <p>Choose an eSIM plan.</p>
-      <button onclick="openPage('esim')">
-        Buy eSIM
-      </button>
-    </div>
-
-    <div class="card">
-      <h3>👤 Account</h3>
-
-      <button onclick="openPage('signup')">
-        Create Account
-      </button>
-
-      <button class="light-button" onclick="openPage('login')">
-        Login
-      </button>
-    </div>
-
-  </section>
-
-
-  <!-- CREATE ACCOUNT -->
-  <section id="signup" class="page">
-
-    <h2>Create Account</h2>
-
-    <input id="name" type="text" placeholder="Full Name">
-
-    <input id="phone" type="tel" placeholder="Phone Number">
-
-    <input id="email" type="email" placeholder="Email Address">
-
-    <input id="password" type="password" placeholder="Password">
-
-    <button onclick="signup()">
-      Create Account
-    </button>
-
-    <button class="light-button" onclick="openPage('login')">
-      Already have an account? Login
-    </button>
-
-    <div id="signupMessage" class="message"></div>
-
-  </section>
-
-
-  <!-- LOGIN -->
-  <section id="login" class="page">
-
-    <h2>Login</h2>
-
-    <input id="loginEmail" type="email" placeholder="Email Address">
-
-    <input id="loginPassword" type="password" placeholder="Password">
-
-    <button onclick="login()">
-      Login
-    </button>
-
-    <button class="light-button" onclick="openPage('signup')">
-      Create Account
-    </button>
-
-    <p class="small">
-      Forgot password? Contact Nexora support.
+  <div class="welcome">
+    <h2>Welcome to Nexora Mobile</h2>
+    <p style="margin-top:8px;">
+      Your simple mobile service platform.
     </p>
+  </div>
 
-    <div id="loginMessage" class="message"></div>
 
-  </section>
+  <!-- ACCOUNT -->
+  <div class="card">
+
+    <h3>👤 Account</h3>
+
+    <button
+      class="account-button"
+      onclick="showPage('signup')">
+
+      <span class="icon">👤</span>
+      <span>Create Account</span>
+
+    </button>
+
+
+    <button
+      class="account-button secondary"
+      onclick="showPage('login')">
+
+      <span class="icon">🔐</span>
+      <span>Login</span>
+
+    </button>
+
+  </div>
 
 
   <!-- AIRTIME -->
-  <section id="airtime" class="page">
+  <div class="card">
 
-    <h2>Buy Airtime</h2>
+    <h3>📱 Airtime</h3>
 
-    <input
-      id="airtimeNumber"
-      type="tel"
-      placeholder="Customer phone number"
-    >
+    <p>Buy airtime for your phone.</p>
 
-    <select id="airtimeAmount">
-
-      <option value="100">₦100</option>
-      <option value="200">₦200</option>
-      <option value="500">₦500</option>
-      <option value="1000">₦1,000</option>
-      <option value="2000">₦2,000</option>
-
-    </select>
-
-    <button onclick="checkout('Airtime')">
-      Continue
+    <button onclick="showPage('airtime')">
+      Buy Airtime
     </button>
 
-  </section>
+  </div>
 
 
   <!-- DATA -->
-  <section id="data" class="page">
+  <div class="card">
 
-    <h2>Buy Data</h2>
+    <h3>📶 Data</h3>
 
-    <input
-      id="dataNumber"
-      type="tel"
-      placeholder="Customer phone number"
-    >
+    <p>Buy your data bundle.</p>
 
-    <select id="dataAmount">
-
-      <option value="500">1GB — ₦500</option>
-      <option value="1000">2GB — ₦1,000</option>
-      <option value="1500">5GB — ₦1,500</option>
-      <option value="2500">10GB — ₦2,500</option>
-
-    </select>
-
-    <button onclick="checkout('Data')">
-      Continue
+    <button onclick="showPage('data')">
+      Buy Data
     </button>
 
-  </section>
+  </div>
 
 
   <!-- ESIM -->
-  <section id="esim" class="page">
+  <div class="card">
 
-    <h2>Buy eSIM</h2>
+    <h3>🌐 eSIM</h3>
 
-    <select id="esimAmount">
+    <p>Choose an eSIM plan.</p>
 
-      <option value="5000">5GB — ₦5,000</option>
-      <option value="10000">10GB — ₦10,000</option>
-      <option value="15000">20GB — ₦15,000</option>
-
-    </select>
-
-    <button onclick="checkout('eSIM')">
-      Continue
+    <button onclick="showPage('esim')">
+      Buy eSIM
     </button>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- PAYMENT -->
-  <section id="payment" class="page">
+<!-- CREATE ACCOUNT -->
+<section id="signup" class="page">
 
-    <h2>OPay Payment</h2>
+  <h2>👤 Create Account</h2>
+
+  <input
+    id="signupName"
+    type="text"
+    placeholder="Full Name">
+
+  <input
+    id="signupPhone"
+    type="tel"
+    placeholder="Phone Number">
+
+  <input
+    id="signupEmail"
+    type="email"
+    placeholder="Email Address">
+
+  <input
+    id="signupPassword"
+    type="password"
+    placeholder="Password">
+
+  <button onclick="createAccount()">
+    Create Account
+  </button>
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back to Home
+
+  </button>
+
+  <div id="signupMessage" class="message"></div>
+
+</section>
+
+
+<!-- LOGIN -->
+<section id="login" class="page">
+
+  <h2>🔐 Login</h2>
+
+  <input
+    id="loginEmail"
+    type="email"
+    placeholder="Email Address">
+
+  <input
+    id="loginPassword"
+    type="password"
+    placeholder="Password">
+
+  <button onclick="login()">
+    Login
+  </button>
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back to Home
+
+  </button>
+
+  <p style="margin-top:15px;">
+    Don't have an account?
+    <a href="#" onclick="showPage('signup'); return false;">
+      Create Account
+    </a>
+  </p>
+
+  <div id="loginMessage" class="message"></div>
+
+</section>
+
+
+<!-- AIRTIME -->
+<section id="airtime" class="page">
+
+  <h2>📱 Buy Airtime</h2>
+
+  <input
+    id="airtimePhone"
+    type="tel"
+    placeholder="Phone Number">
+
+  <select id="airtimeAmount">
+
+    <option value="100">₦100</option>
+    <option value="200">₦200</option>
+    <option value="500">₦500</option>
+    <option value="1000">₦1,000</option>
+    <option value="2000">₦2,000</option>
+
+  </select>
+
+  <button onclick="goPayment('Airtime')">
+    Continue to Payment
+  </button>
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back
+
+  </button>
+
+</section>
+
+
+<!-- DATA -->
+<section id="data" class="page">
+
+  <h2>📶 Buy Data</h2>
+
+  <input
+    id="dataPhone"
+    type="tel"
+    placeholder="Phone Number">
+
+  <select id="dataAmount">
+
+    <option value="500">1GB — ₦500</option>
+    <option value="1000">2GB — ₦1,000</option>
+    <option value="1500">5GB — ₦1,500</option>
+    <option value="2500">10GB — ₦2,500</option>
+
+  </select>
+
+  <button onclick="goPayment('Data')">
+    Continue to Payment
+  </button>
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back
+
+  </button>
+
+</section>
+
+
+<!-- ESIM -->
+<section id="esim" class="page">
+
+  <h2>🌐 Buy eSIM</h2>
+
+  <select id="esimAmount">
+
+    <option value="5000">5GB — ₦5,000</option>
+    <option value="10000">10GB — ₦10,000</option>
+    <option value="15000">20GB — ₦15,000</option>
+
+  </select>
+
+  <button onclick="goPayment('eSIM')">
+    Continue to Payment
+  </button>
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back
+
+  </button>
+
+</section>
+
+
+<!-- PAYMENT -->
+<section id="payment" class="page">
+
+  <h2>💳 Payment</h2>
+
+  <div class="card">
+
+    <p>Service</p>
+
+    <h3 id="serviceName">-</h3>
+
+    <p style="margin-top:15px;">
+      Amount to Pay
+    </p>
+
+    <div id="serviceAmount" class="amount">
+      ₦0
+    </div>
+
+
+    <div class="info">
+
+      <strong>Pay with OPay</strong>
+
+      <br><br>
+
+      Account Name:<br>
+      <strong>Sufiyan Abdul afeez</strong>
+
+      <br><br>
+
+      Account Number:<br>
+      <strong>7034761610</strong>
+
+      <br><br>
+
+      Transfer the exact amount above.
+
+    </div>
+
+
+    <input
+      id="transactionReference"
+      type="text"
+      placeholder="Transaction Reference">
+
+
+    <button onclick="submitPayment()">
+      I Have Paid
+    </button>
+
+
+    <div
+      id="paymentMessage"
+      class="message">
+    </div>
+
+  </div>
+
+
+  <button
+    class="back"
+    onclick="showPage('home')">
+
+    ← Back to Home
+
+  </button>
+
+</section>
+
+
+<!-- ORDERS -->
+<section id="orders" class="page">
+
+  <h2>📋 My Orders</h2>
+
+  <div id="ordersList">
 
     <div class="card">
-
-      <p>Service</p>
-      <h3 id="paymentService">-</h3>
-
-      <p style="margin-top:12px;">Amount</p>
-      <div class="price" id="paymentPrice">
-        ₦0
-      </div>
-
-      <hr>
-
-      <p style="margin-top:15px;">
-        <strong>OPay Account Name</strong>
-      </p>
-
-      <p>
-        Sufiyan Abdul afeez
-      </p>
-
-      <p style="margin-top:12px;">
-        <strong>OPay Account Number</strong>
-      </p>
-
-      <p>
-        7034761610
-      </p>
-
-      <p class="small">
-        Transfer the exact amount to the OPay account above.
-      </p>
-
-      <input
-        id="transaction"
-        type="text"
-        placeholder="Transaction reference"
-      >
-
-      <button onclick="submitOrder()">
-        I Have Paid
-      </button>
-
-      <div id="paymentMessage" class="message"></div>
-
+      <p>No orders yet.</p>
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- ORDERS -->
-  <section id="orders" class="page">
+<!-- PROFILE -->
+<section id="profile" class="page">
 
-    <h2>My Orders</h2>
+  <h2>👤 My Profile</h2>
 
-    <div id="ordersList">
+  <div class="card">
 
-      <div class="card">
-        <p>No orders yet.</p>
-      </div>
+    <p>
+      <strong>Name:</strong>
+      <span id="profileName">
+        Guest
+      </span>
+    </p>
 
-    </div>
+    <p style="margin-top:10px;">
+      <strong>Email:</strong>
+      <span id="profileEmail">
+        Not logged in
+      </span>
+    </p>
 
-  </section>
+    <p style="margin-top:10px;">
+      <strong>Phone:</strong>
+      <span id="profilePhone">
+        -
+      </span>
+    </p>
 
+  </div>
 
-  <!-- PROFILE -->
-  <section id="profile" class="page">
-
-    <h2>My Profile</h2>
-
-    <div class="card">
-
-      <p>
-        <strong>Name:</strong>
-        <span id="profileName">Guest</span>
-      </p>
-
-      <p style="margin-top:10px;">
-        <strong>Email:</strong>
-        <span id="profileEmail">Not logged in</span>
-      </p>
-
-      <p style="margin-top:10px;">
-        <strong>Phone:</strong>
-        <span id="profilePhone">-</span>
-      </p>
-
-    </div>
-
-    <button onclick="logout()">
-      Logout
-    </button>
-
-  </section>
+</section>
 
 
-  <!-- BOTTOM NAVIGATION -->
-  <nav>
+<!-- BOTTOM NAV -->
+<nav>
 
-    <button onclick="openPage('home')">
-      🏠<br>Home
-    </button>
+  <button onclick="showPage('home')">
+    🏠<br>
+    Home
+  </button>
 
-    <button onclick="openPage('orders')">
-      📋<br>Orders
-    </button>
+  <button onclick="showPage('orders')">
+    📋<br>
+    Orders
+  </button>
 
-    <button onclick="openPage('profile')">
-      👤<br>Profile
-    </button>
+  <button onclick="showPage('profile')">
+    👤<br>
+    Profile
+  </button>
 
-    <button onclick="openPage('signup')">
-      🔐<br>Account
-    </button>
+  <button onclick="showPage('signup')">
+    🔐<br>
+    Account
+  </button>
 
-  </nav>
+</nav>
 
 </div>
 
 
 <script>
 
-  let currentOrder = null;
+let currentOrder = null;
 
 
-  function openPage(page) {
+/* PAGE NAVIGATION */
 
-    document.querySelectorAll(".page").forEach(function(section) {
+function showPage(page) {
+
+  document
+    .querySelectorAll(".page")
+    .forEach(function(section) {
 
       section.classList.remove("active");
 
     });
 
-    document.getElementById(page).classList.add("active");
 
-    window.scrollTo(0, 0);
+  document
+    .getElementById(page)
+    .classList.add("active");
+
+
+  window.scrollTo(0, 0);
+
+}
+
+
+/* CREATE ACCOUNT */
+
+function createAccount() {
+
+  const name =
+    document
+      .getElementById("signupName")
+      .value.trim();
+
+
+  const phone =
+    document
+      .getElementById("signupPhone")
+      .value.trim();
+
+
+  const email =
+    document
+      .getElementById("signupEmail")
+      .value.trim();
+
+
+  const password =
+    document
+      .getElementById("signupPassword")
+      .value;
+
+
+  if (!name || !phone || !email || !password) {
+
+    alert("Please fill in all fields.");
+
+    return;
+
   }
 
 
-  function signup() {
+  const user = {
 
-    const name =
-      document.getElementById("name").value.trim();
+    name: name,
+    phone: phone,
+    email: email
+
+  };
+
+
+  localStorage.setItem(
+    "nexoraUser",
+    JSON.stringify(user)
+  );
+
+
+  const message =
+    document.getElementById(
+      "signupMessage"
+    );
+
+
+  message.style.display = "block";
+
+
+  message.textContent =
+    "Account created successfully!";
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent = name;
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent = email;
+
+
+  document.getElementById(
+    "profilePhone"
+  ).textContent = phone;
+
+}
+
+
+/* LOGIN */
+
+function login() {
+
+  const email =
+    document
+      .getElementById("loginEmail")
+      .value.trim();
+
+
+  const password =
+    document
+      .getElementById("loginPassword")
+      .value;
+
+
+  const user =
+    JSON.parse(
+      localStorage.getItem(
+        "nexoraUser"
+      )
+    );
+
+
+  if (!user) {
+
+    alert(
+      "No account found. Please create an account first."
+    );
+
+    return;
+
+  }
+
+
+  if (email !== user.email || !password) {
+
+    alert(
+      "Please enter the correct login details."
+    );
+
+    return;
+
+  }
+
+
+  const message =
+    document.getElementById(
+      "loginMessage"
+    );
+
+
+  message.style.display = "block";
+
+
+  message.textContent =
+    "Login successful!";
+
+
+  document.getElementById(
+    "profileName"
+  ).textContent = user.name;
+
+
+  document.getElementById(
+    "profileEmail"
+  ).textContent = user.email;
+
+
+  document.getElementById(
+    "profilePhone"
+  ).textContent = user.phone;
+
+}
+
+
+/* PAYMENT */
+
+function goPayment(service) {
+
+  let amount = 0;
+
+
+  if (service === "Airtime") {
 
     const phone =
-      document.getElementById("phone").value.trim();
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    if (!name || !phone || !email || !password) {
-
-      alert("Please complete all fields.");
-
-      return;
-    }
-
-    const user = {
-
-      name: name,
-      phone: phone,
-      email: email
-
-    };
-
-    localStorage.setItem(
-      "nexoraUser",
-      JSON.stringify(user)
-    );
-
-    document.getElementById(
-      "signupMessage"
-    ).style.display = "block";
-
-    document.getElementById(
-      "signupMessage"
-    ).textContent =
-      "Account created successfully.";
-
-    updateProfile();
-
-  }
+      document
+        .getElementById(
+          "airtimePhone"
+        )
+        .value.trim();
 
 
-  function login() {
+    if (!phone) {
 
-    const email =
-      document.getElementById("loginEmail").value.trim();
-
-    const password =
-      document.getElementById("loginPassword").value;
-
-    const user =
-      JSON.parse(
-        localStorage.getItem("nexoraUser")
+      alert(
+        "Please enter the phone number."
       );
 
-    if (!user || !email || !password) {
-
-      alert("Please enter your login details.");
-
       return;
+
     }
 
-    if (email !== user.email) {
 
-      alert("Email not found.");
-
-      return;
-    }
-
-    document.getElementById(
-      "loginMessage"
-    ).style.display = "block";
-
-    document.getElementById(
-      "loginMessage"
-    ).textContent =
-      "Login successful.";
-
-    updateProfile();
-
-    setTimeout(function() {
-
-      openPage("profile");
-
-    }, 500);
-
-  }
-
-
-  function updateProfile() {
-
-    const user =
-      JSON.parse(
-        localStorage.getItem("nexoraUser")
-      );
-
-    if (!user) return;
-
-    document.getElementById(
-      "profileName"
-    ).textContent = user.name;
-
-    document.getElementById(
-      "profileEmail"
-    ).textContent = user.email;
-
-    document.getElementById(
-      "profilePhone"
-    ).textContent = user.phone;
-
-  }
-
-
-  function logout() {
-
-    alert("You have been logged out.");
-
-    openPage("home");
-
-  }
-
-
-  function checkout(service) {
-
-    let amount = 0;
-
-    if (service === "Airtime") {
-
-      const number =
-        document.getElementById(
-          "airtimeNumber"
-        ).value.trim();
-
-      if (!number) {
-
-        alert("Enter the phone number.");
-
-        return;
-      }
-
-      amount =
-        document.getElementById(
+    amount =
+      document
+        .getElementById(
           "airtimeAmount"
-        ).value;
-
-    }
-
-
-    if (service === "Data") {
-
-      const number =
-        document.getElementById(
-          "dataNumber"
-        ).value.trim();
-
-      if (!number) {
-
-        alert("Enter the phone number.");
-
-        return;
-      }
-
-      amount =
-        document.getElementById(
-          "dataAmount"
-        ).value;
-
-    }
-
-
-    if (service === "eSIM") {
-
-      amount =
-        document.getElementById(
-          "esimAmount"
-        ).value;
-
-    }
-
-
-    currentOrder = {
-
-      service: service,
-      amount: amount
-
-    };
-
-
-    document.getElementById(
-      "paymentService"
-    ).textContent = service;
-
-
-    document.getElementById(
-      "paymentPrice"
-    ).textContent =
-      "₦" +
-      Number(amount).toLocaleString();
-
-
-    openPage("payment");
+        )
+        .value;
 
   }
 
 
-  function submitOrder() {
+  if (service === "Data") {
 
-    if (!currentOrder) {
-
-      alert("Please select a service first.");
-
-      return;
-    }
-
-
-    const transaction =
-      document.getElementById(
-        "transaction"
-      ).value.trim();
+    const phone =
+      document
+        .getElementById(
+          "dataPhone"
+        )
+        .value.trim();
 
 
-    if (!transaction) {
+    if (!phone) {
 
-      alert("Enter your transaction reference.");
-
-      return;
-    }
-
-
-    const orders =
-      JSON.parse(
-        localStorage.getItem(
-          "nexoraOrders"
-        ) || "[]"
+      alert(
+        "Please enter the phone number."
       );
 
+      return;
 
-    orders.push({
-
-      service: currentOrder.service,
-
-      amount: currentOrder.amount,
-
-      transaction: transaction,
-
-      status: "Pending",
-
-      date: new Date().toLocaleString()
-
-    });
+    }
 
 
-    localStorage.setItem(
-      "nexoraOrders",
-      JSON.stringify(orders)
+    amount =
+      document
+        .getElementById(
+          "dataAmount"
+        )
+        .value;
+
+  }
+
+
+  if (service === "eSIM") {
+
+    amount =
+      document
+        .getElementById(
+          "esimAmount"
+        )
+        .value;
+
+  }
+
+
+  currentOrder = {
+
+    service: service,
+    amount: amount
+
+  };
+
+
+  document.getElementById(
+    "serviceName"
+  ).textContent = service;
+
+
+  document.getElementById(
+    "serviceAmount"
+  ).textContent =
+    "₦" +
+    Number(amount).toLocaleString();
+
+
+  showPage("payment");
+
+}
+
+
+/* SUBMIT PAYMENT */
+
+function submitPayment() {
+
+  const reference =
+    document
+      .getElementById(
+        "transactionReference"
+      )
+      .value.trim();
+
+
+  if (!reference) {
+
+    alert(
+      "Please enter your transaction reference."
+    );
+
+    return;
+
+  }
+
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem(
+        "nexoraOrders"
+      ) || "[]"
     );
 
 
+  orders.push({
+
+    service:
+      currentOrder.service,
+
+    amount:
+      currentOrder.amount,
+
+    reference:
+      reference,
+
+    status:
+      "Pending",
+
+    date:
+      new Date().toLocaleString()
+
+  });
+
+
+  localStorage.setItem(
+    "nexoraOrders",
+    JSON.stringify(orders)
+  );
+
+
+  const message =
     document.getElementById(
       "paymentMessage"
-    ).style.display = "block";
+    );
 
 
+  message.style.display = "block";
+
+
+  message.textContent =
+    "Payment submitted. Your order is pending confirmation.";
+
+}
+
+
+/* LOAD ORDERS */
+
+function loadOrders() {
+
+  const orders =
+    JSON.parse(
+      localStorage.getItem(
+        "nexoraOrders"
+      ) || "[]"
+    );
+
+
+  const list =
     document.getElementById(
-      "paymentMessage"
-    ).textContent =
-      "Payment submitted. Your order is pending confirmation.";
+      "ordersList"
+    );
 
 
-    loadOrders();
+  if (orders.length === 0) {
+
+    return;
 
   }
 
 
-  function loadOrders() {
-
-    const orders =
-      JSON.parse(
-        localStorage.getItem(
-          "nexoraOrders"
-        ) || "[]"
-      );
+  list.innerHTML = "";
 
 
-    const list =
-      document.getElementById(
-        "ordersList"
-      );
+  orders.forEach(function(order) {
+
+    list.innerHTML += `
+
+      <div class="card">
+
+        <h3>${order.service}</h3>
+
+        <p>
+          Amount:
+          ₦${Number(order.amount).toLocaleString()}
+        </p>
+
+        <p>
+          Status:
+          ${order.status}
+        </p>
+
+        <p>
+          Reference:
+          ${order.reference}
+        </p>
+
+        <p style="margin-top:8px;">
+          ${order.date}
+        </p>
+
+      </div>
+
+    `;
+
+  });
+
+}
 
 
-    if (orders.length === 0) {
-
-      list.innerHTML =
-        '<div class="card"><p>No orders yet.</p></div>';
-
-      return;
-    }
-
-
-    list.innerHTML = "";
-
-
-    orders.forEach(function(order) {
-
-      list.innerHTML += `
-
-        <div class="card">
-
-          <h3>${order.service}</h3>
-
-          <p>
-            Amount:
-            ₦${Number(order.amount).toLocaleString()}
-          </p>
-
-          <p>
-            Status:
-            ${order.status}
-          </p>
-
-          <p>
-            Reference:
-            ${order.transaction}
-          </p>
-
-          <p class="small">
-            ${order.date}
-          </p>
-
-        </div>
-
-      `;
-
-    });
-
-  }
-
-
-  updateProfile();
-
-  loadOrders();
+loadOrders();
 
 </script>
 
