@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nexora Mobile</title>
 
 <style>
@@ -12,35 +13,45 @@
   padding:0;
 }
 
+html{
+  scroll-behavior:smooth;
+}
+
 body{
   font-family:Arial,sans-serif;
-  background:#f4f7fb;
+  background:#f5f7fb;
   color:#101828;
-  padding-bottom:80px;
+  padding-bottom:85px;
 }
 
 header{
   background:#101828;
   color:white;
-  padding:24px 18px;
+  padding:25px 18px;
 }
 
-header h1{
-  font-size:28px;
-  margin-bottom:8px;
+.header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
 
-header p{
+.logo{
+  font-size:24px;
+  font-weight:bold;
+}
+
+.tagline{
   color:#d0d5dd;
-  font-size:16px;
+  margin-top:8px;
 }
 
 .search{
-  margin-top:20px;
   width:100%;
-  padding:16px;
+  margin-top:20px;
+  padding:15px;
   border:0;
-  border-radius:14px;
+  border-radius:13px;
   font-size:16px;
 }
 
@@ -55,96 +66,120 @@ header p{
   border-radius:18px;
   padding:22px;
   margin-bottom:22px;
-  box-shadow:0 4px 15px rgba(0,0,0,.08);
+  box-shadow:0 4px 15px rgba(0,0,0,.07);
 }
 
 .card h2{
-  margin-bottom:18px;
+  margin-bottom:12px;
+}
+
+.card p{
+  color:#667085;
+  line-height:1.5;
 }
 
 label{
   display:block;
-  font-weight:bold;
-  margin-top:15px;
+  margin-top:16px;
   margin-bottom:7px;
+  font-weight:bold;
 }
 
-input,select{
+input,
+select{
   width:100%;
-  padding:15px;
+  padding:14px;
   border:1px solid #d0d5dd;
-  border-radius:12px;
-  font-size:16px;
+  border-radius:11px;
   background:white;
+  font-size:16px;
 }
 
 button{
   width:100%;
-  padding:16px;
-  margin-top:20px;
+  padding:15px;
+  margin-top:18px;
   border:0;
   border-radius:12px;
-  background:#2864e8;
+  background:#2563eb;
   color:white;
-  font-size:17px;
+  font-size:16px;
   font-weight:bold;
+  cursor:pointer;
 }
 
 button:active{
   transform:scale(.98);
 }
 
-.payment{
-  background:#101828;
-  color:white;
+.payment-choice{
+  background:#f8fafc;
+  color:#101828;
+  border:1px solid #d0d5dd;
+  text-align:left;
 }
 
-.payment p{
-  color:#d0d5dd;
-  line-height:1.6;
+.payment-choice:hover{
+  border-color:#2563eb;
 }
 
-.notice{
+.order-box{
+  display:none;
+  margin-top:18px;
+  padding:15px;
+  background:#ecfdf3;
+  color:#067647;
+  border-radius:12px;
+  line-height:1.7;
+}
+
+.info{
   margin-top:15px;
   padding:14px;
-  background:#eef4ff;
-  color:#174ea6;
-  border-radius:10px;
-  font-size:14px;
+  background:#eff6ff;
+  color:#1d4ed8;
+  border-radius:11px;
+  line-height:1.5;
 }
 
-nav{
+footer{
+  background:#101828;
+  color:white;
+  text-align:center;
+  padding:30px 20px;
+}
+
+.bottom-nav{
   position:fixed;
   bottom:0;
   left:0;
   right:0;
+  height:72px;
   background:white;
   display:flex;
   justify-content:space-around;
-  padding:12px 5px;
-  box-shadow:0 -3px 12px rgba(0,0,0,.12);
+  align-items:center;
+  box-shadow:0 -3px 15px rgba(0,0,0,.12);
+  z-index:20;
 }
 
-nav a{
-  text-decoration:none;
+.bottom-nav a{
   color:#344054;
+  text-decoration:none;
   text-align:center;
-  font-size:13px;
+  font-size:12px;
 }
 
-nav span{
+.bottom-nav span{
   display:block;
-  font-size:22px;
+  font-size:21px;
   margin-bottom:3px;
 }
 
-.success{
-  display:none;
-  background:#ecfdf3;
-  color:#067647;
-  padding:15px;
-  border-radius:12px;
-  margin-top:15px;
+@media(min-width:700px){
+  .container{
+    max-width:900px;
+  }
 }
 </style>
 </head>
@@ -152,115 +187,321 @@ nav span{
 <body>
 
 <header>
-  <h1>🌍 Nexora Mobile</h1>
-  <p>Stay Connected Anywhere</p>
-  <input class="search" type="search"
-    placeholder="Search eSIM, airtime or data...">
-</header>
 
-<div class="container">
-
-  <div class="card">
-    <h2>📱 eSIM Plans</h2>
-    <p>Browse affordable international eSIM plans.</p>
-    <button onclick="showMessage('eSIM plans will be available here.')">
-      View eSIM Plans
-    </button>
+  <div class="header-row">
+    <div class="logo">🌍 Nexora Mobile</div>
+    <div>☰</div>
   </div>
 
-  <div class="card" id="airtime">
-    <h2>📶 Buy Airtime or Data</h2>
+  <p class="tagline">Stay Connected Anywhere</p>
 
-    <label>Choose Network</label>
+  <input
+    class="search"
+    type="search"
+    placeholder="Search eSIM, airtime or data..."
+  >
+
+</header>
+
+
+<main class="container">
+
+  <!-- HOME -->
+
+  <section class="card" id="home">
+
+    <h2>Everything Connected.</h2>
+
+    <p>
+      Buy eSIMs, airtime and data quickly from
+      Nexora Mobile.
+    </p>
+
+  </section>
+
+
+  <!-- ESIM -->
+
+  <section class="card" id="esim">
+
+    <h2>📱 eSIM Store</h2>
+
+    <p>
+      International eSIM plans will appear here.
+    </p>
+
+    <button
+      type="button"
+      onclick="showNotice('eSIM plans are being prepared.')">
+      View eSIM Plans
+    </button>
+
+  </section>
+
+
+  <!-- AIRTIME / DATA -->
+
+  <section class="card" id="airtime">
+
+    <h2>📶 Airtime & Data</h2>
+
+    <label for="network">
+      Choose Network
+    </label>
+
     <select id="network">
-      <option>MTN</option>
-      <option>Airtel</option>
-      <option>Glo</option>
-      <option>9mobile</option>
+      <option value="MTN">MTN</option>
+      <option value="Airtel">Airtel</option>
+      <option value="Glo">Glo</option>
+      <option value="9mobile">9mobile</option>
     </select>
 
-    <label>Phone Number</label>
-    <input id="phone" type="tel"
-      placeholder="08012345678">
 
-    <label>Choose Service</label>
+    <label for="phone">
+      Phone Number
+    </label>
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="08012345678"
+    >
+
+
+    <label for="service">
+      Choose Service
+    </label>
+
     <select id="service">
-      <option>Airtime</option>
-      <option>Data</option>
+      <option value="Airtime">Airtime</option>
+      <option value="Data">Data</option>
     </select>
 
-    <label>Amount</label>
+
+    <label for="amount">
+      Amount
+    </label>
+
     <select id="amount">
-      <option>₦100</option>
-      <option>₦200</option>
-      <option>₦500</option>
-      <option>₦1,000</option>
-      <option>₦2,000</option>
-      <option>₦5,000</option>
+      <option value="₦100">₦100</option>
+      <option value="₦200">₦200</option>
+      <option value="₦500">₦500</option>
+      <option value="₦1,000">₦1,000</option>
+      <option value="₦2,000">₦2,000</option>
+      <option value="₦5,000">₦5,000</option>
+      <option value="₦10,000">₦10,000</option>
     </select>
 
-    <button onclick="continuePayment()">
+
+    <button
+      type="button"
+      onclick="createOrder()">
       Continue to Payment
     </button>
 
-    <div id="success" class="success"></div>
-  </
-<div class="payment-options">
-  <h3>Choose Payment Method</h3>
 
-  <button type="button" onclick="choosePayment('Bank Transfer')">
-    🏦 Bank Transfer — Any Nigerian Bank
-  </button>
+    <div id="orderBox" class="order-box"></div>
 
-  <button type="button" onclick="choosePayment('Bank Card')">
-    💳 Debit / Credit Card
-  </button>
+  </section>
 
-  <button type="button" onclick="choosePayment('USDT / Bitcoin')">
-    ₿ USDT / Bitcoin
-  </button>
-</div>
-  </div>
 
-<nav>
-  <a href="#"><span>🏠</span>Home</a>
-  <a href="#esim"><span>📱</span>eSIM</a>
-  <a href="#airtime"><span>📶</span>Airtime</a>
-  <a href="#payment"><span>💳</span>Payment</a>
-  <a href="#"><span>💬</span>Help</a>
+  <!-- PAYMENT -->
+
+  <section class="card" id="payment">
+
+    <h2>💳 Payment</h2>
+
+    <p>
+      Choose how you would like to pay.
+    </p>
+
+    <div class="info">
+      Bank transfer can be made from
+      <strong>any Nigerian bank</strong>.
+      We don't need to list every bank.
+    </div>
+
+
+    <button
+      type="button"
+      class="payment-choice"
+      onclick="selectPayment('Bank Transfer')">
+
+      🏦 Bank Transfer
+      <br>
+      <small>Any Nigerian bank</small>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="payment-choice"
+      onclick="selectPayment('Debit/Credit Card')">
+
+      💳 Debit / Credit Card
+      <br>
+      <small>Card payment</small>
+
+    </button>
+
+
+    <button
+      type="button"
+      class="payment-choice"
+      onclick="selectPayment('USDT / Bitcoin')">
+
+      ₿ USDT / Bitcoin
+      <br>
+      <small>Crypto payment</small>
+
+    </button>
+
+
+    <div id="paymentMessage" class="info"
+         style="display:none;">
+    </div>
+
+  </section>
+
+
+  <!-- HELP -->
+
+  <section class="card" id="help">
+
+    <h2>💬 Customer Support</h2>
+
+    <p>
+      Need help with an order or payment?
+      Contact Nexora Mobile support.
+    </p>
+
+    <button
+      type="button"
+      onclick="showNotice('WhatsApp support will be connected next.')">
+      WhatsApp Support
+    </button>
+
+  </section>
+
+</main>
+
+
+<footer>
+
+  <h3>🌍 Nexora Mobile</h3>
+
+  <p style="margin-top:8px;">
+    Stay Connected Anywhere
+  </p>
+
+  <p style="margin-top:15px;">
+    © 2026 Nexora Mobile
+  </p>
+
+</footer>
+
+
+<!-- MOBILE NAVIGATION -->
+
+<nav class="bottom-nav">
+
+  <a href="#home">
+    <span>🏠</span>
+    Home
+  </a>
+
+  <a href="#esim">
+    <span>📱</span>
+    eSIM
+  </a>
+
+  <a href="#airtime">
+    <span>📶</span>
+    Airtime
+  </a>
+
+  <a href="#payment">
+    <span>💳</span>
+    Payment
+  </a>
+
+  <a href="#help">
+    <span>💬</span>
+    Help
+  </a>
+
 </nav>
 
-<script>
-function continuePayment(){
 
-  const phone = document.getElementById("phone").value.trim();
-  const network = document.getElementById("network").value;
-  const service = document.getElementById("service").value;
-  const amount = document.getElementById("amount").value;
-  const success = document.getElementById("success");
+<script>
+
+function createOrder(){
+
+  const network =
+    document.getElementById("network").value;
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const service =
+    document.getElementById("service").value;
+
+  const amount =
+    document.getElementById("amount").value;
+
+  const orderBox =
+    document.getElementById("orderBox");
+
 
   if(phone === ""){
+
     alert("Please enter your phone number.");
+
     return;
   }
 
-  success.style.display = "block";
 
-  success.innerHTML =
-    "<strong>Order details</strong><br>" +
+  orderBox.style.display = "block";
+
+  orderBox.innerHTML =
+    "<strong>Order Details</strong><br>" +
     "Network: " + network + "<br>" +
     "Phone: " + phone + "<br>" +
     "Service: " + service + "<br>" +
     "Amount: " + amount;
 
-  document.getElementById("payment").scrollIntoView({
-    behavior:"smooth"
-  });
+
+  document
+    .getElementById("payment")
+    .scrollIntoView({
+      behavior:"smooth"
+    });
 }
 
-function showMessage(message){
-  alert(message);
+
+function selectPayment(method){
+
+  const paymentMessage =
+    document.getElementById("paymentMessage");
+
+  paymentMessage.style.display = "block";
+
+  paymentMessage.innerHTML =
+    "<strong>" +
+    method +
+    " selected.</strong><br>" +
+    "The real payment gateway will be connected next.";
+
 }
+
+
+function showNotice(message){
+
+  alert(message);
+
+}
+
 </script>
 
 </body>
