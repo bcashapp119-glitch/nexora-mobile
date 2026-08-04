@@ -204,25 +204,23 @@ nav span{
     </button>
 
     <div id="success" class="success"></div>
-  </div>
+  </
+<div class="payment-options">
+  <h3>Choose Payment Method</h3>
 
-  <div class="card payment" id="payment">
-    <h2>💳 Payment</h2>
-    <p>
-      Select your service, enter your details,
-      and proceed to payment.
-    </p>
+  <button type="button" onclick="choosePayment('Bank Transfer')">
+    🏦 Bank Transfer — Any Nigerian Bank
+  </button>
 
-    <div class="notice">
-      Payment methods can be connected here later.
-    </div>
+  <button type="button" onclick="choosePayment('Bank Card')">
+    💳 Debit / Credit Card
+  </button>
 
-    <button onclick="showMessage('Payment setup coming next.')">
-      Choose Payment Method
-    </button>
-  </div>
-
+  <button type="button" onclick="choosePayment('USDT / Bitcoin')">
+    ₿ USDT / Bitcoin
+  </button>
 </div>
+  </div>
 
 <nav>
   <a href="#"><span>🏠</span>Home</a>
