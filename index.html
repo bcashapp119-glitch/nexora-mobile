@@ -1641,5 +1641,58 @@ function renderWalletHistory(){
 updateWallet();
 
 </script>
+  <!-- PAYMENT SECTION -->
+<section id="payment-section" style="padding:20px; max-width:500px; margin:auto;">
+  <h2>Complete Your Payment</h2>
+
+  <p>Choose your payment method:</p>
+
+  <button onclick="showOPay()">
+    Pay with OPay
+  </button>
+
+  <div id="opay-payment" style="display:none; margin-top:20px;">
+    <h3>OPay Transfer</h3>
+
+    <p>Transfer the exact amount to:</p>
+
+    <p><strong>OPay Account Name:</strong> YOUR NAME</p>
+    <p><strong>OPay Account Number:</strong> YOUR OPAY NUMBER</p>
+
+    <label>Enter your transaction reference:</label>
+    <input
+      type="text"
+      id="transaction-reference"
+      placeholder="Transaction reference"
+      style="width:100%; padding:10px; margin-top:8px;"
+    >
+
+    <button onclick="submitPayment()" style="margin-top:12px;">
+      I Have Paid
+    </button>
+
+    <p id="payment-message"></p>
+  </div>
+</section>
+
+<script>
+function showOPay() {
+  document.getElementById("opay-payment").style.display = "block";
+}
+
+function submitPayment() {
+  const reference =
+    document.getElementById("transaction-reference").value.trim();
+
+  if (!reference) {
+    document.getElementById("payment-message").textContent =
+      "Please enter your transaction reference.";
+    return;
+  }
+
+  document.getElementById("payment-message").textContent =
+    "Payment submitted. Your order is awaiting confirmation.";
+}
+</script>
 </body>
 </html>
