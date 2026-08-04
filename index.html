@@ -3,243 +3,298 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Nexora Mobile</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f5f9;
-  color: #111827;
-  padding-bottom: 85px;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f3f5f9;
+  color:#111827;
+  padding-bottom:90px;
 }
 
-.header {
-  background: #10182c;
-  color: white;
-  padding: 28px 25px 35px;
+header{
+  background:#10182c;
+  color:white;
+  padding:25px 20px 30px;
 }
 
-.logo {
-  font-size: 28px;
-  font-weight: bold;
+header h1{
+  margin:0 0 8px;
+  font-size:28px;
 }
 
-.tagline {
-  margin-top: 10px;
-  font-size: 18px;
-  color: #d7dbe5;
+header p{
+  margin:0 0 20px;
+  color:#cbd5e1;
+  font-size:17px;
 }
 
-.search {
-  margin-top: 28px;
-  width: 100%;
-  padding: 20px;
-  border-radius: 22px;
-  border: none;
-  font-size: 17px;
+.search{
+  width:100%;
+  padding:17px;
+  border:0;
+  border-radius:18px;
+  font-size:16px;
+  outline:none;
 }
 
-.container {
-  padding: 22px;
+main{
+  max-width:720px;
+  margin:auto;
+  padding:20px;
 }
 
-.card {
-  background: white;
-  padding: 25px;
-  margin-bottom: 20px;
-  border-radius: 25px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.06);
+.card{
+  background:white;
+  border-radius:24px;
+  padding:22px;
+  margin-bottom:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.06);
 }
 
-.card h2 {
-  margin-top: 0;
+.card h2{
+  margin-top:0;
+  font-size:24px;
 }
 
-button {
-  width: 100%;
-  border: none;
-  padding: 17px;
-  border-radius: 15px;
-  background: #2864e8;
-  color: white;
-  font-size: 17px;
-  font-weight: bold;
-  cursor: pointer;
+.card p{
+  color:#64748b;
+  line-height:1.6;
 }
 
-button:active {
-  transform: scale(.98);
+button{
+  width:100%;
+  border:0;
+  padding:16px;
+  border-radius:14px;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.primary{
+  background:#2864e6;
+  color:white;
+}
+
+.dark{
+  background:#10182c;
+  color:white;
+}
+
+.green{
+  background:#20b958;
+  color:white;
+}
+
+.payment-option{
+  border:2px solid #e5e7eb;
+  padding:18px;
+  border-radius:18px;
+  margin:12px 0;
+  cursor:pointer;
+}
+
+.payment-option:hover{
+  border-color:#2864e6;
+}
+
+.payment-option strong{
+  display:block;
+  font-size:18px;
+  margin-bottom:6px;
+}
+
+.amount{
+  font-size:20px;
+  font-weight:bold;
+  margin:10px 0;
 }
 
 select,
-input {
-  width: 100%;
-  padding: 16px;
-  margin: 10px 0 15px;
-  border: 1px solid #d5d9e1;
-  border-radius: 13px;
-  font-size: 16px;
-  background: white;
+input{
+  width:100%;
+  padding:15px;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  margin:8px 0 15px;
+  font-size:16px;
+  background:white;
 }
 
-.payment-option {
-  border: 2px solid #e0e4eb;
-  border-radius: 18px;
-  padding: 18px;
-  margin: 12px 0;
-  cursor: pointer;
+label{
+  font-weight:bold;
+  display:block;
+  margin-top:10px;
 }
 
-.payment-option:hover {
-  border-color: #2864e8;
+.page{
+  display:none;
 }
 
-.payment-option strong {
-  font-size: 18px;
+.page.active{
+  display:block;
 }
 
-.transaction {
-  border: 1px solid #e1e5eb;
-  border-radius: 17px;
-  padding: 17px;
-  margin-bottom: 13px;
-  background: white;
+.transaction{
+  border:1px solid #e5e7eb;
+  border-radius:16px;
+  padding:16px;
+  margin:12px 0;
 }
 
-.status {
-  display: inline-block;
-  margin-top: 8px;
-  padding: 6px 10px;
-  border-radius: 20px;
-  font-size: 13px;
-  font-weight: bold;
+.transaction-top{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
 }
 
-.success {
-  background: #dcfce7;
-  color: #15803d;
+.transaction-title{
+  font-weight:bold;
 }
 
-.pending {
-  background: #fef3c7;
-  color: #a16207;
+.transaction-id{
+  font-size:12px;
+  color:#64748b;
+  margin-top:6px;
 }
 
-.failed {
-  background: #fee2e2;
-  color: #b91c1c;
+.status{
+  color:#16a34a;
+  font-weight:bold;
 }
 
-.bottom-nav {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 78px;
-  background: white;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  z-index: 1000;
+.empty{
+  text-align:center;
+  color:#64748b;
+  padding:25px 5px;
 }
 
-.nav-item {
-  text-align: center;
-  font-size: 12px;
-  color: #4b5563;
-  cursor: pointer;
+.back{
+  width:auto;
+  padding:10px 16px;
+  background:#e8edf5;
+  color:#111827;
+  margin-bottom:15px;
 }
 
-.nav-item span {
-  display: block;
-  font-size: 24px;
-  margin-bottom: 3px;
+.bottom-nav{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  height:78px;
+  background:white;
+  border-top:1px solid #ddd;
+  display:flex;
+  justify-content:space-around;
+  align-items:center;
+  z-index:1000;
 }
 
-.nav-item.active {
-  color: #2864e8;
-  font-weight: bold;
+.nav-btn{
+  background:none;
+  color:#475569;
+  padding:5px;
+  font-size:12px;
+  font-weight:normal;
 }
 
-.page {
-  display: none;
+.nav-btn span{
+  display:block;
+  font-size:23px;
+  margin-bottom:3px;
 }
 
-.page.active {
-  display: block;
+.nav-btn.active{
+  color:#2864e6;
+  font-weight:bold;
 }
 
-.back {
-  background: #e8edf7;
-  color: #111827;
-  margin-bottom: 18px;
+.notice{
+  background:#eef5ff;
+  border-left:4px solid #2864e6;
+  padding:14px;
+  border-radius:10px;
+  margin:15px 0;
 }
 
-.whatsapp {
-  background: #16a34a;
+.danger{
+  background:#fff4f4;
+  border-left:4px solid #ef4444;
 }
 
-.notice {
-  background: #eef4ff;
-  color: #244b9b;
-  padding: 15px;
-  border-radius: 14px;
-  margin-bottom: 15px;
+footer{
+  background:#10182c;
+  color:white;
+  text-align:center;
+  padding:35px 20px;
+  margin-top:20px;
 }
 
-.amount {
-  font-size: 24px;
-  font-weight: bold;
-}
+@media(max-width:500px){
+  main{
+    padding:15px;
+  }
 
-footer {
-  background: #09101f;
-  color: white;
-  text-align: center;
-  padding: 35px 20px;
-  margin-top: 30px;
+  header{
+    padding:22px 15px 25px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="logo">🌍 Nexora Mobile</div>
-  <div class="tagline">Stay Connected Anywhere</div>
-  <input class="search" placeholder="Search eSIM, airtime or data...">
+<header>
+  <h1>🌍 Nexora Mobile</h1>
+  <p>Stay Connected Anywhere</p>
+
+  <input
+    class="search"
+    type="text"
+    placeholder="Search eSIM, airtime or data..."
+    oninput="searchPlans()"
+  >
 </header>
 
 
+<main>
+
 <!-- HOME -->
 <section id="home" class="page active">
-<div class="container">
 
   <div class="card">
-    <h1>Everything Connected.</h1>
+    <h2>Everything Connected.</h2>
     <p>
-      Buy eSIMs, airtime and data quickly from Nexora Mobile.
+      Buy eSIMs, airtime and mobile data quickly from Nexora Mobile.
     </p>
   </div>
 
-  <div class="card">
+
+  <div class="card searchable">
     <h2>📱 eSIM Store</h2>
     <p>Choose from available international eSIM plans.</p>
-    <button onclick="openPage('esim')">View eSIM Plans</button>
+
+    <button class="primary" onclick="showPage('esim')">
+      View eSIM Plans
+    </button>
   </div>
 
-  <div class="card">
+
+  <div class="card searchable">
     <h2>📶 Airtime & Data</h2>
 
     <label>Choose Network</label>
-    <select>
+
+    <select id="network">
       <option>MTN</option>
       <option>Airtel</option>
       <option>Glo</option>
@@ -247,337 +302,782 @@ footer {
     </select>
 
     <label>Phone Number</label>
-    <input type="tel" placeholder="08012345678">
+
+    <input
+      id="phone"
+      type="tel"
+      placeholder="08012345678"
+    >
+
+    <label>Choose Service</label>
+
+    <select id="service">
+      <option>Airtime</option>
+      <option>Data</option>
+    </select>
 
     <label>Amount</label>
-    <input type="number" placeholder="₦ Amount">
 
-    <button onclick="createTransaction('Airtime / Data')">
-      Continue
+    <select id="airtimeAmount">
+      <option value="500">₦500</option>
+      <option value="1000">₦1,000</option>
+      <option value="2000">₦2,000</option>
+      <option value="5000">₦5,000</option>
+      <option value="10000">₦10,000</option>
+    </select>
+
+    <button class="primary" onclick="startPurchase()">
+      Continue to Payment
     </button>
   </div>
 
-</div>
 </section>
 
 
 <!-- ESIM -->
 <section id="esim" class="page">
-<div class="container">
 
   <div class="card">
-    <button class="back" onclick="openPage('home')">← Back</button>
+
+    <button class="back" onclick="showPage('home')">
+      ← Back
+    </button>
 
     <h2>📱 eSIM Plans</h2>
 
-    <div class="payment-option">
+    <div class="payment-option searchable">
       <strong>🇺🇸 USA eSIM</strong>
       <p>5GB Data • 30 Days</p>
+
       <div class="amount">₦12,500</div>
-      <button onclick="createTransaction('USA eSIM')">
+
+      <button
+        class="primary"
+        onclick="buyESIM('USA eSIM','₦12,500')">
         Buy eSIM
       </button>
     </div>
 
-    <div class="payment-option">
+
+    <div class="payment-option searchable">
       <strong>🇬🇧 UK eSIM</strong>
       <p>10GB Data • 30 Days</p>
+
       <div class="amount">₦15,000</div>
-      <button onclick="createTransaction('UK eSIM')">
+
+      <button
+        class="primary"
+        onclick="buyESIM('UK eSIM','₦15,000')">
         Buy eSIM
       </button>
     </div>
 
-    <div class="payment-option">
+
+    <div class="payment-option searchable">
       <strong>🌍 Global eSIM</strong>
       <p>5GB Data • 30 Days</p>
+
       <div class="amount">₦20,000</div>
-      <button onclick="createTransaction('Global eSIM')">
+
+      <button
+        class="primary"
+        onclick="buyESIM('Global eSIM','₦20,000')">
         Buy eSIM
       </button>
     </div>
 
   </div>
 
-</div>
 </section>
 
 
 <!-- PAYMENT -->
 <section id="payment" class="page">
-<div class="container">
 
   <div class="card">
+
+    <button class="back" onclick="showPage('home')">
+      ← Back
+    </button>
+
     <h2>💳 Payment</h2>
 
-    <div class="notice">
-      Select your preferred payment method.
+    <div id="orderSummary" class="notice">
+      Select a product first.
     </div>
 
-    <div class="payment-option"
-         onclick="selectPayment('Bank Transfer')">
-      🏦 <strong>Bank Transfer</strong>
-      <p>Pay from any Nigerian bank</p>
+
+    <h3>Choose Payment Method</h3>
+
+
+    <div
+      class="payment-option"
+      onclick="selectPayment('Bank Transfer')">
+
+      <strong>🏦 Bank Transfer</strong>
+      <p>Pay from any Nigerian bank.</p>
+
     </div>
 
-    <div class="payment-option"
-         onclick="selectPayment('Debit / Credit Card')">
-      💳 <strong>Debit / Credit Card</strong>
-      <p>Pay with your bank card</p>
+
+    <div
+      class="payment-option"
+      onclick="selectPayment('Debit / Credit Card')">
+
+      <strong>💳 Debit / Credit Card</strong>
+      <p>Pay securely with your bank card.</p>
+
     </div>
 
-    <div class="payment-option"
-         onclick="selectPayment('USDT / Bitcoin')">
-      ₿ <strong>USDT / Bitcoin</strong>
-      <p>Pay with cryptocurrency</p>
+
+    <div
+      class="payment-option"
+      onclick="selectPayment('USDT / Bitcoin')">
+
+      <strong>₿ USDT / Bitcoin</strong>
+      <p>Pay with cryptocurrency.</p>
+
     </div>
 
-    <div id="paymentMessage"></div>
+
+    <div id="paymentInfo"></div>
+
   </div>
 
-</div>
 </section>
 
 
 <!-- TRANSACTIONS -->
 <section id="transactions" class="page">
-<div class="container">
 
   <div class="card">
+
     <h2>🧾 Transactions</h2>
-    <p>Your orders and payment history.</p>
 
-    <div id="transactionList">
+    <p>
+      View your previous Nexora Mobile orders and transaction details.
+    </p>
 
-      <div class="transaction">
-        <strong>TXN-100001</strong>
-        <p>USA eSIM</p>
-        <p>₦12,500</p>
-        <small>Aug 4, 2026 • 1:45 PM</small>
-        <br>
-        <span class="status success">Successful</span>
-        <button style="margin-top:12px"
-                onclick="showTransaction('TXN-100001','USA eSIM','₦12,500','Successful')">
-          View Details
-        </button>
-      </div>
+    <div id="transactionList"></div>
 
-    </div>
   </div>
 
-</div>
 </section>
 
 
 <!-- TRANSACTION DETAILS -->
 <section id="transactionDetails" class="page">
-<div class="container">
 
   <div class="card">
 
-    <button class="back" onclick="openPage('transactions')">
-      ← Back to Transactions
+    <button class="back" onclick="showPage('transactions')">
+      ← Transactions
     </button>
 
-    <h2>Transaction Details</h2>
+    <h2>🧾 Transaction Details</h2>
 
-    <p><strong>Transaction ID</strong></p>
-    <p id="detailId"></p>
-
-    <p><strong>Service</strong></p>
-    <p id="detailService"></p>
-
-    <p><strong>Amount</strong></p>
-    <p id="detailAmount"></p>
-
-    <p><strong>Status</strong></p>
-    <p id="detailStatus"></p>
-
-    <hr>
-
-    <p>
-      Keep your transaction ID for support or future reference.
-    </p>
+    <div id="detailsBox"></div>
 
   </div>
 
-</div>
 </section>
 
 
 <!-- HELP -->
 <section id="help" class="page">
-<div class="container">
 
   <div class="card">
+
     <h2>💬 Nexora Mobile Support</h2>
 
     <p>
       Need help with an order, payment, airtime, data or eSIM?
+      Contact our support team.
     </p>
 
-    <!-- REAL WHATSAPP BUTTON -->
-    <button class="whatsapp" onclick="openWhatsApp()">
+    <div class="notice">
+      WhatsApp support is available for customer assistance.
+    </div>
+
+    <button
+      class="green"
+      onclick="openWhatsApp()">
       💬 WhatsApp Support
     </button>
 
   </div>
 
-</div>
 </section>
+
+</main>
 
 
 <footer>
-  🌍 <strong>Nexora Mobile</strong>
+  <h2>🌍 Nexora Mobile</h2>
   <p>Stay Connected Anywhere</p>
-  © 2026 Nexora Mobile
+  <p>© 2026 Nexora Mobile</p>
 </footer>
 
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav">
 
-  <div class="nav-item active" onclick="openPage('home')">
+  <button class="nav-btn active" onclick="showPage('home')">
     <span>🏠</span>
     Home
-  </div>
+  </button>
 
-  <div class="nav-item" onclick="openPage('esim')">
+  <button class="nav-btn" onclick="showPage('esim')">
     <span>📱</span>
     eSIM
-  </div>
+  </button>
 
-  <div class="nav-item" onclick="openPage('home')">
+  <button class="nav-btn" onclick="showPage('home')">
     <span>📶</span>
     Airtime
-  </div>
+  </button>
 
-  <div class="nav-item" onclick="openPage('transactions')">
+  <button class="nav-btn" onclick="showPage('transactions')">
     <span>🧾</span>
     Transactions
-  </div>
+  </button>
 
-  <div class="nav-item" onclick="openPage('payment')">
-    <span>💳</span>
-    Payment
-  </div>
-
-  <div class="nav-item" onclick="openPage('help')">
+  <button class="nav-btn" onclick="showPage('help')">
     <span>💬</span>
     Help
-  </div>
+  </button>
 
 </nav>
 
 
 <script>
 
-/* =========================
-   PAGE NAVIGATION
-========================= */
+let currentOrder = {
+  product:"",
+  amount:"",
+  type:""
+};
 
-function openPage(page) {
+let selectedPayment = "";
 
-  document.querySelectorAll('.page')
-    .forEach(p => p.classList.remove('active'));
 
-  const selected = document.getElementById(page);
+// PAGE NAVIGATION
+function showPage(page){
 
-  if (selected) {
-    selected.classList.add('active');
+  document.querySelectorAll(".page")
+    .forEach(p => p.classList.remove("active"));
+
+  const target = document.getElementById(page);
+
+  if(target){
+    target.classList.add("active");
   }
 
   window.scrollTo({
-    top: 0,
-    behavior: 'smooth'
+    top:0,
+    behavior:"smooth"
   });
+
+  renderTransactions();
 }
 
 
-/* =========================
-   WHATSAPP SUPPORT
-========================= */
+// ESIM PURCHASE
+function buyESIM(product,amount){
 
-function openWhatsApp() {
+  currentOrder = {
+    product:product,
+    amount:amount,
+    type:"eSIM"
+  };
 
-  const phone = "2347079025076";
+  document.getElementById("orderSummary").innerHTML =
+    "<strong>Order:</strong> " +
+    product +
+    "<br><strong>Amount:</strong> " +
+    amount;
+
+  showPage("payment");
+}
+
+
+// AIRTIME / DATA PURCHASE
+function startPurchase(){
+
+  const phone =
+    document.getElementById("phone").value.trim();
+
+  const network =
+    document.getElementById("network").value;
+
+  const service =
+    document.getElementById("service").value;
+
+  const amount =
+    document.getElementById("airtimeAmount").value;
+
+
+  if(!phone){
+
+    alert("Please enter the customer's phone number.");
+
+    return;
+  }
+
+
+  currentOrder = {
+
+    product:
+      network +
+      " " +
+      service +
+      " - " +
+      phone,
+
+    amount:
+      "₦" +
+      Number(amount).toLocaleString(),
+
+    type:
+      service
+
+  };
+
+
+  document.getElementById("orderSummary").innerHTML =
+
+    "<strong>Network:</strong> " +
+    network +
+
+    "<br><strong>Service:</strong> " +
+    service +
+
+    "<br><strong>Phone:</strong> " +
+    phone +
+
+    "<br><strong>Amount:</strong> ₦" +
+    Number(amount).toLocaleString();
+
+
+  showPage("payment");
+}
+
+
+// PAYMENT METHOD
+function selectPayment(method){
+
+  selectedPayment = method;
+
+  const info =
+    document.getElementById("paymentInfo");
+
+
+  if(method === "Bank Transfer"){
+
+    info.innerHTML = `
+
+      <div class="notice">
+
+        <h3>🏦 Bank Transfer</h3>
+
+        <p>
+          Your bank transfer details will appear here
+          when the real payment gateway is connected.
+        </p>
+
+        <p>
+          <strong>Important:</strong>
+          Do not send money to an account unless it is
+          displayed by the official payment system.
+        </p>
+
+      </div>
+
+      <button
+        class="primary"
+        onclick="createTransaction()">
+        I've Selected Bank Transfer
+      </button>
+    `;
+  }
+
+
+  if(method === "Debit / Credit Card"){
+
+    info.innerHTML = `
+
+      <div class="notice">
+
+        <h3>💳 Card Payment</h3>
+
+        <p>
+          Secure card checkout will be connected
+          to the payment gateway next.
+        </p>
+
+      </div>
+
+      <button
+        class="primary"
+        onclick="createTransaction()">
+        Continue
+      </button>
+    `;
+  }
+
+
+  if(method === "USDT / Bitcoin"){
+
+    info.innerHTML = `
+
+      <div class="notice">
+
+        <h3>₿ Crypto Payment</h3>
+
+        <p>
+          USDT and Bitcoin payment processing will be
+          connected when the crypto payment gateway
+          is added.
+        </p>
+
+      </div>
+
+      <button
+        class="primary"
+        onclick="createTransaction()">
+        Continue
+      </button>
+    `;
+  }
+
+}
+
+
+// CREATE TRANSACTION
+function createTransaction(){
+
+  if(!currentOrder.product){
+
+    alert("Please select a product first.");
+
+    return;
+  }
+
+
+  const transaction = {
+
+    id:
+      "NX" +
+      Date.now().toString().slice(-8),
+
+    product:
+      currentOrder.product,
+
+    amount:
+      currentOrder.amount,
+
+    type:
+      currentOrder.type,
+
+    payment:
+      selectedPayment || "Not selected",
+
+    status:
+      "Pending",
+
+    date:
+      new Date().toLocaleString()
+
+  };
+
+
+  let transactions =
+    JSON.parse(
+      localStorage.getItem("nexoraTransactions")
+    ) || [];
+
+
+  transactions.unshift(transaction);
+
+
+  localStorage.setItem(
+    "nexoraTransactions",
+    JSON.stringify(transactions)
+  );
+
+
+  alert(
+    "Transaction created successfully.\n\n" +
+    "Transaction ID: " +
+    transaction.id
+  );
+
+
+  showPage("transactions");
+}
+
+
+// RENDER TRANSACTIONS
+function renderTransactions(){
+
+  const box =
+    document.getElementById("transactionList");
+
+  if(!box) return;
+
+
+  let transactions =
+    JSON.parse(
+      localStorage.getItem("nexoraTransactions")
+    ) || [];
+
+
+  if(transactions.length === 0){
+
+    box.innerHTML = `
+      <div class="empty">
+        🧾 No transactions yet.
+        <br><br>
+        Your orders will appear here.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  box.innerHTML = "";
+
+
+  transactions.forEach((tx,index)=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className =
+      "transaction";
+
+
+    div.innerHTML = `
+
+      <div class="transaction-top">
+
+        <div>
+
+          <div class="transaction-title">
+            ${escapeHTML(tx.product)}
+          </div>
+
+          <div class="transaction-id">
+            ${escapeHTML(tx.id)}
+          </div>
+
+        </div>
+
+        <div class="status">
+          ${escapeHTML(tx.status)}
+        </div>
+
+      </div>
+
+      <br>
+
+      <strong>
+        ${escapeHTML(tx.amount)}
+      </strong>
+
+      <br><br>
+
+      <button
+        class="dark"
+        onclick="viewTransaction(${index})">
+
+        View Transaction Details
+
+      </button>
+
+    `;
+
+
+    box.appendChild(div);
+
+  });
+
+}
+
+
+// VIEW TRANSACTION
+function viewTransaction(index){
+
+  let transactions =
+    JSON.parse(
+      localStorage.getItem("nexoraTransactions")
+    ) || [];
+
+
+  const tx =
+    transactions[index];
+
+
+  if(!tx) return;
+
+
+  document.getElementById("detailsBox").innerHTML = `
+
+    <div class="notice">
+
+      <p>
+        <strong>Transaction ID</strong><br>
+        ${escapeHTML(tx.id)}
+      </p>
+
+      <p>
+        <strong>Product</strong><br>
+        ${escapeHTML(tx.product)}
+      </p>
+
+      <p>
+        <strong>Amount</strong><br>
+        ${escapeHTML(tx.amount)}
+      </p>
+
+      <p>
+        <strong>Payment Method</strong><br>
+        ${escapeHTML(tx.payment)}
+      </p>
+
+      <p>
+        <strong>Status</strong><br>
+        ${escapeHTML(tx.status)}
+      </p>
+
+      <p>
+        <strong>Date</strong><br>
+        ${escapeHTML(tx.date)}
+      </p>
+
+    </div>
+
+    <button
+      class="green"
+      onclick="openWhatsAppWithTransaction('${tx.id}')">
+
+      💬 Contact Support About This Transaction
+
+    </button>
+
+  `;
+
+
+  showPage("transactionDetails");
+}
+
+
+// WHATSAPP
+function openWhatsApp(){
+
+  /*
+   * Replace this number with your REAL WhatsApp
+   * business number.
+   *
+   * Use international format WITHOUT + or spaces.
+   *
+   * Example:
+   * 2348012345678
+   */
+
+  const number =
+    "2348070347610";
 
   const message =
-    "Hello Nexora Mobile Support 👋 I need help with my order.";
+    encodeURIComponent(
+      "Hello Nexora Mobile Support, I need help with my order."
+    );
 
-  const url =
-    "https://wa.me/" + phone +
-    "?text=" + encodeURIComponent(message);
 
-  window.location.href = url;
+  window.location.href =
+    "https://wa.me/" +
+    number +
+    "?text=" +
+    message;
 }
 
 
-/* =========================
-   PAYMENT METHOD
-========================= */
+// WHATSAPP TRANSACTION SUPPORT
+function openWhatsAppWithTransaction(id){
 
-function selectPayment(method) {
+  const number =
+    "2348070347610";
 
-  document.getElementById("paymentMessage").innerHTML = `
-    <div class="notice">
-      <strong>${method}</strong> selected.
-      <br><br>
-      The real payment gateway will be connected next.
-    </div>
-  `;
+  const message =
+    encodeURIComponent(
+      "Hello Nexora Mobile Support. I need help with transaction " +
+      id
+    );
+
+
+  window.location.href =
+    "https://wa.me/" +
+    number +
+    "?text=" +
+    message;
 }
 
 
-/* =========================
-   TRANSACTION DETAILS
-========================= */
+// SEARCH
+function searchPlans(){
 
-function showTransaction(id, service, amount, status) {
+  const q =
+    document
+      .querySelector(".search")
+      .value
+      .toLowerCase();
 
-  document.getElementById("detailId").textContent = id;
-  document.getElementById("detailService").textContent = service;
-  document.getElementById("detailAmount").textContent = amount;
-  document.getElementById("detailStatus").textContent = status;
-
-  openPage("transactionDetails");
-}
-
-
-/* =========================
-   CREATE TRANSACTION
-========================= */
-
-function createTransaction(service) {
-
-  const id =
-    "TXN-" + Math.floor(100000 + Math.random() * 900000);
-
-  const transaction = `
-    <div class="transaction">
-      <strong>${id}</strong>
-      <p>${service}</p>
-      <p>Payment required</p>
-      <span class="status pending">Pending</span>
-
-      <button style="margin-top:12px"
-        onclick="showTransaction(
-          '${id}',
-          '${service}',
-          'Amount to be confirmed',
-          'Pending'
-        )">
-        View Details
-      </button>
-    </div>
-  `;
 
   document
-    .getElementById("transactionList")
-    .insertAdjacentHTML("afterbegin", transaction);
+    .querySelectorAll(".searchable")
+    .forEach(item=>{
 
-  openPage("payment");
+      const text =
+        item.innerText.toLowerCase();
+
+      item.style.display =
+        text.includes(q)
+          ? "block"
+          : "none";
+
+    });
+
+
+  if(q){
+
+    showPage("esim");
+
+  }
+
 }
+
+
+// BASIC HTML SAFETY
+function escapeHTML(value){
+
+  return String(value)
+
+    .replace(/&/g,"&amp;")
+
+    .replace(/</g,"&lt;")
+
+    .replace(/>/g,"&gt;")
+
+    .replace(/"/g,"&quot;")
+
+    .replace(/'/g,"&#039;");
+
+}
+
+
+// LOAD TRANSACTIONS
+renderTransactions();
 
 </script>
 
