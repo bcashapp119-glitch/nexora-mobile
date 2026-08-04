@@ -14,7 +14,7 @@
     }
 
     body {
-      background: #f5f7fa;
+      background: #f4f6f8;
       color: #111827;
     }
 
@@ -28,12 +28,12 @@
     header {
       background: #111827;
       color: white;
-      padding: 20px;
+      padding: 22px;
       text-align: center;
     }
 
     header h1 {
-      font-size: 24px;
+      font-size: 26px;
     }
 
     header p {
@@ -41,100 +41,100 @@
       opacity: 0.8;
     }
 
-    .screen {
+    .page {
       display: none;
       padding: 20px;
     }
 
-    .screen.active {
+    .page.active {
       display: block;
     }
 
+    .welcome {
+      background: #111827;
+      color: white;
+      padding: 22px;
+      border-radius: 16px;
+      margin-bottom: 18px;
+    }
+
     .card {
-      background: white;
       border: 1px solid #e5e7eb;
       border-radius: 14px;
       padding: 18px;
       margin-bottom: 15px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
     }
 
     .card h3 {
       margin-bottom: 8px;
     }
 
+    input,
+    select {
+      width: 100%;
+      padding: 13px;
+      margin: 8px 0;
+      border: 1px solid #d1d5db;
+      border-radius: 9px;
+      font-size: 15px;
+    }
+
     button {
       width: 100%;
-      border: none;
-      border-radius: 10px;
       padding: 13px;
       margin-top: 10px;
+      border: none;
+      border-radius: 9px;
       background: #111827;
       color: white;
       font-size: 15px;
       cursor: pointer;
     }
 
-    button.secondary {
+    .light-button {
       background: #e5e7eb;
       color: #111827;
     }
 
-    input, select {
-      width: 100%;
-      padding: 13px;
-      margin-top: 10px;
-      border: 1px solid #d1d5db;
-      border-radius: 9px;
-      font-size: 15px;
-    }
-
     .price {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
-      margin-top: 8px;
+      margin: 8px 0 15px;
     }
 
-    .success {
+    .message {
+      display: none;
+      padding: 12px;
+      margin-top: 12px;
+      border-radius: 9px;
       background: #ecfdf5;
       border: 1px solid #a7f3d0;
-      padding: 12px;
-      border-radius: 10px;
-      margin-top: 12px;
-      display: none;
     }
 
     nav {
       position: sticky;
       bottom: 0;
-      background: white;
-      border-top: 1px solid #e5e7eb;
       display: grid;
       grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      background: white;
       padding: 8px;
+      border-top: 1px solid #ddd;
     }
 
     nav button {
-      margin: 0 3px;
-      padding: 10px 5px;
+      margin: 0;
+      padding: 10px 3px;
       font-size: 12px;
       background: white;
       color: #111827;
-      border: 1px solid #e5e7eb;
+      border: 1px solid #ddd;
     }
 
-    .logo {
-      font-weight: bold;
-      font-size: 28px;
-      margin-bottom: 5px;
-    }
-
-    .welcome {
-      background: #111827;
-      color: white;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 18px;
+    .small {
+      font-size: 13px;
+      color: #6b7280;
+      margin-top: 8px;
     }
   </style>
 </head>
@@ -144,369 +144,676 @@
 <div class="app">
 
   <header>
-    <div class="logo">NEXORA</div>
+    <h1>NEXORA</h1>
     <p>Mobile Services</p>
   </header>
 
+
   <!-- HOME -->
-  <section id="home" class="screen active">
+  <section id="home" class="page active">
 
     <div class="welcome">
       <h2>Welcome to Nexora Mobile</h2>
-      <p>Buy airtime, data and eSIM services easily.</p>
+      <p style="margin-top:8px;">
+        Buy airtime, data and eSIM services.
+      </p>
     </div>
 
     <div class="card">
       <h3>📱 Airtime</h3>
-      <p>Recharge your phone instantly.</p>
-      <button onclick="showScreen('airtime')">Buy Airtime</button>
+      <p>Recharge any supported phone number.</p>
+      <button onclick="openPage('airtime')">
+        Buy Airtime
+      </button>
     </div>
 
     <div class="card">
       <h3>📶 Data</h3>
       <p>Choose a data bundle.</p>
-      <button onclick="showScreen('data')">Buy Data</button>
+      <button onclick="openPage('data')">
+        Buy Data
+      </button>
     </div>
 
     <div class="card">
       <h3>🌐 eSIM</h3>
-      <p>Get an eSIM plan.</p>
-      <button onclick="showScreen('esim')">Buy eSIM</button>
+      <p>Choose an eSIM plan.</p>
+      <button onclick="openPage('esim')">
+        Buy eSIM
+      </button>
     </div>
 
     <div class="card">
       <h3>👤 Account</h3>
-      <button onclick="showScreen('create')">Create Account</button>
-      <button class="secondary" onclick="showScreen('login')">Login</button>
+
+      <button onclick="openPage('signup')">
+        Create Account
+      </button>
+
+      <button class="light-button" onclick="openPage('login')">
+        Login
+      </button>
     </div>
 
   </section>
 
+
   <!-- CREATE ACCOUNT -->
-  <section id="create" class="screen">
+  <section id="signup" class="page">
 
     <h2>Create Account</h2>
 
-    <input id="signupName" type="text" placeholder="Full Name">
-    <input id="signupPhone" type="tel" placeholder="Phone Number">
-    <input id="signupEmail" type="email" placeholder="Email Address">
-    <input id="signupPassword" type="password" placeholder="Password">
+    <input id="name" type="text" placeholder="Full Name">
 
-    <button onclick="createAccount()">Create Account</button>
-    <button class="secondary" onclick="showScreen('login')">Already have an account? Login</button>
+    <input id="phone" type="tel" placeholder="Phone Number">
 
-    <div id="signupMessage" class="success"></div>
+    <input id="email" type="email" placeholder="Email Address">
+
+    <input id="password" type="password" placeholder="Password">
+
+    <button onclick="signup()">
+      Create Account
+    </button>
+
+    <button class="light-button" onclick="openPage('login')">
+      Already have an account? Login
+    </button>
+
+    <div id="signupMessage" class="message"></div>
 
   </section>
 
+
   <!-- LOGIN -->
-  <section id="login" class="screen">
+  <section id="login" class="page">
 
     <h2>Login</h2>
 
     <input id="loginEmail" type="email" placeholder="Email Address">
+
     <input id="loginPassword" type="password" placeholder="Password">
 
-    <button onclick="login()">Login</button>
-    <button class="secondary" onclick="showScreen('create')">Create Account</button>
+    <button onclick="login()">
+      Login
+    </button>
 
-    <p style="margin-top:15px;">
-      <a href="#" onclick="forgotPassword()">Forgot password?</a>
+    <button class="light-button" onclick="openPage('signup')">
+      Create Account
+    </button>
+
+    <p class="small">
+      Forgot password? Contact Nexora support.
     </p>
 
-    <div id="loginMessage" class="success"></div>
+    <div id="loginMessage" class="message"></div>
 
   </section>
 
+
   <!-- AIRTIME -->
-  <section id="airtime" class="screen">
+  <section id="airtime" class="page">
 
     <h2>Buy Airtime</h2>
 
-    <input id="airtimePhone" type="tel" placeholder="Phone Number">
+    <input
+      id="airtimeNumber"
+      type="tel"
+      placeholder="Customer phone number"
+    >
 
     <select id="airtimeAmount">
+
       <option value="100">₦100</option>
       <option value="200">₦200</option>
       <option value="500">₦500</option>
       <option value="1000">₦1,000</option>
       <option value="2000">₦2,000</option>
+
     </select>
 
-    <button onclick="startPayment('Airtime')">Continue to Payment</button>
+    <button onclick="checkout('Airtime')">
+      Continue
+    </button>
 
   </section>
 
+
   <!-- DATA -->
-  <section id="data" class="screen">
+  <section id="data" class="page">
 
     <h2>Buy Data</h2>
 
-    <input id="dataPhone" type="tel" placeholder="Phone Number">
+    <input
+      id="dataNumber"
+      type="tel"
+      placeholder="Customer phone number"
+    >
 
-    <select id="dataPlan">
+    <select id="dataAmount">
+
       <option value="500">1GB — ₦500</option>
       <option value="1000">2GB — ₦1,000</option>
       <option value="1500">5GB — ₦1,500</option>
       <option value="2500">10GB — ₦2,500</option>
+
     </select>
 
-    <button onclick="startPayment('Data')">Continue to Payment</button>
+    <button onclick="checkout('Data')">
+      Continue
+    </button>
 
   </section>
 
+
   <!-- ESIM -->
-  <section id="esim" class="screen">
+  <section id="esim" class="page">
 
     <h2>Buy eSIM</h2>
 
-    <select id="esimPlan">
-      <option value="5000">5GB eSIM — ₦5,000</option>
-      <option value="10000">10GB eSIM — ₦10,000</option>
-      <option value="15000">20GB eSIM — ₦15,000</option>
+    <select id="esimAmount">
+
+      <option value="5000">5GB — ₦5,000</option>
+      <option value="10000">10GB — ₦10,000</option>
+      <option value="15000">20GB — ₦15,000</option>
+
     </select>
 
-    <button onclick="startPayment('eSIM')">Continue to Payment</button>
+    <button onclick="checkout('eSIM')">
+      Continue
+    </button>
 
   </section>
 
+
   <!-- PAYMENT -->
-  <section id="payment" class="screen">
+  <section id="payment" class="page">
 
     <h2>OPay Payment</h2>
 
     <div class="card">
 
-      <p>Order:</p>
-      <h3 id="paymentProduct">Service</h3>
+      <p>Service</p>
+      <h3 id="paymentService">-</h3>
 
-      <p style="margin-top:10px;">Amount to pay:</p>
-      <div class="price" id="paymentAmount">₦0</div>
+      <p style="margin-top:12px;">Amount</p>
+      <div class="price" id="paymentPrice">
+        ₦0
+      </div>
 
-      <hr style="margin:15px 0;">
+      <hr>
 
-      <p><strong>OPay Account Name:</strong><br>
-      Sufiyan Abdul afeez</p>
+      <p style="margin-top:15px;">
+        <strong>OPay Account Name</strong>
+      </p>
 
-      <p style="margin-top:10px;">
-        <strong>OPay Account Number:</strong><br>
+      <p>
+        Sufiyan Abdul afeez
+      </p>
+
+      <p style="margin-top:12px;">
+        <strong>OPay Account Number</strong>
+      </p>
+
+      <p>
         7034761610
       </p>
 
-      <p style="margin-top:15px;">
-        Transfer the exact amount to the account above.
+      <p class="small">
+        Transfer the exact amount to the OPay account above.
       </p>
 
-      <input id="transactionReference" type="text"
-             placeholder="Enter transaction reference">
+      <input
+        id="transaction"
+        type="text"
+        placeholder="Transaction reference"
+      >
 
-      <button onclick="submitPayment()">I Have Paid</button>
+      <button onclick="submitOrder()">
+        I Have Paid
+      </button>
 
-      <div id="paymentMessage" class="success"></div>
+      <div id="paymentMessage" class="message"></div>
 
     </div>
 
   </section>
 
+
   <!-- ORDERS -->
-  <section id="orders" class="screen">
+  <section id="orders" class="page">
 
-    <h2>Order History</h2>
+    <h2>My Orders</h2>
 
-    <div id="orderList">
+    <div id="ordersList">
+
       <div class="card">
         <p>No orders yet.</p>
       </div>
+
     </div>
 
   </section>
 
+
   <!-- PROFILE -->
-  <section id="profile" class="screen">
+  <section id="profile" class="page">
 
     <h2>My Profile</h2>
 
     <div class="card">
-      <p><strong>Name:</strong> <span id="profileName">Guest</span></p>
-      <p style="margin-top:8px;">
-        <strong>Email:</strong> <span id="profileEmail">Not logged in</span>
+
+      <p>
+        <strong>Name:</strong>
+        <span id="profileName">Guest</span>
       </p>
+
+      <p style="margin-top:10px;">
+        <strong>Email:</strong>
+        <span id="profileEmail">Not logged in</span>
+      </p>
+
+      <p style="margin-top:10px;">
+        <strong>Phone:</strong>
+        <span id="profilePhone">-</span>
+      </p>
+
     </div>
 
-    <button onclick="logout()">Logout</button>
+    <button onclick="logout()">
+      Logout
+    </button>
 
   </section>
 
-  <!-- NAVIGATION -->
+
+  <!-- BOTTOM NAVIGATION -->
   <nav>
-    <button onclick="showScreen('home')">🏠<br>Home</button>
-    <button onclick="showScreen('orders')">📋<br>Orders</button>
-    <button onclick="showScreen('profile')">👤<br>Profile</button>
-    <button onclick="showScreen('create')">🔐<br>Account</button>
+
+    <button onclick="openPage('home')">
+      🏠<br>Home
+    </button>
+
+    <button onclick="openPage('orders')">
+      📋<br>Orders
+    </button>
+
+    <button onclick="openPage('profile')">
+      👤<br>Profile
+    </button>
+
+    <button onclick="openPage('signup')">
+      🔐<br>Account
+    </button>
+
   </nav>
 
 </div>
+
 
 <script>
 
   let currentOrder = null;
 
-  function showScreen(id) {
 
-    document.querySelectorAll('.screen').forEach(function(screen) {
-      screen.classList.remove('active');
+  function openPage(page) {
+
+    document.querySelectorAll(".page").forEach(function(section) {
+
+      section.classList.remove("active");
+
     });
 
-    document.getElementById(id).classList.add('active');
+    document.getElementById(page).classList.add("active");
 
     window.scrollTo(0, 0);
   }
 
-  function createAccount() {
 
-    const name = document.getElementById('signupName').value;
-    const phone = document.getElementById('signupPhone').value;
-    const email = document.getElementById('signupEmail').value;
-    const password = document.getElementById('signupPassword').value;
+  function signup() {
+
+    const name =
+      document.getElementById("name").value.trim();
+
+    const phone =
+      document.getElementById("phone").value.trim();
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
 
     if (!name || !phone || !email || !password) {
-      alert('Please complete all fields.');
+
+      alert("Please complete all fields.");
+
       return;
     }
 
-    localStorage.setItem('nexoraUser', JSON.stringify({
+    const user = {
+
       name: name,
       phone: phone,
       email: email
-    }));
 
-    document.getElementById('signupMessage').style.display = 'block';
-    document.getElementById('signupMessage').textContent =
-      'Account created successfully.';
+    };
 
-    document.getElementById('profileName').textContent = name;
-    document.getElementById('profileEmail').textContent = email;
+    localStorage.setItem(
+      "nexoraUser",
+      JSON.stringify(user)
+    );
+
+    document.getElementById(
+      "signupMessage"
+    ).style.display = "block";
+
+    document.getElementById(
+      "signupMessage"
+    ).textContent =
+      "Account created successfully.";
+
+    updateProfile();
+
   }
+
 
   function login() {
 
-    const email = document.getElementById('loginEmail').value;
-    const password = document.getElementById('loginPassword').value;
+    const email =
+      document.getElementById("loginEmail").value.trim();
 
-    const user = JSON.parse(localStorage.getItem('nexoraUser'));
+    const password =
+      document.getElementById("loginPassword").value;
 
-    if (!user || email !== user.email || !password) {
-      alert('Account not found or password is incorrect.');
+    const user =
+      JSON.parse(
+        localStorage.getItem("nexoraUser")
+      );
+
+    if (!user || !email || !password) {
+
+      alert("Please enter your login details.");
+
       return;
     }
 
-    document.getElementById('profileName').textContent = user.name;
-    document.getElementById('profileEmail').textContent = user.email;
+    if (email !== user.email) {
 
-    alert('Login successful.');
-    showScreen('profile');
+      alert("Email not found.");
+
+      return;
+    }
+
+    document.getElementById(
+      "loginMessage"
+    ).style.display = "block";
+
+    document.getElementById(
+      "loginMessage"
+    ).textContent =
+      "Login successful.";
+
+    updateProfile();
+
+    setTimeout(function() {
+
+      openPage("profile");
+
+    }, 500);
+
   }
 
-  function forgotPassword() {
-    alert('Password recovery will be connected to secure authentication later.');
+
+  function updateProfile() {
+
+    const user =
+      JSON.parse(
+        localStorage.getItem("nexoraUser")
+      );
+
+    if (!user) return;
+
+    document.getElementById(
+      "profileName"
+    ).textContent = user.name;
+
+    document.getElementById(
+      "profileEmail"
+    ).textContent = user.email;
+
+    document.getElementById(
+      "profilePhone"
+    ).textContent = user.phone;
+
   }
+
 
   function logout() {
-    alert('Logged out.');
-    showScreen('home');
+
+    alert("You have been logged out.");
+
+    openPage("home");
+
   }
 
-  function startPayment(product) {
+
+  function checkout(service) {
 
     let amount = 0;
 
-    if (product === 'Airtime') {
-      amount = document.getElementById('airtimeAmount').value;
+    if (service === "Airtime") {
+
+      const number =
+        document.getElementById(
+          "airtimeNumber"
+        ).value.trim();
+
+      if (!number) {
+
+        alert("Enter the phone number.");
+
+        return;
+      }
+
+      amount =
+        document.getElementById(
+          "airtimeAmount"
+        ).value;
+
     }
 
-    if (product === 'Data') {
-      amount = document.getElementById('dataPlan').value;
+
+    if (service === "Data") {
+
+      const number =
+        document.getElementById(
+          "dataNumber"
+        ).value.trim();
+
+      if (!number) {
+
+        alert("Enter the phone number.");
+
+        return;
+      }
+
+      amount =
+        document.getElementById(
+          "dataAmount"
+        ).value;
+
     }
 
-    if (product === 'eSIM') {
-      amount = document.getElementById('esimPlan').value;
+
+    if (service === "eSIM") {
+
+      amount =
+        document.getElementById(
+          "esimAmount"
+        ).value;
+
     }
+
 
     currentOrder = {
-      product: product,
-      amount: amount,
-      reference: 'NEX-' + Date.now()
+
+      service: service,
+      amount: amount
+
     };
 
-    document.getElementById('paymentProduct').textContent =
-      product;
 
-    document.getElementById('paymentAmount').textContent =
-      '₦' + Number(amount).toLocaleString();
+    document.getElementById(
+      "paymentService"
+    ).textContent = service;
 
-    showScreen('payment');
+
+    document.getElementById(
+      "paymentPrice"
+    ).textContent =
+      "₦" +
+      Number(amount).toLocaleString();
+
+
+    openPage("payment");
+
   }
 
-  function submitPayment() {
 
-    const reference =
-      document.getElementById('transactionReference').value.trim();
+  function submitOrder() {
 
-    if (!reference) {
-      alert('Please enter your transaction reference.');
+    if (!currentOrder) {
+
+      alert("Please select a service first.");
+
       return;
     }
 
+
+    const transaction =
+      document.getElementById(
+        "transaction"
+      ).value.trim();
+
+
+    if (!transaction) {
+
+      alert("Enter your transaction reference.");
+
+      return;
+    }
+
+
     const orders =
-      JSON.parse(localStorage.getItem('nexoraOrders') || '[]');
+      JSON.parse(
+        localStorage.getItem(
+          "nexoraOrders"
+        ) || "[]"
+      );
+
 
     orders.push({
-      product: currentOrder.product,
+
+      service: currentOrder.service,
+
       amount: currentOrder.amount,
-      transactionReference: reference,
-      status: 'Pending',
+
+      transaction: transaction,
+
+      status: "Pending",
+
       date: new Date().toLocaleString()
+
     });
 
-    localStorage.setItem('nexoraOrders', JSON.stringify(orders));
 
-    document.getElementById('paymentMessage').style.display = 'block';
+    localStorage.setItem(
+      "nexoraOrders",
+      JSON.stringify(orders)
+    );
 
-    document.getElementById('paymentMessage').textContent =
-      'Payment submitted. Your order is pending confirmation.';
+
+    document.getElementById(
+      "paymentMessage"
+    ).style.display = "block";
+
+
+    document.getElementById(
+      "paymentMessage"
+    ).textContent =
+      "Payment submitted. Your order is pending confirmation.";
+
 
     loadOrders();
+
   }
+
 
   function loadOrders() {
 
     const orders =
-      JSON.parse(localStorage.getItem('nexoraOrders') || '[]');
+      JSON.parse(
+        localStorage.getItem(
+          "nexoraOrders"
+        ) || "[]"
+      );
 
-    const list = document.getElementById('orderList');
+
+    const list =
+      document.getElementById(
+        "ordersList"
+      );
+
 
     if (orders.length === 0) {
+
       list.innerHTML =
         '<div class="card"><p>No orders yet.</p></div>';
+
       return;
     }
 
-    list.innerHTML = '';
+
+    list.innerHTML = "";
+
 
     orders.forEach(function(order) {
 
       list.innerHTML += `
+
         <div class="card">
-          <h3>${order.product}</h3>
-          <p>Amount: ₦${Number(order.amount).toLocaleString()}</p>
-          <p>Status: ${order.status}</p>
-          <p>Reference: ${order.transactionReference}</p>
-          <p>${order.date}</p>
+
+          <h3>${order.service}</h3>
+
+          <p>
+            Amount:
+            ₦${Number(order.amount).toLocaleString()}
+          </p>
+
+          <p>
+            Status:
+            ${order.status}
+          </p>
+
+          <p>
+            Reference:
+            ${order.transaction}
+          </p>
+
+          <p class="small">
+            ${order.date}
+          </p>
+
         </div>
+
       `;
 
     });
+
   }
+
+
+  updateProfile();
 
   loadOrders();
 
