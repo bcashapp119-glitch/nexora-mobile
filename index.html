@@ -1,175 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora Mobile</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      box-sizing: border-box;
+<title>Nexora Mobile</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #eef1f5;
+    color: #111827;
+}
+
+.app {
+    max-width: 480px;
+    min-height: 100vh;
+    margin: auto;
+    background: #f8fafc;
+    padding-bottom: 85px;
+}
+
+
+/* TOP BAR */
+
+.topbar {
+    background: #111827;
+    color: white;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+.profile-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: white;
+    color: #111827;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+
+/* CONTENT */
+
+.content {
+    padding: 18px;
+}
+
+
+/* GREETING */
+
+.greeting {
+    margin-bottom: 18px;
+}
+
+.greeting p {
+    color: #6b7280;
+    margin-top: 5px;
+}
+
+
+/* BALANCE CARD */
+
+.balance {
+    background: #111827;
+    color: white;
+    border-radius: 20px;
+    padding: 22px;
+    margin-bottom: 20px;
+}
+
+.balance-label {
+    opacity: .75;
+    font-size: 14px;
+}
+
+.balance-amount {
+    font-size: 30px;
+    font-weight: bold;
+    margin: 8px 0 18px;
+}
+
+.balance button {
+    background: white;
+    color: #111827;
+    border: none;
+    border-radius: 9px;
+    padding: 10px 16px;
+}
+
+
+/* SERVICES */
+
+.section-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 12px;
+}
+
+.services {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 22px;
+}
+
+.service {
+    background: white;
+    border-radius: 16px;
+    padding: 17px 8px;
+    text-align: center;
+    border: 1px solid #e5e7eb;
+}
+
+.service-icon {
+    font-size: 27px;
+    margin-bottom: 9px;
+}
+
+.service p {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+
+/* ACCOUNT */
+
+.account-card {
+    background: white;
+    border-radius: 18px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 20px;
+}
+
+.account-card button {
+    width: 100%;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    margin-top: 10px;
+    background: #111827;
+    color: white;
+    font-size: 15px;
+}
+
+.account-card .login {
+    background: #eef0f3;
+    color: #111827;
+}
+
+
+/* RECENT ORDERS */
+
+.order {
+    background: white;
+    padding: 16px;
+    border-radius: 15px;
+    border: 1px solid #e5e7eb;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.order-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.order-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: #f1f3f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.order small {
+    color: #6b7280;
+}
+
+
+/* BOTTOM NAVIGATION */
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-top: 1px solid #e5e7eb;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    padding: 10px 5px;
+    z-index: 100;
+}
+
+.nav-item {
+    text-align: center;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+.nav-item.active {
+    color: #111827;
+    font-weight: bold;
+}
+
+.nav-icon {
+    font-size: 21px;
+    margin-bottom: 3px;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 360px) {
+
+    .services {
+        gap: 6px;
     }
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      color: #111827;
+    .service {
+        padding: 14px 5px;
     }
 
-    .app {
-      max-width: 480px;
-      min-height: 100vh;
-      margin: auto;
-      background: white;
-    }
+}
 
-    header {
-      background: #111827;
-      color: white;
-      text-align: center;
-      padding: 28px 20px;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-      opacity: 0.8;
-    }
-
-    main {
-      padding: 20px;
-    }
-
-    .welcome {
-      background: #111827;
-      color: white;
-      border-radius: 18px;
-      padding: 22px;
-      margin-bottom: 18px;
-    }
-
-    .welcome h2 {
-      margin-top: 0;
-    }
-
-    .card {
-      background: white;
-      border: 1px solid #e5e7eb;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 15px;
-    }
-
-    .card h3 {
-      margin-top: 0;
-    }
-
-    button {
-      width: 100%;
-      border: 0;
-      border-radius: 10px;
-      padding: 14px;
-      margin-top: 10px;
-      background: #111827;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    .secondary {
-      background: #e5e7eb;
-      color: #111827;
-    }
-
-    .icon {
-      font-size: 24px;
-      margin-right: 8px;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #6b7280;
-      font-size: 13px;
-    }
-  </style>
+</style>
 </head>
+
 
 <body>
 
-  <div class="app">
+<div class="app">
 
-    <header>
-      <h1>NEXORA</h1>
-      <p>Mobile Services</p>
-    </header>
 
-    <main>
+<!-- TOP BAR -->
 
-      <section class="welcome">
-        <h2>Welcome to Nexora Mobile</h2>
+<div class="topbar">
+
+    <div class="logo">
+        NEXORA
+    </div>
+
+    <div class="profile-icon">
+        👤
+    </div>
+
+</div>
+
+
+<!-- MAIN CONTENT -->
+
+<div class="content">
+
+
+<!-- GREETING -->
+
+<div class="greeting">
+
+    <h2>Hello 👋</h2>
+
+    <p>
+        Welcome back to Nexora Mobile
+    </p>
+
+</div>
+
+
+<!-- BALANCE -->
+
+<div class="balance">
+
+    <div class="balance-label">
+        Available Balance
+    </div>
+
+    <div class="balance-amount">
+        ₦0.00
+    </div>
+
+    <button>
+        + Add Money
+    </button>
+
+</div>
+
+
+<!-- SERVICES -->
+
+<div class="section-title">
+    Services
+</div>
+
+
+<div class="services">
+
+
+    <div class="service">
+
+        <div class="service-icon">
+            📱
+        </div>
+
         <p>
-          Your simple platform for airtime, data and eSIM services.
+            Airtime
         </p>
-      </section>
 
-      <section class="card">
-        <h3>👤 Account</h3>
+    </div>
 
-        <button onclick="alert('Create Account selected')">
-          <span class="icon">👤</span>
-          Create Account
-        </button>
 
-        <button
-          class="secondary"
-          onclick="alert('Login selected')">
+    <div class="service">
 
-          <span class="icon">🔐</span>
-          Login
+        <div class="service-icon">
+            📶
+        </div>
 
-        </button>
-      </section>
+        <p>
+            Data
+        </p>
 
-      <section class="card">
-        <h3>📱 Airtime</h3>
-        <p>Buy airtime quickly.</p>
+    </div>
 
-        <button onclick="alert('Airtime selected')">
-          Buy Airtime
-        </button>
-      </section>
 
-      <section class="card">
-        <h3>📶 Data</h3>
-        <p>Choose your preferred data bundle.</p>
+    <div class="service">
 
-        <button onclick="alert('Data selected')">
-          Buy Data
-        </button>
-      </section>
+        <div class="service-icon">
+            🌐
+        </div>
 
-      <section class="card">
-        <h3>🌐 eSIM</h3>
-        <p>Get an eSIM plan.</p>
+        <p>
+            eSIM
+        </p>
 
-        <button onclick="alert('eSIM selected')">
-          Buy eSIM
-        </button>
-      </section>
+    </div>
 
-    </main>
 
-    <footer>
-      © 2026 Nexora Mobile
-    </footer>
+</div>
 
-  </div>
+
+<!-- ACCOUNT -->
+
+<div class="account-card">
+
+    <div class="section-title">
+        Your Account
+    </div>
+
+    <p style="color:#6b7280;">
+        Create an account to manage your orders.
+    </p>
+
+
+    <button>
+        👤 Create Account
+    </button>
+
+
+    <button class="login">
+        🔐 Login
+    </button>
+
+</div>
+
+
+<!-- RECENT ORDERS -->
+
+<div class="section-title">
+    Recent Orders
+</div>
+
+
+<div class="order">
+
+    <div class="order-left">
+
+        <div class="order-icon">
+            📱
+        </div>
+
+        <div>
+
+            <strong>
+                Airtime
+            </strong>
+
+            <br>
+
+            <small>
+                No orders yet
+            </small>
+
+        </div>
+
+    </div>
+
+    <strong>
+        —
+    </strong>
+
+</div>
+
+
+</div>
+
+
+<!-- BOTTOM NAVIGATION -->
+
+<div class="bottom-nav">
+
+
+    <div class="nav-item active">
+
+        <div class="nav-icon">
+            🏠
+        </div>
+
+        Home
+
+    </div>
+
+
+    <div class="nav-item">
+
+        <div class="nav-icon">
+            📋
+        </div>
+
+        Orders
+
+    </div>
+
+
+    <div class="nav-item">
+
+        <div class="nav-icon">
+            💳
+        </div>
+
+        Wallet
+
+    </div>
+
+
+    <div class="nav-item">
+
+        <div class="nav-icon">
+            👤
+        </div>
+
+        Profile
+
+    </div>
+
+
+</div>
+
+
+</div>
 
 </body>
 </html>
