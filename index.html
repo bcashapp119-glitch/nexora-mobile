@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SwiftSIM - eSIM Store</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f7fb;
+      color: #222;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 34px;
+    }
+
+    header p {
+      margin: 10px 0 0;
+      font-size: 16px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 15px;
+    }
+
+    .welcome {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .welcome h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+    }
+
+    .plan {
+      background: white;
+      padding: 22px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .flag {
+      font-size: 45px;
+    }
+
+    .plan h3 {
+      font-size: 21px;
+      margin: 10px 0;
+    }
+
+    .details {
+      line-height: 1.7;
+      color: #555;
+    }
+
+    .price {
+      font-size: 27px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
+
+    .buy-button {
+      display: inline-block;
+      background: #111827;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 9px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .payment {
+      margin-top: 40px;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .payment h2 {
+      margin-top: 0;
+    }
+
+    .payment-button {
+      display: inline-block;
+      margin: 7px;
+      padding: 12px 18px;
+      border-radius: 9px;
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      background: #111827;
+    }
+
+    .how {
+      margin-top: 40px;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+    }
+
+    .how h2 {
+      text-align: center;
+    }
+
+    .step {
+      margin: 15px 0;
+      padding: 12px;
+      background: #f4f7fb;
+      border-radius: 10px;
+    }
+
+    .contact {
+      text-align: center;
+      margin-top: 35px;
+    }
+
+    .contact a {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 13px 22px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 9px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 40px;
+      padding: 25px;
+      background: #111827;
+      color: white;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>🌎 SwiftSIM</h1>
+  <p>Stay Connected Anywhere</p>
+</header>
+
+<div class="container">
+
+  <div class="welcome">
+    <h2>Choose Your eSIM</h2>
+    <p>Affordable data plans for travelers.</p>
+  </div>
+
+  <div class="plans">
+
+    <!-- USA -->
+    <div class="plan">
+      <div class="flag">🇺🇸</div>
+      <h3>USA eSIM</h3>
+      <div class="details">
+        📶 10GB Data<br>
+        📅 30 Days<br>
+        🌐 Data Only
+      </div>
+
+      <div class="price">$15</div>
+
+      <a class="buy-button"
+      href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20buy%20the%20USA%20eSIM%20-%2010GB%20for%2030%20Days."
+      target="_blank">
+        Buy USA eSIM
+      </a>
+    </div>
+
+
+    <!-- UK -->
+    <div class="plan">
+      <div class="flag">🇬🇧</div>
+      <h3>UK eSIM</h3>
+      <div class="details">
+        📶 10GB Data<br>
+        📅 30 Days<br>
+        🌐 Data Only
+      </div>
+
+      <div class="price">$15</div>
+
+      <a class="buy-button"
+      href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20buy%20the%20UK%20eSIM%20-%2010GB%20for%2030%20Days."
+      target="_blank">
+        Buy UK eSIM
+      </a>
+    </div>
+
+
+    <!-- Canada -->
+    <div class="plan">
+      <div class="flag">🇨🇦</div>
+      <h3>Canada eSIM</h3>
+      <div class="details">
+        📶 10GB Data<br>
+        📅 30 Days<br>
+        🌐 Data Only
+      </div>
+
+      <div class="price">$15</div>
+
+      <a class="buy-button"
+      href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20buy%20the%20Canada%20eSIM%20-%2010GB%20for%2030%20Days."
+      target="_blank">
+        Buy Canada eSIM
+      </a>
+    </div>
+
+
+    <!-- Ireland -->
+    <div class="plan">
+      <div class="flag">🇮🇪</div>
+      <h3>Ireland eSIM</h3>
+      <div class="details">
+        📶 10GB Data<br>
+        📅 30 Days<br>
+        🌐 Data Only
+      </div>
+
+      <div class="price">$15</div>
+
+      <a class="buy-button"
+      href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20buy%20the%20Ireland%20eSIM%20-%2010GB%20for%2030%20Days."
+      target="_blank">
+        Buy Ireland eSIM
+      </a>
+    </div>
+
+  </div>
+
+
+  <!-- PAYMENT -->
+  <div class="payment">
+
+    <h2>💳 Choose Payment Method</h2>
+
+    <a class="payment-button"
+    href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20pay%20for%20my%20eSIM%20using%20OPay."
+    target="_blank">
+      🏦 OPay
+    </a>
+
+    <a class="payment-button"
+    href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20pay%20for%20my%20eSIM%20using%20Bitcoin."
+    target="_blank">
+      ₿ Bitcoin
+    </a>
+
+    <a class="payment-button"
+    href="https://wa.me/2347034761610?text=Hi%2C%20I%20want%20to%20pay%20for%20my%20eSIM%20using%20USDT."
+    target="_blank">
+      💵 USDT
+    </a>
+
+  </div>
+
+
+  <!-- HOW IT WORKS -->
+  <div class="how">
+
+    <h2>📱 How It Works</h2>
+
+    <div class="step">
+      <strong>1️⃣ Choose a plan</strong><br>
+      Select the country you are traveling to.
+    </div>
+
+    <div class="step">
+      <strong>2️⃣ Contact SwiftSIM</strong><br>
+      Tap the Buy button and message us on WhatsApp.
+    </div>
+
+    <div class="step">
+      <strong>3️⃣ Make payment</strong><br>
+      Choose one of our available payment methods.
+    </div>
+
+    <div class="step">
+      <strong>4️⃣ Receive your eSIM</strong><br>
+      After payment is confirmed, your eSIM details can be delivered to you.
+    </div>
+
+  </div>
+
+
+  <!-- CONTACT -->
+  <div class="contact">
+
+    <h2>Need Help?</h2>
+
+    <p>Contact SwiftSIM on WhatsApp.</p>
+
+    <a href="https://wa.me/2347034761610?text=Hi%20SwiftSIM%2C%20I%20need%20help%20with%20an%20eSIM."
+    target="_blank">
+      💬 Chat on WhatsApp
+    </a>
+
+  </div>
+
+</div>
+
+
+<footer>
+  <p>© 2026 SwiftSIM</p>
+  <p>Stay Connected Anywhere 🌍</p>
+</footer>
+
+</body>
+</html>
