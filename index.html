@@ -1080,6 +1080,148 @@ function escapeHTML(value){
 renderTransactions();
 
 </script>
+<!-- PAYMENT CHECKOUT -->
+<div id="checkout" class="checkout-box" style="display:none;">
+  <div class="checkout-card">
+    <button onclick="closeCheckout()" class="close-btn">✕</button>
 
+    <h2>💳 Checkout</h2>
+
+    <p id="checkoutProduct">Product</p>
+    <h3 id="checkoutAmount">₦0</h3>
+
+    <input id="customerName" type="text" placeholder="Your name">
+
+    <input id="customerPhone" type="tel" placeholder="Phone number">
+
+    <input id="customerEmail" type="email" placeholder="Email address">
+
+    <h3>Choose payment method</h3>
+
+    <button class="pay-method" onclick="choosePayment('Bank Transfer')">
+      🏦 Bank Transfer
+    </button>
+
+    <button class="pay-method" onclick="choosePayment('Debit / Credit Card')">
+      💳 Debit / Credit Card
+    </button>
+
+    <button class="pay-method" onclick="choosePayment('USDT / Bitcoin')">
+      ₿ USDT / Bitcoin
+    </button>
+
+    <button id="continuePayment" onclick="continuePayment()" class="continue-btn">
+      Continue
+    </button>
+
+    <p id="paymentMessage"></p>
+  </div>
+</div>
+
+<style>
+.checkout-box{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:9999;
+  padding:20px;
+}
+
+.checkout-card{
+  background:white;
+  width:100%;
+  max-width:430px;
+  border-radius:24px;
+  padding:25px;
+  position:relative;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.checkout-card h2{
+  margin-top:5px;
+}
+
+.checkout-card input{
+  width:100%;
+  padding:15px;
+  margin:7px 0;
+  border:1px solid #ddd;
+  border-radius:12px;
+  font-size:16px;
+}
+
+.close-btn{
+  position:absolute;
+  right:18px;
+  top:15px;
+  border:0;
+  background:#eee;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+}
+
+.pay-method{
+  width:100%;
+  padding:15px;
+  margin:6px 0;
+  border:1px solid #ddd;
+  background:white;
+  border-radius:12px;
+  text-align:left;
+  font-size:16px;
+}
+
+.continue-btn{
+  width:100%;
+  padding:16px;
+  margin-top:12px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+}
+</style>
+
+<script>
+let selectedPayment = "";
+
+function openCheckout(product, amount){
+  document.getElementById("checkout").style.display = "flex";
+  document.getElementById("checkoutProduct").innerText = product;
+  document.getElementById("checkoutAmount").innerText = amount;
+  document.getElementById("paymentMessage").innerText = "";
+}
+
+function closeCheckout(){
+  document.getElementById("checkout").style.display = "none";
+}
+
+function choosePayment(method){
+  selectedPayment = method;
+  document.getElementById("paymentMessage").innerText =
+    "Selected: " + method;
+}
+
+function continuePayment(){
+  const name = document.getElementById("customerName").value.trim();
+  const phone = document.getElementById("customerPhone").value.trim();
+  const email = document.getElementById("customerEmail").value.trim();
+
+  if(!name || !phone || !email || !selectedPayment){
+    document.getElementById("paymentMessage").innerText =
+      "Please complete your details and choose a payment method.";
+    return;
+  }
+
+  document.getElementById("paymentMessage").innerText =
+    "Checkout information saved. Payment gateway will be connected next.";
+}
+</script>
 </body>
 </html>
