@@ -1223,5 +1223,423 @@ function continuePayment(){
     "Checkout information saved. Payment gateway will be connected next.";
 }
 </script>
+<!-- NEXORA WALLET -->
+<style>
+.wallet-box{
+  background:#10182c;
+  color:white;
+  margin:20px;
+  padding:24px;
+  border-radius:24px;
+  box-shadow:0 10px 30px rgba(0,0,0,.12);
+}
+
+.wallet-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:20px;
+}
+
+.wallet-title{
+  font-size:20px;
+  font-weight:700;
+}
+
+.wallet-icon{
+  font-size:28px;
+}
+
+.wallet-label{
+  color:#cbd5e1;
+  font-size:14px;
+}
+
+.wallet-balance{
+  font-size:34px;
+  font-weight:800;
+  margin:8px 0 22px;
+}
+
+.wallet-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.wallet-btn{
+  border:0;
+  border-radius:14px;
+  padding:15px 10px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.add-money{
+  background:#2563eb;
+  color:white;
+}
+
+.withdraw-money{
+  background:white;
+  color:#10182c;
+}
+
+.wallet-history{
+  background:white;
+  color:#111827;
+  margin-top:16px;
+  padding:18px;
+  border-radius:20px;
+}
+
+.wallet-history h3{
+  margin-top:0;
+}
+
+.wallet-empty{
+  color:#64748b;
+  font-size:14px;
+}
+
+.wallet-modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  z-index:9999;
+  padding:20px;
+}
+
+.wallet-modal-card{
+  background:white;
+  color:#111827;
+  max-width:500px;
+  margin:80px auto;
+  padding:24px;
+  border-radius:24px;
+}
+
+.wallet-modal-card input{
+  width:100%;
+  padding:15px;
+  margin:10px 0;
+  border:1px solid #d1d5db;
+  border-radius:12px;
+  font-size:16px;
+}
+
+.wallet-modal-card button{
+  width:100%;
+  padding:15px;
+  border:0;
+  border-radius:12px;
+  background:#2563eb;
+  color:white;
+  font-weight:700;
+  font-size:16px;
+  margin-top:8px;
+}
+
+.close-wallet{
+  background:#e5e7eb !important;
+  color:#111827 !important;
+}
+</style>
+
+<div class="wallet-box">
+
+  <div class="wallet-top">
+    <div>
+      <div class="wallet-label">Nexora Wallet</div>
+      <div class="wallet-title">Available Balance</div>
+    </div>
+
+    <div class="wallet-icon">💰</div>
+  </div>
+
+  <div class="wallet-balance" id="walletBalance">
+    ₦0.00
+  </div>
+
+  <div class="wallet-actions">
+
+    <button
+      class="wallet-btn add-money"
+      onclick="openWalletModal('add')">
+      ＋ Add Money
+    </button>
+
+    <button
+      class="wallet-btn withdraw-money"
+      onclick="openWalletModal('withdraw')">
+      ↗ Withdraw
+    </button>
+
+  </div>
+
+</div>
+
+<div class="wallet-history">
+
+  <h3>🧾 Wallet Activity</h3>
+
+  <div id="walletHistory">
+    <div class="wallet-empty">
+      No wallet transactions yet.
+    </div>
+  </div>
+
+</div>
+
+
+<!-- WALLET MODAL -->
+
+<div class="wallet-modal" id="walletModal">
+
+  <div class="wallet-modal-card">
+
+    <h2 id="walletModalTitle">
+      Add Money
+    </h2>
+
+    <p id="walletModalText">
+      Enter the amount you want to add.
+    </p>
+
+    <input
+      id="walletAmount"
+      type="number"
+      min="1"
+      placeholder="Enter amount">
+
+    <button onclick="submitWalletRequest()">
+      Continue
+    </button>
+
+    <button
+      class="close-wallet"
+      onclick="closeWalletModal()">
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
+
+<script>
+
+let walletBalance =
+  Number(localStorage.getItem("nexoraWalletBalance")) || 0;
+
+let walletHistory =
+  JSON.parse(localStorage.getItem("nexoraWalletHistory") || "[]");
+
+let walletAction = "add";
+
+
+function updateWallet(){
+
+  document.getElementById("walletBalance").textContent =
+    "₦" + walletBalance.toLocaleString("en-NG", {
+      minimumFractionDigits:2,
+      maximumFractionDigits:2
+    });
+
+  localStorage.setItem(
+    "nexoraWalletBalance",
+    walletBalance
+  );
+
+  renderWalletHistory();
+}
+
+
+function openWalletModal(action){
+
+  walletAction = action;
+
+  const modal =
+    document.getElementById("walletModal");
+
+  const title =
+    document.getElementById("walletModalTitle");
+
+  const text =
+    document.getElementById("walletModalText");
+
+  if(action === "add"){
+
+    title.textContent = "＋ Add Money";
+
+    text.textContent =
+      "Enter the amount you want to add to your wallet.";
+
+  }else{
+
+    title.textContent = "↗ Withdraw Money";
+
+    text.textContent =
+      "Enter the amount you want to request for withdrawal.";
+
+  }
+
+  document.getElementById("walletAmount").value = "";
+
+  modal.style.display = "block";
+}
+
+
+function closeWalletModal(){
+
+  document.getElementById("walletModal")
+    .style.display = "none";
+
+}
+
+
+function submitWalletRequest(){
+
+  const amount =
+    Number(document.getElementById("walletAmount").value);
+
+  if(!amount || amount <= 0){
+
+    alert("Please enter a valid amount.");
+
+    return;
+  }
+
+
+  if(walletAction === "add"){
+
+    /*
+      DEMO MODE:
+      This records a pending deposit request.
+      A real payment gateway should confirm the
+      payment before the wallet balance is credited.
+    */
+
+    walletHistory.unshift({
+
+      type:"Deposit",
+
+      amount:amount,
+
+      status:"Pending",
+
+      date:new Date().toLocaleString()
+
+    });
+
+    alert(
+      "Deposit request created. Payment confirmation is required before your wallet is credited."
+    );
+
+  }
+
+
+  if(walletAction === "withdraw"){
+
+    if(amount > walletBalance){
+
+      alert(
+        "Insufficient wallet balance."
+      );
+
+      return;
+    }
+
+    walletHistory.unshift({
+
+      type:"Withdrawal",
+
+      amount:amount,
+
+      status:"Pending",
+
+      date:new Date().toLocaleString()
+
+    });
+
+    alert(
+      "Withdrawal request created. It will remain pending until processed."
+    );
+
+  }
+
+
+  localStorage.setItem(
+    "nexoraWalletHistory",
+    JSON.stringify(walletHistory)
+  );
+
+  closeWalletModal();
+
+  renderWalletHistory();
+
+}
+
+
+function renderWalletHistory(){
+
+  const box =
+    document.getElementById("walletHistory");
+
+  if(!walletHistory.length){
+
+    box.innerHTML =
+      '<div class="wallet-empty">No wallet transactions yet.</div>';
+
+    return;
+  }
+
+
+  box.innerHTML =
+    walletHistory.slice(0,10).map(item => `
+
+      <div style="
+        padding:12px 0;
+        border-bottom:1px solid #e5e7eb;
+      ">
+
+        <strong>
+          ${item.type}
+        </strong>
+
+        <div style="
+          margin-top:4px;
+          font-size:14px;
+          color:#64748b;
+        ">
+
+          ₦${Number(item.amount).toLocaleString("en-NG")}
+
+          • ${item.status}
+
+        </div>
+
+        <div style="
+          margin-top:3px;
+          font-size:12px;
+          color:#94a3b8;
+        ">
+
+          ${item.date}
+
+        </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+updateWallet();
+
+</script>
 </body>
 </html>
