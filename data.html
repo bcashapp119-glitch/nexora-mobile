@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexora Data</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f3f6fb;
+padding:20px;
+}
+
+.container{
+max-width:400px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h1{
+text-align:center;
+color:#2563eb;
+}
+
+input,select{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<h1>Buy Data</h1>
+
+
+<select id="network">
+
+<option>MTN</option>
+<option>Airtel</option>
+<option>Glo</option>
+<option>9mobile</option>
+
+</select>
+
+
+<select id="plan">
+
+<option value="500">1GB - ₦500</option>
+
+<option value="1000">2GB - ₦1000</option>
+
+<option value="2000">5GB - ₦2000</option>
+
+<option value="5000">10GB - ₦5000</option>
+
+</select>
+
+
+<input id="phone" placeholder="Phone Number">
+
+
+<button id="buy">
+Buy Data
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+<script>
+
+document.getElementById("buy").onclick=()=>{
+
+
+let network =
+document.getElementById("network").value;
+
+
+let plan =
+document.getElementById("plan").value;
+
+
+let phone =
+document.getElementById("phone").value;
+
+
+document.getElementById("message").innerHTML =
+network+" data purchase for "+phone+" amount ₦"+plan;
+
+
+};
+
+</script>
+
+
+</body>
+
+</html>
