@@ -1,8 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-import { 
-  getAuth, 
-  onAuthStateChanged 
+import {
+  getAuth,
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 import {
@@ -33,7 +33,7 @@ const db = getFirestore(app);
 const appDiv = document.getElementById("app");
 
 
-onAuthStateChanged(auth, async (user)=>{
+onAuthStateChanged(auth, async (user) => {
 
 
 if(!user){
@@ -45,6 +45,7 @@ appDiv.innerHTML = `
 return;
 
 }
+
 
 
 appDiv.innerHTML = `
@@ -64,22 +65,15 @@ Loading users...
 `;
 
 
+
 const userList = document.getElementById("userList");
 
 
-try {
+
+try{
 
 
 const usersSnapshot = await getDocs(collection(db,"users"));
-
-
-if(usersSnapshot.empty){
-
-userList.innerHTML = "No users found";
-
-return;
-
-}
 
 
 let output = "";
@@ -94,42 +88,53 @@ const userData = doc.data();
 output += `
 
 <div style="
-background:#f5f5f5;
+background:white;
 padding:15px;
 margin:10px;
-border-radius:10px;
+border-radius:12px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
 ">
 
-<h3>${userData.name || "No Name"}</h3>
+<h3>${userData.Name || "No Name"}</h3>
 
-<p>Email: ${userData.email || "No Email"}</p>
+<p>Email: ${userData.Email || "No Email"}</p>
 
-<p>Status: ${userData.status || "Unknown"}</p>
+<p>Status: ${userData.Status || "No Status"}</p>
 
-<p>Wallet: ₦${userData.wallet || 0}</p>
+<p>Wallet: ₦${userData.Wallet || 0}</p>
 
 </div>
 
 `;
 
+
+
 });
 
 
+if(output === ""){
+
+userList.innerHTML = "No users found";
+
+}else{
+
 userList.innerHTML = output;
+
+}
+
 
 
 }
 
 catch(error){
 
-
 userList.innerHTML = `
-<p>Error loading users:</p>
+<h3>Error loading users</h3>
 <p>${error.message}</p>
 `;
 
-
 }
+
 
 
 });
