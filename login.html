@@ -139,7 +139,11 @@ message.innerHTML="Login successful!";
 
 setTimeout(()=>{
 
-window.location.href="dashboard.html";
+if(email === "Sufiyanolawale36@gmail.com"){
+    window.location.href="admin.html";
+}else{
+    window.location.href="dashboard.html";
+}
 
 },1000);
 
