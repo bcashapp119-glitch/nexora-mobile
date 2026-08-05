@@ -1,63 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Mobile - Airtime</title>
+<title>Nexora Airtime</title>
 
 <style>
 
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f5f7fb;
+font-family:Arial,sans-serif;
+background:#f3f6fb;
+padding:20px;
 }
 
 .container{
-    max-width:420px;
-    margin:50px auto;
-    background:white;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,.1);
+max-width:400px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
 }
 
 h1{
-    text-align:center;
-    color:#2563eb;
+text-align:center;
+color:#2563eb;
 }
 
-p{
-    text-align:center;
-}
-
-select,input{
-    width:100%;
-    padding:15px;
-    margin:10px 0;
-    border-radius:8px;
-    border:1px solid #ddd;
+input,select{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ccc;
 }
 
 button{
-    width:100%;
-    padding:15px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-weight:bold;
-}
-
-a{
-    display:block;
-    text-align:center;
-    margin-top:20px;
-    color:#2563eb;
-    text-decoration:none;
+width:100%;
+padding:15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
 }
 
 </style>
@@ -66,42 +53,58 @@ a{
 
 <body>
 
+
 <div class="container">
 
-<h1>
-📱 Buy Airtime
-</h1>
+<h1>Buy Airtime</h1>
 
-<p>
-Recharge your network instantly with Nexora Mobile.
-</p>
 
-<select>
-<option>Select Network</option>
+<select id="network">
+
 <option>MTN</option>
 <option>Airtel</option>
 <option>Glo</option>
-<option>9Mobile</option>
+<option>9mobile</option>
+
 </select>
 
 
-<input type="tel" placeholder="Phone Number">
-
-<input type="number" placeholder="Amount (₦)">
+<input id="phone" placeholder="Phone Number">
 
 
-<button>
-Continue
+<input id="amount" type="number" placeholder="Amount">
+
+
+<button id="buy">
+Buy Airtime
 </button>
 
 
-<a href="index.html">
-← Back to Home
-</a>
+<p id="message"></p>
 
 
 </div>
 
-</body>
 
+<script>
+
+document.getElementById("buy").onclick=()=>{
+
+let network=document.getElementById("network").value;
+
+let phone=document.getElementById("phone").value;
+
+let amount=document.getElementById("amount").value;
+
+
+document.getElementById("message").innerHTML =
+"Preparing "+network+" airtime for "+phone+" amount ₦"+amount;
+
+
+};
+
+</script>
+
+
+</body>
 </html>
