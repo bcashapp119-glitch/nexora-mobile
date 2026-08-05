@@ -48,15 +48,9 @@ border-radius:10px;
 font-size:16px;
 }
 
-#message{
-text-align:center;
-margin-top:15px;
-}
-
 </style>
 
 </head>
-
 
 <body>
 
@@ -65,18 +59,13 @@ margin-top:15px;
 
 <h1>Fund Wallet</h1>
 
-<p>Enter amount to add:</p>
-
 <input id="amount" type="number" placeholder="Enter amount">
 
-
 <button id="fundBtn">
-Continue
+Add Money
 </button>
 
-
 <p id="message"></p>
-
 
 </div>
 
@@ -101,7 +90,9 @@ getFirestore,
 doc,
 getDoc,
 updateDoc,
-setDoc
+collection,
+addDoc,
+serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
@@ -134,9 +125,7 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 
-
-let currentUser;
-
+let currentUser = null;
 
 
 onAuthStateChanged(auth,(user)=>{
@@ -147,17 +136,18 @@ currentUser=user;
 
 
 
-document.getElementById("fundBtn").onclick=async()=>{
+document.getElementById("fundBtn").onclick = async()=>{
 
 
-const amount =
-Number(document.getElementById("amount").value);
+const amount = Number(
+document.getElementById("amount").value
+);
 
 
 
 if(!currentUser){
 
-document.getElementById("message").innerHTML=
+document.getElementById("message").innerHTML =
 "Please login first";
 
 return;
@@ -165,9 +155,10 @@ return;
 }
 
 
-if(amount<=0){
 
-document.getElementById("message").innerHTML=
+if(amount <= 0){
+
+document.getElementById("message").innerHTML =
 "Enter a valid amount";
 
 return;
@@ -176,14 +167,15 @@ return;
 
 
 
-const userRef =
-doc(db,"users",currentUser.uid);
+const userRef = doc(
+db,
+"users",
+currentUser.uid
+);
 
 
 
-const userSnap =
-await getDoc(userRef);
-
+const userSnap = await getDoc(userRef);
 
 
 const oldWallet =
@@ -199,8 +191,26 @@ wallet: oldWallet + amount
 
 
 
-document.getElementById("message").innerHTML=
-"Wallet updated successfully";
+await addDoc(
+collection(db,"transactions"),
+{
+
+userId: currentUser.uid,
+
+type:"Wallet Funding",
+
+amount:amount,
+
+status:"Successful",
+
+createdAt:serverTimestamp()
+
+});
+
+
+
+document.getElementById("message").innerHTML =
+"Wallet funded successfully";
 
 
 };
