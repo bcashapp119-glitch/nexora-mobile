@@ -1,761 +1,90 @@
-// Nexora Mobile — Admin Dashboard
-// Complete admin.js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-const app = document.getElementById("app");
+  <title>Nexora Admin Dashboard</title>
 
-const ADMIN_EMAIL = "sufiyanolawale36@gmail.com";
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-// Storage keys
-const USERS_KEY = "nexora_users";
-const TRANSACTIONS_KEY = "nexora_transactions";
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #222;
+    }
 
-// -----------------------------
-// STORAGE
-// -----------------------------
+    .container {
+      max-width: 700px;
+      margin: auto;
+    }
 
-function getUsers() {
-  try {
-    return JSON.parse(localStorage.getItem(USERS_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
+    h1 {
+      text-align: center;
+      color: #2563eb;
+    }
 
-function saveUsers(users) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(users));
-}
+    h2 {
+      margin-top: 0;
+    }
 
-function getTransactions() {
-  try {
-    return JSON.parse(localStorage.getItem(TRANSACTIONS_KEY)) || [];
-  } catch {
-    return [];
-  }
-}
+    .card {
+      background: white;
+      padding: 20px;
+      margin: 15px 0;
+      border-radius: 12px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    }
 
-function saveTransactions(transactions) {
-  localStorage.setItem(
-    TRANSACTIONS_KEY,
-    JSON.stringify(transactions)
-  );
-}
+    button {
+      background: #2563eb;
+      color: white;
+      border: none;
+      padding: 12px 16px;
+      margin: 5px 3px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 15px;
+    }
 
-// -----------------------------
-// HELPERS
-// -----------------------------
+    button:hover {
+      opacity: 0.9;
+    }
 
-function money(amount) {
-  return "₦" + Number(amount || 0).toLocaleString("en-NG");
-}
+    input,
+    select {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
 
-function escapeHTML(value) {
-  return String(value ?? "")
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 20px 0;
+    }
+  </style>
+</head>
 
-function createID(prefix = "NX") {
-  return (
-    prefix +
-    Date.now().toString(36) +
-    Math.random().toString(36).substring(2, 7)
-  ).toUpperCase();
-}
+<body>
 
-function formatDate(date) {
-  return new Date(date).toLocaleString("en-NG", {
-    dateStyle: "medium",
-    timeStyle: "short"
-  });
-}
+  <div class="container">
 
-// -----------------------------
-// SAMPLE DATA
-// -----------------------------
-
-function createDemoData() {
-  let users = getUsers();
-
-  if (users.length === 0) {
-    users = [
-      {
-        id: createID("USR"),
-        name: "Sufiyan Abdul afeez",
-        email: "bcashapp119@gmail.com",
-        wallet: 0,
-        status: "active",
-        joined: new Date().toISOString()
-      },
-      {
-        id: createID("USR"),
-        name: "Olawale",
-        email: "a66327810@gmail.com",
-        wallet: 1500,
-        status: "active",
-        joined: new Date().toISOString()
-      }
-    ];
-
-    saveUsers(users);
-  }
-
-  if (!localStorage.getItem(TRANSACTIONS_KEY)) {
-    saveTransactions([]);
-  }
-}
-
-// -----------------------------
-// DASHBOARD
-// -----------------------------
-
-function renderDashboard() {
-  const users = getUsers();
-  const transactions = getTransactions();
-
-  const totalWallet = users.reduce(
-    (sum, user) => sum + Number(user.wallet || 0),
-    0
-  );
-
-  const totalTransactions = transactions.length;
-
-  const completed = transactions.filter(
-    t => t.status === "completed"
-  ).length;
-
-  const pending = transactions.filter(
-    t => t.status === "pending"
-  ).length;
-
-  app.innerHTML = `
-    <h1>Nexora Admin Dashboard</h1>
-
-    <p>
-      <strong>Admin:</strong>
-      ${escapeHTML(ADMIN_EMAIL)}
-    </p>
-
-    <hr>
-
-    <div class="card">
-      <h2>Dashboard Overview</h2>
-
-      <p><strong>Total Users:</strong> ${users.length}</p>
-
-      <p>
-        <strong>Total Wallet Balance:</strong>
-        ${money(totalWallet)}
-      </p>
-
-      <p>
-        <strong>Total Transactions:</strong>
-        ${totalTransactions}
-      </p>
-
-      <p>
-        <strong>Completed:</strong>
-        ${completed}
-      </p>
-
-      <p>
-        <strong>Pending:</strong>
-        ${pending}
-      </p>
+    <div id="app">
+      <h1>Loading Nexora Admin...</h1>
     </div>
 
-    <div class="card">
-      <h2>Quick Actions</h2>
+  </div>
 
-      <button onclick="showUsers()">
-        👥 Manage Users
-      </button>
+  <script type="module" src="./admin.js"></script>
 
-      <button onclick="showTransactions()">
-        📜 Transactions
-      </button>
-
-      <button onclick="showWalletFunding()">
-        💰 Fund User Wallet
-      </button>
-
-      <button onclick="showAddTransaction()">
-        ➕ Add Transaction
-      </button>
-    </div>
-
-    <div class="card">
-      <h2>Recent Transactions</h2>
-
-      ${
-        transactions.length === 0
-          ? "<p>No transactions yet.</p>"
-          : transactions
-              .slice()
-              .reverse()
-              .slice(0, 5)
-              .map(transactionHTML)
-              .join("")
-      }
-    </div>
-  `;
-}
-
-// -----------------------------
-// USER MANAGEMENT
-// -----------------------------
-
-function showUsers() {
-  const users = getUsers();
-
-  app.innerHTML = `
-    <h1>Users</h1>
-
-    <button onclick="renderDashboard()">← Dashboard</button>
-
-    <div class="card">
-      <input
-        id="userSearch"
-        placeholder="Search name or email..."
-        oninput="filterUsers()"
-      >
-    </div>
-
-    <div id="usersList">
-      ${users.map(userHTML).join("")}
-    </div>
-  `;
-}
-
-function filterUsers() {
-  const search =
-    document
-      .getElementById("userSearch")
-      .value
-      .toLowerCase();
-
-  const users = getUsers().filter(user =>
-    `${user.name} ${user.email}`
-      .toLowerCase()
-      .includes(search)
-  );
-
-  document.getElementById("usersList").innerHTML =
-    users.length
-      ? users.map(userHTML).join("")
-      : "<p>No users found.</p>";
-}
-
-function userHTML(user) {
-  return `
-    <div class="card">
-
-      <h2>${escapeHTML(user.name)}</h2>
-
-      <p>
-        <strong>Email:</strong>
-        ${escapeHTML(user.email)}
-      </p>
-
-      <p>
-        <strong>Status:</strong>
-        ${escapeHTML(user.status || "active")}
-      </p>
-
-      <p>
-        <strong>Wallet:</strong>
-        ${money(user.wallet)}
-      </p>
-
-      <p>
-        <strong>User ID:</strong>
-        ${escapeHTML(user.id)}
-      </p>
-
-      <button onclick="viewUser('${user.id}')">
-        View User
-      </button>
-
-      <button onclick="showWalletFunding('${user.id}')">
-        Fund Wallet
-      </button>
-
-      <button onclick="toggleUserStatus('${user.id}')">
-        ${
-          user.status === "active"
-            ? "Deactivate"
-            : "Activate"
-        }
-      </button>
-
-    </div>
-  `;
-}
-
-// -----------------------------
-// USER DETAILS
-// -----------------------------
-
-function viewUser(id) {
-  const user = getUsers().find(u => u.id === id);
-
-  if (!user) {
-    alert("User not found.");
-    return;
-  }
-
-  const transactions = getTransactions().filter(
-    t => t.userId === id
-  );
-
-  app.innerHTML = `
-    <h1>User Details</h1>
-
-    <button onclick="showUsers()">← Users</button>
-
-    <div class="card">
-
-      <h2>${escapeHTML(user.name)}</h2>
-
-      <p>
-        <strong>Email:</strong>
-        ${escapeHTML(user.email)}
-      </p>
-
-      <p>
-        <strong>Status:</strong>
-        ${escapeHTML(user.status)}
-      </p>
-
-      <p>
-        <strong>Wallet:</strong>
-        ${money(user.wallet)}
-      </p>
-
-      <p>
-        <strong>Joined:</strong>
-        ${formatDate(user.joined)}
-      </p>
-
-    </div>
-
-    <div class="card">
-
-      <h2>User Transactions</h2>
-
-      ${
-        transactions.length
-          ? transactions.map(transactionHTML).join("")
-          : "<p>No transactions for this user.</p>"
-      }
-
-    </div>
-  `;
-}
-
-// -----------------------------
-// USER STATUS
-// -----------------------------
-
-function toggleUserStatus(id) {
-  const users = getUsers();
-
-  const user = users.find(u => u.id === id);
-
-  if (!user) return;
-
-  user.status =
-    user.status === "active"
-      ? "inactive"
-      : "active";
-
-  saveUsers(users);
-
-  showUsers();
-}
-
-// -----------------------------
-// WALLET FUNDING
-// -----------------------------
-
-function showWalletFunding(preselectedUser = "") {
-  const users = getUsers();
-
-  app.innerHTML = `
-    <h1>Fund User Wallet</h1>
-
-    <button onclick="renderDashboard()">
-      ← Dashboard
-    </button>
-
-    <div class="card">
-
-      <label>User</label>
-
-      <select id="fundUser">
-
-        <option value="">
-          Select a user
-        </option>
-
-        ${users
-          .map(
-            user => `
-              <option
-                value="${user.id}"
-                ${
-                  user.id === preselectedUser
-                    ? "selected"
-                    : ""
-                }
-              >
-                ${escapeHTML(user.name)}
-                — ${escapeHTML(user.email)}
-              </option>
-            `
-          )
-          .join("")}
-
-      </select>
-
-      <label>Amount</label>
-
-      <input
-        id="fundAmount"
-        type="number"
-        min="1"
-        placeholder="Enter amount"
-      >
-
-      <button onclick="fundWallet()">
-        Add Money
-      </button>
-
-    </div>
-  `;
-}
-
-function fundWallet() {
-  const userId =
-    document.getElementById("fundUser").value;
-
-  const amount =
-    Number(document.getElementById("fundAmount").value);
-
-  if (!userId) {
-    alert("Please select a user.");
-    return;
-  }
-
-  if (!amount || amount <= 0) {
-    alert("Enter a valid amount.");
-    return;
-  }
-
-  const users = getUsers();
-
-  const user = users.find(u => u.id === userId);
-
-  if (!user) {
-    alert("User not found.");
-    return;
-  }
-
-  user.wallet = Number(user.wallet || 0) + amount;
-
-  saveUsers(users);
-
-  const transactions = getTransactions();
-
-  transactions.push({
-    id: createID("TXN"),
-    userId: user.id,
-    userName: user.name,
-    type: "Wallet Funding",
-    amount,
-    status: "completed",
-    date: new Date().toISOString(),
-    description: "Admin wallet funding"
-  });
-
-  saveTransactions(transactions);
-
-  alert(
-    `${money(amount)} added to ${user.name}'s wallet.`
-  );
-
-  showUsers();
-}
-
-// -----------------------------
-// TRANSACTIONS
-// -----------------------------
-
-function showTransactions() {
-  const transactions = getTransactions();
-
-  app.innerHTML = `
-    <h1>Transaction History</h1>
-
-    <button onclick="renderDashboard()">
-      ← Dashboard
-    </button>
-
-    <div class="card">
-
-      <input
-        id="transactionSearch"
-        placeholder="Search transactions..."
-        oninput="filterTransactions()"
-      >
-
-      <select
-        id="transactionType"
-        onchange="filterTransactions()"
-      >
-        <option value="">All Services</option>
-        <option value="Airtime">Airtime</option>
-        <option value="Data">Data</option>
-        <option value="eSIM">eSIM</option>
-        <option value="ePIN">ePIN</option>
-        <option value="Wallet Funding">
-          Wallet Funding
-        </option>
-      </select>
-
-    </div>
-
-    <div id="transactionsList">
-
-      ${
-        transactions.length
-          ? transactions
-              .slice()
-              .reverse()
-              .map(transactionHTML)
-              .join("")
-          : "<p>No transactions yet.</p>"
-      }
-
-    </div>
-  `;
-}
-
-function filterTransactions() {
-  const search =
-    document
-      .getElementById("transactionSearch")
-      .value
-      .toLowerCase();
-
-  const type =
-    document.getElementById("transactionType").value;
-
-  const transactions = getTransactions().filter(t => {
-
-    const matchesSearch =
-      `${t.id} ${t.userName} ${t.type} ${t.status}`
-        .toLowerCase()
-        .includes(search);
-
-    const matchesType =
-      !type || t.type === type;
-
-    return matchesSearch && matchesType;
-  });
-
-  document.getElementById("transactionsList").innerHTML =
-    transactions.length
-      ? transactions
-          .slice()
-          .reverse()
-          .map(transactionHTML)
-          .join("")
-      : "<p>No matching transactions.</p>";
-}
-
-function transactionHTML(t) {
-  return `
-    <div class="card">
-
-      <h3>${escapeHTML(t.type)}</h3>
-
-      <p>
-        <strong>Transaction ID:</strong>
-        ${escapeHTML(t.id)}
-      </p>
-
-      <p>
-        <strong>User:</strong>
-        ${escapeHTML(t.userName || "Unknown")}
-      </p>
-
-      <p>
-        <strong>Amount:</strong>
-        ${money(t.amount)}
-      </p>
-
-      <p>
-        <strong>Status:</strong>
-        ${escapeHTML(t.status)}
-      </p>
-
-      <p>
-        <strong>Date:</strong>
-        ${formatDate(t.date)}
-      </p>
-
-      ${
-        t.description
-          ? `<p>${escapeHTML(t.description)}</p>`
-          : ""
-      }
-
-    </div>
-  `;
-}
-
-// -----------------------------
-// ADD TRANSACTION
-// -----------------------------
-
-function showAddTransaction() {
-  const users = getUsers();
-
-  app.innerHTML = `
-    <h1>Add Transaction</h1>
-
-    <button onclick="renderDashboard()">
-      ← Dashboard
-    </button>
-
-    <div class="card">
-
-      <select id="transactionUser">
-
-        <option value="">
-          Select user
-        </option>
-
-        ${users
-          .map(
-            user => `
-              <option value="${user.id}">
-                ${escapeHTML(user.name)}
-              </option>
-            `
-          )
-          .join("")}
-
-      </select>
-
-      <select id="transactionService">
-
-        <option value="Airtime">Airtime</option>
-        <option value="Data">Data</option>
-        <option value="eSIM">eSIM</option>
-        <option value="ePIN">ePIN</option>
-
-      </select>
-
-      <input
-        id="transactionAmount"
-        type="number"
-        min="0"
-        placeholder="Amount"
-      >
-
-      <select id="transactionStatus">
-
-        <option value="completed">
-          Completed
-        </option>
-
-        <option value="pending">
-          Pending
-        </option>
-
-        <option value="failed">
-          Failed
-        </option>
-
-      </select>
-
-      <input
-        id="transactionDescription"
-        placeholder="Description"
-      >
-
-      <button onclick="addTransaction()">
-        Save Transaction
-      </button>
-
-    </div>
-  `;
-}
-
-function addTransaction() {
-  const userId =
-    document.getElementById("transactionUser").value;
-
-  const type =
-    document.getElementById("transactionService").value;
-
-  const amount =
-    Number(
-      document.getElementById("transactionAmount").value
-    );
-
-  const status =
-    document.getElementById("transactionStatus").value;
-
-  const description =
-    document.getElementById(
-      "transactionDescription"
-    ).value;
-
-  if (!userId) {
-    alert("Select a user.");
-    return;
-  }
-
-  if (amount < 0) {
-    alert("Enter a valid amount.");
-    return;
-  }
-
-  const user = getUsers().find(u => u.id === userId);
-
-  if (!user) {
-    alert("User not found.");
-    return;
-  }
-
-  const transactions = getTransactions();
-
-  transactions.push({
-    id: createID("TXN"),
-    userId,
-    userName: user.name,
-    type,
-    amount,
-    status,
-    description,
-    date: new Date().toISOString()
-  });
-
-  saveTransactions(transactions);
-
-  alert("Transaction saved.");
-
-  showTransactions();
-}
-
-// -----------------------------
-// START DASHBOARD
-// -----------------------------
-
-createDemoData();
-renderDashboard();
+</body>
+</html>
