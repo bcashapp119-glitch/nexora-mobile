@@ -185,7 +185,68 @@ NEXORA ADMIN
 </div>
 
 </div>
+<script type="module">
 
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+
+authDomain:"nexora-mobile-af02f.firebaseapp.com",
+
+projectId:"nexora-mobile-af02f",
+
+storageBucket:"nexora-mobile-af02f.firebasestorage.app",
+
+messagingSenderId:"498265618137",
+
+appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+
+measurementId:"G-8494CNWZKL"
+
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+onAuthStateChanged(auth,(user)=>{
+
+if(!user){
+
+alert("Please login.");
+
+window.location.href="login.html";
+
+return;
+
+}
+
+if(user.email !== "Sufiyanolawale36@gmail.com"){
+
+alert("Access Denied");
+
+window.location.href="dashboard.html";
+
+return;
+
+}
+
+document.querySelector(".header h3").innerHTML =
+user.email;
+
+});
+
+</script>
 </body>
 
 </html>
