@@ -6,87 +6,273 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Mobile Login</title>
+<title>Nexora Mobile</title>
 
 <style>
 
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
 body{
-    margin:0;
-    padding:0;
-    background:#f5f7fb;
-    font-family:Arial, sans-serif;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+background:#f5f7fb;
+color:#222;
 }
 
-.login-container{
-    background:white;
-    width:90%;
-    max-width:400px;
-    padding:30px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
-    text-align:center;
+header{
+background:#08152f;
+color:white;
+padding:20px;
 }
 
-h1{
-    color:#2563eb;
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-input{
-    width:90%;
-    padding:15px;
-    margin:10px 0;
-    border-radius:8px;
-    border:1px solid #ddd;
+.logo{
+font-size:25px;
+font-weight:bold;
 }
 
-button{
-    width:100%;
-    padding:15px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    font-weight:bold;
+.hero{
+background:linear-gradient(135deg,#2563eb,#08152f);
+color:white;
+text-align:center;
+padding:70px 20px;
 }
 
-a{
-    color:#2563eb;
-    text-decoration:none;
+.hero h1{
+font-size:40px;
+margin-bottom:15px;
+}
+
+.hero p{
+font-size:18px;
+margin-bottom:30px;
+}
+
+.btn{
+display:inline-block;
+background:white;
+color:#2563eb;
+padding:15px 25px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+margin:8px;
+}
+
+.container{
+padding:40px 20px;
+max-width:1100px;
+margin:auto;
+}
+
+.title{
+text-align:center;
+font-size:32px;
+margin-bottom:30px;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+}
+
+.card{
+background:white;
+padding:25px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+text-align:center;
+}
+
+.card h2{
+margin-bottom:15px;
+}
+
+.card p{
+margin-bottom:20px;
+}
+
+.button{
+display:block;
+background:#2563eb;
+color:white;
+padding:14px;
+border-radius:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+footer{
+background:#08152f;
+color:white;
+text-align:center;
+padding:30px;
+margin-top:40px;
 }
 
 </style>
 
 </head>
 
+
 <body>
 
-<div class="login-container">
 
-<h1>Nexora Mobile</h1>
+<header>
 
-<h2>Login</h2>
+<div class="nav">
 
-<input type="email" placeholder="Email Address">
-
-<input type="password" placeholder="Password">
-
-<button>
-Login
-</button>
-
-<p>
-Don't have an account?
-<a href="signup.html">
-Create Account
-</a>
-</p>
+<div class="logo">
+Nexora Mobile
+</div>
 
 </div>
+
+</header>
+
+
+
+<section class="hero">
+
+<h1>
+Welcome to Nexora Mobile
+</h1>
+
+<p>
+Buy Airtime, Data, eSIM and manage your mobile services easily.
+</p>
+
+
+<a href="signup.html" class="btn">
+Create Account
+</a>
+
+
+<a href="login.html" class="btn">
+Login
+</a>
+
+
+</section>
+
+
+
+<div class="container">
+
+
+<h1 class="title">
+Our Services
+</h1>
+
+
+
+<div class="cards">
+
+
+
+<div class="card">
+
+<h2>
+📱 Airtime
+</h2>
+
+<p>
+Recharge all Nigerian networks instantly.
+</p>
+
+<a href="airtime.html" class="button">
+Buy Airtime
+</a>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>
+📶 Data
+</h2>
+
+<p>
+Affordable data bundles anytime.
+</p>
+
+<a href="data.html" class="button">
+Buy Data
+</a>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>
+🌍 eSIM
+</h2>
+
+<p>
+International travel eSIM plans.
+</p>
+
+<a href="esim.html" class="button">
+Buy eSIM
+</a>
+
+</div>
+
+
+
+
+<div class="card">
+
+<h2>
+🎟️ ePIN
+</h2>
+
+<p>
+Digital pins and mobile services.
+</p>
+
+<a href="epin.html" class="button">
+Buy ePIN
+</a>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+<footer>
+
+<p>
+© 2026 Nexora Mobile
+</p>
+
+<p>
+Airtime • Data • eSIM • ePIN
+</p>
+
+</footer>
+
 
 </body>
 
