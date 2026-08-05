@@ -9,15 +9,19 @@
 <style>
 body{
 font-family:Arial,sans-serif;
-background:#f5f7fb;
+background:#f3f6fb;
 margin:0;
 }
 
-.header{
+.top{
 background:#2563eb;
 color:white;
 padding:25px;
-text-align:center;
+border-radius:0 0 25px 25px;
+}
+
+.top h1{
+margin:0;
 }
 
 .container{
@@ -27,30 +31,43 @@ padding:20px;
 .card{
 background:white;
 padding:20px;
-margin-bottom:15px;
-border-radius:15px;
-box-shadow:0 4px 15px rgba(0,0,0,0.1);
+margin-bottom:20px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,0.08);
+}
+
+.wallet{
+background:#2563eb;
+color:white;
 }
 
 .balance{
 font-size:35px;
 font-weight:bold;
-color:#2563eb;
+}
+
+.services{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+}
+
+.service{
+background:#eef2ff;
+padding:20px;
+border-radius:15px;
+text-align:center;
+font-weight:bold;
 }
 
 button{
 width:100%;
-padding:14px;
+padding:15px;
+border:none;
+border-radius:12px;
 background:#dc2626;
 color:white;
-border:none;
-border-radius:10px;
 font-size:16px;
-}
-
-.status{
-color:green;
-font-weight:bold;
 }
 </style>
 
@@ -58,27 +75,23 @@ font-weight:bold;
 
 <body>
 
-<div class="header">
-<h1>Nexora Mobile</h1>
-<p>My Account</p>
+
+<div class="top">
+<h1>Hello, <span id="name">User</span> 👋</h1>
+<p>Nexora Mobile</p>
 </div>
 
 
 <div class="container">
 
 
-<div class="card">
+<div class="card wallet">
 
-<h2>👤 Profile</h2>
+<h2>Wallet Balance</h2>
 
-<p>Name:</p>
-<h3 id="userName">Loading...</h3>
-
-<p>Email:</p>
-<p id="userEmail">Loading...</p>
-
-<p>Status:</p>
-<p id="userStatus" class="status">Loading...</p>
+<div class="balance">
+₦<span id="wallet">0</span>
+</div>
 
 </div>
 
@@ -86,11 +99,13 @@ font-weight:bold;
 
 <div class="card">
 
-<h2>💰 Wallet Balance</h2>
+<h2>Account</h2>
 
-<p class="balance">
-₦<span id="wallet">0</span>
-</p>
+<p>Email:</p>
+<b id="email">Loading...</b>
+
+<p>Status:</p>
+<b id="status">Loading...</b>
 
 </div>
 
@@ -100,10 +115,35 @@ font-weight:bold;
 
 <h2>Services</h2>
 
-<p>📱 Airtime</p>
-<p>📶 Data</p>
-<p>🌍 eSIM</p>
-<p>🎟 E-PIN</p>
+<div class="services">
+
+<div class="service">
+📱 Airtime
+</div>
+
+<div class="service">
+📶 Data
+</div>
+
+<div class="service">
+🌍 eSIM
+</div>
+
+<div class="service">
+🎟 E-PIN
+</div>
+
+</div>
+
+</div>
+
+
+
+<div class="card">
+
+<h2>Transactions</h2>
+
+<p>No transactions yet</p>
 
 </div>
 
@@ -144,25 +184,15 @@ getDoc
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
-
 const firebaseConfig = {
-
-apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-
-authDomain: "nexora-mobile-af02f.firebaseapp.com",
-
-projectId: "nexora-mobile-af02f",
-
-storageBucket: "nexora-mobile-af02f.firebasestorage.app",
-
-messagingSenderId: "498265618137",
-
-appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-
-measurementId: "G-8494CNWZKL"
-
+apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+authDomain:"nexora-mobile-af02f.firebaseapp.com",
+projectId:"nexora-mobile-af02f",
+storageBucket:"nexora-mobile-af02f.firebasestorage.app",
+messagingSenderId:"498265618137",
+appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+measurementId:"G-8494CNWZKL"
 };
-
 
 
 const app = initializeApp(firebaseConfig);
@@ -175,65 +205,44 @@ const db = getFirestore(app);
 
 onAuthStateChanged(auth, async(user)=>{
 
-
 if(user){
 
+const ref = doc(db,"users",user.uid);
 
-const userRef = doc(db,"users",user.uid);
-
-const userSnap = await getDoc(userRef);
-
+const snap = await getDoc(ref);
 
 
-if(userSnap.exists()){
+if(snap.exists()){
 
+const data = snap.data();
 
-const data = userSnap.data();
+document.getElementById("name").innerHTML=data.name;
 
+document.getElementById("email").innerHTML=data.email;
 
+document.getElementById("wallet").innerHTML=data.wallet;
 
-document.getElementById("userName").innerHTML =
-data.name;
-
-
-document.getElementById("userEmail").innerHTML =
-data.email;
-
-
-document.getElementById("userStatus").innerHTML =
-data.status;
-
-
-document.getElementById("wallet").innerHTML =
-data.wallet;
-
+document.getElementById("status").innerHTML=data.status;
 
 }
-
-
 
 }else{
 
-
 window.location.href="login.html";
 
-
 }
-
 
 });
 
 
 
-document.getElementById("logout").onclick = ()=>{
-
+document.getElementById("logout").onclick=()=>{
 
 signOut(auth).then(()=>{
 
 window.location.href="login.html";
 
 });
-
 
 };
 
