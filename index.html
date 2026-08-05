@@ -1,668 +1,461 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexora Mobile</title>
 
-<meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #172033;
+    }
 
-<title>Nexora Mobile</title>
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-<style>
+    .header-inner {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-* {
-    box-sizing: border-box;
-}
+    .logo {
+      font-size: 23px;
+      font-weight: bold;
+    }
 
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #f2f4f7;
-    color: #111827;
-}
+    .balance {
+      background: #1f2937;
+      padding: 9px 13px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
 
-.app {
-    max-width: 480px;
-    min-height: 100vh;
-    margin: auto;
-    background: white;
-    padding-bottom: 80px;
-}
+    .hero {
+      background: #2563eb;
+      color: white;
+      padding: 42px 20px;
+      text-align: center;
+    }
 
-.header {
-    background: #111827;
-    color: white;
-    padding: 22px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+    .hero h1 {
+      margin: 0 0 10px;
+      font-size: 34px;
+    }
 
-.logo {
-    font-size: 23px;
-    font-weight: bold;
-}
+    .hero p {
+      margin: 0;
+      font-size: 17px;
+    }
 
-.profile {
-    font-size: 25px;
-}
+    .container {
+      max-width: 1000px;
+      margin: auto;
+      padding: 25px 18px 60px;
+    }
 
-.page {
-    display: none;
-    padding: 20px;
-}
+    .section {
+      margin-bottom: 32px;
+    }
 
-.page.active {
-    display: block;
-}
+    .section h2 {
+      margin-bottom: 15px;
+    }
 
-.welcome {
-    background: #111827;
-    color: white;
-    border-radius: 18px;
-    padding: 22px;
-    margin-bottom: 18px;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
+    }
 
-.card {
-    border: 1px solid #e5e7eb;
-    border-radius: 16px;
-    padding: 18px;
-    margin-bottom: 15px;
-    background: white;
-}
+    .card {
+      background: white;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-.card h3 {
-    margin-top: 0;
-}
+    .card h3 {
+      margin-top: 0;
+    }
 
-button {
-    width: 100%;
-    border: none;
-    border-radius: 10px;
-    padding: 14px;
-    margin-top: 10px;
-    background: #111827;
-    color: white;
-    font-size: 15px;
-}
+    .price {
+      font-size: 23px;
+      font-weight: bold;
+      margin: 15px 0;
+    }
 
-.secondary {
-    background: #e5e7eb;
-    color: #111827;
-}
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 18px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      background: #2563eb;
+      color: white;
+      width: 100%;
+    }
 
-.icon {
-    font-size: 27px;
-    margin-right: 8px;
-}
+    button.secondary {
+      background: #111827;
+    }
 
-input,
-select {
-    width: 100%;
-    padding: 13px;
-    margin-top: 10px;
-    border: 1px solid #d1d5db;
-    border-radius: 9px;
-    font-size: 15px;
-}
+    button.green {
+      background: #059669;
+    }
 
-.back {
-    background: #e5e7eb;
-    color: #111827;
-}
+    .payment-box {
+      background: white;
+      border-radius: 16px;
+      padding: 22px;
+      box-shadow: 0 5px 18px rgba(0,0,0,.07);
+    }
 
-.bottom {
-    position: fixed;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    max-width: 480px;
-    width: 100%;
-    background: white;
-    border-top: 1px solid #ddd;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 8px;
-}
+    .payment-option {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+    }
 
-.bottom button {
-    margin: 0 3px;
-    background: white;
-    color: #111827;
-    font-size: 12px;
-}
+    .notice {
+      background: #eff6ff;
+      border-left: 4px solid #2563eb;
+      padding: 13px;
+      border-radius: 8px;
+      margin-top: 15px;
+      font-size: 14px;
+    }
 
-.message {
-    margin-top: 15px;
-    padding: 12px;
-    background: #ecfdf5;
-    border-radius: 10px;
-    display: none;
-}
+    .history-item {
+      background: white;
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      box-shadow: 0 3px 12px rgba(0,0,0,.05);
+    }
 
-</style>
+    .status {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 20px;
+      background: #fef3c7;
+      font-size: 12px;
+      font-weight: bold;
+    }
 
+    .support {
+      text-align: center;
+      background: #111827;
+      color: white;
+      border-radius: 18px;
+      padding: 30px 20px;
+    }
+
+    .support button {
+      max-width: 280px;
+      background: #059669;
+      margin-top: 10px;
+    }
+
+    footer {
+      background: #0b1120;
+      color: #9ca3af;
+      text-align: center;
+      padding: 25px;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 28px;
+      }
+
+      .header-inner {
+        gap: 10px;
+      }
+
+      .balance {
+        font-size: 12px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
+<header>
+  <div class="header-inner">
+    <div class="logo">Nexora Mobile</div>
+    <div class="balance">Wallet: ₦0.00</div>
+  </div>
+</header>
 
-<div class="app">
-
-
-<!-- HEADER -->
-
-<div class="header">
-
-<div class="logo">
-NEXORA
-</div>
-
-<div class="profile">
-👤
-</div>
-
-</div>
-
-
-<!-- HOME -->
-
-<section
-id="home"
-class="page active">
-
-<div class="welcome">
-
-<h2>
-Welcome to Nexora 👋
-</h2>
-
-<p>
-Your mobile service platform.
-</p>
-
-</div>
-
-
-<!-- ACCOUNT -->
-
-<div class="card">
-
-<h3>
-👤 Account
-</h3>
-
-<button
-onclick="openPage('signup')">
-
-<span class="icon">👤</span>
-Create Account
-
-</button>
-
-
-<button
-class="secondary"
-onclick="openPage('login')">
-
-<span class="icon">🔐</span>
-Login
-
-</button>
-
-</div>
-
-
-<!-- SERVICES -->
-
-<div class="card">
-
-<h3>
-📱 Airtime
-</h3>
-
-<p>
-Recharge any phone number.
-</p>
-
-<button
-onclick="openPage('airtime')">
-
-Buy Airtime
-
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-📶 Data
-</h3>
-
-<p>
-Choose your data plan.
-</p>
-
-<button
-onclick="openPage('data')">
-
-Buy Data
-
-</button>
-
-</div>
-
-
-<div class="card">
-
-<h3>
-🌐 eSIM
-</h3>
-
-<p>
-Choose an eSIM plan.
-</p>
-
-<button
-onclick="openPage('esim')">
-
-Buy eSIM
-
-</button>
-
-</div>
-
+<section class="hero">
+  <h1>Welcome to Nexora Mobile</h1>
+  <p>Airtime, Data, eSIM and digital services in one place.</p>
 </section>
 
+<main class="container">
+
+  <!-- SERVICES -->
+  <section class="section">
+    <h2>⚡ Quick Services</h2>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>📱 Airtime</h3>
+        <p>Recharge your mobile line quickly.</p>
+        <button onclick="showMessage('Airtime service selected')">
+          Buy Airtime
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>📶 Data</h3>
+        <p>Choose a data bundle for your network.</p>
+        <button onclick="showMessage('Data service selected')">
+          Buy Data
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>🌍 eSIM</h3>
+        <p>Get an eSIM data plan for supported destinations.</p>
+        <button onclick="scrollToSection('esim')">
+          Buy eSIM
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>💡 Electricity</h3>
+        <p>Pay your electricity bill.</p>
+        <button onclick="showMessage('Electricity bill service selected')">
+          Pay Bill
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>🎓 WAEC</h3>
+        <p>Purchase WAEC result-checking services.</p>
+        <button onclick="showMessage('WAEC result service selected')">
+          Check Result
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>🎟️ ePIN</h3>
+        <p>Purchase supported examination ePINs.</p>
+        <button onclick="showMessage('ePIN service selected')">
+          Buy ePIN
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- eSIM -->
+  <section class="section" id="esim">
+    <h2>🌍 Buy eSIM</h2>
+    <p>Choose your eSIM data plan.</p>
+
+    <div class="grid">
+
+      <div class="card">
+        <h3>5GB eSIM</h3>
+        <p>Reliable travel data.</p>
+        <div class="price">₦5,000</div>
+        <button onclick="selectEsim('5GB', 5000)">
+          Select Plan
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>10GB eSIM</h3>
+        <p>More data for longer trips.</p>
+        <div class="price">₦10,000</div>
+        <button onclick="selectEsim('10GB', 10000)">
+          Select Plan
+        </button>
+      </div>
+
+      <div class="card">
+        <h3>20GB eSIM</h3>
+        <p>Great for heavy data users.</p>
+        <div class="price">₦20,000</div>
+        <button onclick="selectEsim('20GB', 20000)">
+          Select Plan
+        </button>
+      </div>
+
+    </div>
+
+    <div class="payment-box" id="esimMessage" style="display:none; margin-top:20px;">
+      <h3>eSIM Plan Selected</h3>
+      <p id="selectedPlan"></p>
+
+      <button class="green" onclick="continueEsim()">
+        Continue
+      </button>
+    </div>
+  </section>
 
 
-<!-- CREATE ACCOUNT -->
+  <!-- PAYMENT -->
+  <section class="section" id="payment">
+    <h2>💳 Add Money / Payment</h2>
 
-<section
-id="signup"
-class="page">
+    <div class="payment-box">
 
-<h2>
-👤 Create Account
-</h2>
+      <div class="payment-option">
+        <strong>🏦 Bank / OPay</strong>
+        <p>Pay using an approved payment method.</p>
+      </div>
 
-<div class="card">
+      <div class="payment-option">
+        <strong>💳 Bank Card</strong>
+        <p>Card payments will be handled through a secure payment gateway.</p>
+      </div>
 
-<input
-type="text"
-placeholder="Full Name">
+      <div class="payment-option">
+        <strong>₿ Bitcoin</strong>
+        <p>BTC payments can be enabled after a wallet/payment provider is connected.</p>
+      </div>
 
-<input
-type="tel"
-placeholder="Phone Number">
+      <div class="payment-option">
+        <strong>💵 USDT</strong>
+        <p>USDT payments can be enabled after a supported payment provider is connected.</p>
+      </div>
 
-<input
-type="email"
-placeholder="Email Address">
+      <div class="notice">
+        <strong>Security:</strong> Never ask customers to send card PINs,
+        CVVs, OTPs, passwords or private crypto keys through this website.
+      </div>
 
-<input
-type="password"
-placeholder="Password">
+      <br>
 
-<button
-onclick="showMessage('signupMessage')">
+      <button onclick="showMessage('Secure payment checkout will be connected here.')">
+        Add Money
+      </button>
 
-Create Account
+    </div>
+  </section>
 
-</button>
 
-<div
-id="signupMessage"
-class="message">
+  <!-- TRANSACTION HISTORY -->
+  <section class="section" id="history">
+    <h2>🧾 Transaction History</h2>
 
-Account created successfully.
+    <div class="history-item">
+      <strong>No transactions yet</strong>
+      <p>Your airtime, data, eSIM and other orders will appear here.</p>
+      <span class="status">Waiting for transaction</span>
+    </div>
 
-</div>
+  </section>
 
-<button
-class="back"
-onclick="openPage('home')">
 
-← Back Home
+  <!-- SUPPORT -->
+  <section class="section">
+    <div class="support">
+      <h2>Need Help?</h2>
+      <p>Contact Nexora Mobile support.</p>
 
-</button>
+      <button onclick="contactSupport()">
+        💬 WhatsApp Support
+      </button>
+    </div>
+  </section>
 
-</div>
+</main>
 
-</section>
-
-
-
-<!-- LOGIN -->
-
-<section
-id="login"
-class="page">
-
-<h2>
-🔐 Login
-</h2>
-
-<div class="card">
-
-<input
-type="email"
-placeholder="Email Address">
-
-<input
-type="password"
-placeholder="Password">
-
-<button
-onclick="showMessage('loginMessage')">
-
-Login
-
-</button>
-
-<div
-id="loginMessage"
-class="message">
-
-Login successful.
-
-</div>
-
-<button
-class="back"
-onclick="openPage('home')">
-
-← Back Home
-
-</button>
-
-</div>
-
-</section>
-
-
-
-<!-- AIRTIME -->
-
-<section
-id="airtime"
-class="page">
-
-<h2>
-📱 Buy Airtime
-</h2>
-
-<div class="card">
-
-<input
-type="tel"
-placeholder="Phone Number">
-
-<select>
-
-<option>
-₦100 Airtime
-</option>
-
-<option>
-₦200 Airtime
-</option>
-
-<option>
-₦500 Airtime
-</option>
-
-<option>
-₦1,000 Airtime
-</option>
-
-<option>
-₦2,000 Airtime
-</option>
-
-</select>
-
-<button
-onclick="showMessage('airtimeMessage')">
-
-Continue
-
-</button>
-
-<div
-id="airtimeMessage"
-class="message">
-
-Airtime order selected.
-
-</div>
-
-<button
-class="back"
-onclick="openPage('home')">
-
-← Back Home
-
-</button>
-
-</div>
-
-</section>
-
-
-
-<!-- DATA -->
-
-<section
-id="data"
-class="page">
-
-<h2>
-📶 Buy Data
-</h2>
-
-<div class="card">
-
-<input
-type="tel"
-placeholder="Phone Number">
-
-<select>
-
-<option>
-1GB — ₦500
-</option>
-
-<option>
-2GB — ₦1,000
-</option>
-
-<option>
-5GB — ₦1,500
-</option>
-
-<option>
-10GB — ₦2,500
-</option>
-
-</select>
-
-<button
-onclick="showMessage('dataMessage')">
-
-Continue
-
-</button>
-
-<div
-id="dataMessage"
-class="message">
-
-Data plan selected.
-
-</div>
-
-<button
-class="back"
-onclick="openPage('home')">
-
-← Back Home
-
-</button>
-
-</div>
-
-</section>
-
-
-
-<!-- ESIM -->
-
-<section
-id="esim"
-class="page">
-
-<h2>
-🌐 Buy eSIM
-</h2>
-
-<div class="card">
-
-<select>
-
-<option>
-5GB — ₦5,000
-</option>
-
-<option>
-10GB — ₦10,000
-</option>
-
-<option>
-20GB — ₦15,000
-</option>
-
-</select>
-
-<button
-onclick="showMessage('esimMessage')">
-
-Continue
-
-</button>
-
-<div
-id="esimMessage"
-class="message">
-
-eSIM plan selected.
-
-</div>
-
-<button
-class="back"
-onclick="openPage('home')">
-
-← Back Home
-
-</button>
-
-</div>
-
-</section>
-
-
-
-<!-- BOTTOM NAVIGATION -->
-
-<div class="bottom">
-
-<button
-onclick="openPage('home')">
-
-🏠
-<br>
-Home
-
-</button>
-
-
-<button
-onclick="alert('Orders page coming next')">
-
-📋
-<br>
-Orders
-
-</button>
-
-
-<button
-onclick="alert('Wallet page coming next')">
-
-💳
-<br>
-Wallet
-
-</button>
-
-
-<button
-onclick="openPage('signup')">
-
-👤
-<br>
-Account
-
-</button>
-
-</div>
-
-
-</div>
-
+<footer>
+  © 2026 Nexora Mobile. All rights reserved.
+</footer>
 
 
 <script>
 
+  let selectedEsim = "";
+  let selectedPrice = 0;
 
-function openPage(page) {
+  function showMessage(message) {
+    alert(message);
+  }
 
-document
-.querySelectorAll(".page")
-.forEach(function(item) {
+  function scrollToSection(id) {
+    document.getElementById(id).scrollIntoView({
+      behavior: "smooth"
+    });
+  }
 
-item.classList.remove("active");
+  function selectEsim(plan, price) {
 
-});
+    selectedEsim = plan;
+    selectedPrice = price;
 
+    document.getElementById("selectedPlan").innerHTML =
+      "<strong>" + plan + " eSIM</strong><br>" +
+      "Price: ₦" + price.toLocaleString();
 
-document
-.getElementById(page)
-.classList.add("active");
+    document.getElementById("esimMessage").style.display = "block";
 
-window.scrollTo(0,0);
+    document.getElementById("esimMessage").scrollIntoView({
+      behavior: "smooth"
+    });
+  }
 
-}
+  function continueEsim() {
 
+    if (!selectedEsim) {
+      alert("Please select an eSIM plan first.");
+      return;
+    }
 
+    alert(
+      "You selected " +
+      selectedEsim +
+      " eSIM for ₦" +
+      selectedPrice.toLocaleString() +
+      ".\n\nThe next stage is connecting Nexora Mobile to a real eSIM provider API."
+    );
+  }
 
-function showMessage(id) {
+  function contactSupport() {
 
-document
-.getElementById(id)
-.style.display = "block";
+    const phone = "2347034761610";
 
-}
+    const message =
+      "Hello Nexora Mobile, I need help with my account/order.";
 
+    window.open(
+      "https://wa.me/" +
+      phone +
+      "?text=" +
+      encodeURIComponent(message),
+      "_blank"
+    );
+  }
 
 </script>
 
-
 </body>
-
 </html>
