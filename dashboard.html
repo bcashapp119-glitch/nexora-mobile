@@ -4,73 +4,54 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Mobile Account</title>
+<title>Nexora Dashboard</title>
 
 <style>
 body{
-    font-family:Arial,sans-serif;
-    background:#f5f7fb;
-    margin:0;
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+margin:0;
 }
 
 .header{
-    background:#2563eb;
-    color:white;
-    padding:25px;
-    text-align:center;
+background:#2563eb;
+color:white;
+padding:25px;
+text-align:center;
 }
 
 .container{
-    padding:20px;
+padding:20px;
 }
 
 .card{
-    background:white;
-    padding:20px;
-    margin-bottom:15px;
-    border-radius:15px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+background:white;
+padding:20px;
+margin-bottom:15px;
+border-radius:15px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
 }
 
-.status{
-    color:green;
-    font-weight:bold;
-}
-
-.profile{
-    text-align:center;
-}
-
-.avatar{
-    width:70px;
-    height:70px;
-    border-radius:50%;
-    background:#2563eb;
-    color:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    margin:auto;
-    font-size:30px;
+.balance{
+font-size:35px;
+font-weight:bold;
+color:#2563eb;
 }
 
 button{
-    width:100%;
-    padding:14px;
-    border:none;
-    border-radius:10px;
-    background:#dc2626;
-    color:white;
-    font-size:16px;
+width:100%;
+padding:14px;
+background:#dc2626;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
 }
 
-.service{
-    display:flex;
-    justify-content:space-between;
-    padding:12px;
-    border-bottom:1px solid #ddd;
+.status{
+color:green;
+font-weight:bold;
 }
-
 </style>
 
 </head>
@@ -86,59 +67,46 @@ button{
 <div class="container">
 
 
-<div class="card profile">
+<div class="card">
 
-<div class="avatar">
-👤
+<h2>👤 Profile</h2>
+
+<p>Name:</p>
+<h3 id="userName">Loading...</h3>
+
+<p>Email:</p>
+<p id="userEmail">Loading...</p>
+
+<p>Status:</p>
+<p id="userStatus" class="status">Loading...</p>
+
 </div>
 
-<h2 id="username">Loading...</h2>
-
-<p id="email">Loading...</p>
-
-<p class="status">
-● Account Signed In
-</p>
-
-</div>
 
 
 <div class="card">
 
-<h2>Wallet</h2>
+<h2>💰 Wallet Balance</h2>
 
-<h1>₦0.00</h1>
-
-<p>Your balance will appear here.</p>
+<p class="balance">
+₦<span id="wallet">0</span>
+</p>
 
 </div>
+
 
 
 <div class="card">
 
 <h2>Services</h2>
 
-<div class="service">
-<span>📱 Airtime</span>
-<span>Available</span>
-</div>
-
-<div class="service">
-<span>📶 Data</span>
-<span>Available</span>
-</div>
-
-<div class="service">
-<span>🌍 eSIM</span>
-<span>Available</span>
-</div>
-
-<div class="service">
-<span>🎟 E-PIN</span>
-<span>Available</span>
-</div>
+<p>📱 Airtime</p>
+<p>📶 Data</p>
+<p>🌍 eSIM</p>
+<p>🎟 E-PIN</p>
 
 </div>
+
 
 
 <div class="card">
@@ -153,10 +121,12 @@ Logout
 </div>
 
 
+
 <script type="module">
 
-import { initializeApp } 
+import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 
 import {
 getAuth,
@@ -166,50 +136,104 @@ signOut
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
+import {
+getFirestore,
+doc,
+getDoc
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+
+
 const firebaseConfig = {
+
 apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+
 authDomain: "nexora-mobile-af02f.firebaseapp.com",
+
 projectId: "nexora-mobile-af02f",
+
 storageBucket: "nexora-mobile-af02f.firebasestorage.app",
+
 messagingSenderId: "498265618137",
+
 appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+
 measurementId: "G-8494CNWZKL"
+
 };
+
 
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
+const db = getFirestore(app);
 
-onAuthStateChanged(auth,(user)=>{
+
+
+onAuthStateChanged(auth, async(user)=>{
+
 
 if(user){
 
-document.getElementById("email").innerHTML =
-user.email;
 
-document.getElementById("username").innerHTML =
-user.displayName || "Nexora User";
+const userRef = doc(db,"users",user.uid);
+
+const userSnap = await getDoc(userRef);
+
+
+
+if(userSnap.exists()){
+
+
+const data = userSnap.data();
+
+
+
+document.getElementById("userName").innerHTML =
+data.name;
+
+
+document.getElementById("userEmail").innerHTML =
+data.email;
+
+
+document.getElementById("userStatus").innerHTML =
+data.status;
+
+
+document.getElementById("wallet").innerHTML =
+data.wallet;
+
 
 }
 
-else{
+
+
+}else{
+
 
 window.location.href="login.html";
 
+
 }
+
 
 });
 
 
+
 document.getElementById("logout").onclick = ()=>{
+
 
 signOut(auth).then(()=>{
 
 window.location.href="login.html";
 
 });
+
 
 };
 
