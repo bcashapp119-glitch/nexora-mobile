@@ -4,59 +4,53 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Mobile - Create Account</title>
+<title>Nexora Create Account</title>
 
 <style>
 body{
-    font-family: Arial, sans-serif;
-    background:#f5f7fb;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+font-family:Arial,sans-serif;
+background:#f5f7fb;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
 .container{
-    background:white;
-    padding:30px;
-    width:90%;
-    max-width:400px;
-    border-radius:15px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.1);
+background:white;
+padding:30px;
+width:90%;
+max-width:400px;
+border-radius:15px;
+box-shadow:0 5px 20px rgba(0,0,0,.1);
 }
 
 h1{
-    text-align:center;
-    color:#2563eb;
+text-align:center;
+color:#2563eb;
 }
 
 input{
-    width:100%;
-    padding:12px;
-    margin:10px 0;
-    border:1px solid #ccc;
-    border-radius:8px;
+width:100%;
+padding:12px;
+margin:10px 0;
+border:1px solid #ccc;
+border-radius:8px;
 }
 
 button{
-    width:100%;
-    padding:14px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:8px;
-    font-size:16px;
-    cursor:pointer;
+width:100%;
+padding:14px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
 }
 
-button:hover{
-    background:#1d4ed8;
-}
-
-a{
-    display:block;
-    text-align:center;
-    margin-top:15px;
+#message{
+text-align:center;
+margin-top:15px;
 }
 </style>
 
@@ -66,7 +60,7 @@ a{
 
 <div class="container">
 
-<h1>Create Account</h1>
+<h1>Create Nexora Account</h1>
 
 <input id="name" type="text" placeholder="Full Name">
 
@@ -78,23 +72,27 @@ a{
 
 <p id="message"></p>
 
-<a href="login.html">Already have an account? Login</a>
-
 </div>
 
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-import { 
-getAuth, 
-createUserWithEmailAndPassword,
-updateProfile
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+import {
+getAuth,
+createUserWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
+import {
+getFirestore,
+doc,
+setDoc
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
-// Your Nexora Firebase Configuration
 
 const firebaseConfig = {
 apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
@@ -111,34 +109,59 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
+const db = getFirestore(app);
 
-document.getElementById("signupBtn").addEventListener("click", async ()=>{
 
-const name = document.getElementById("name").value;
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+document.getElementById("signupBtn").onclick = async()=>{
 
-const message = document.getElementById("message");
+
+const name =
+document.getElementById("name").value;
+
+const email =
+document.getElementById("email").value;
+
+const password =
+document.getElementById("password").value;
+
+
+const message =
+document.getElementById("message");
 
 
 try{
 
-const userCredential = await createUserWithEmailAndPassword(
+
+const userCredential =
+await createUserWithEmailAndPassword(
 auth,
 email,
 password
 );
 
 
-await updateProfile(userCredential.user,{
-displayName:name
-});
+const user =
+userCredential.user;
+
+
+await setDoc(
+doc(db,"users",user.uid),
+{
+name:name,
+email:email,
+wallet:0,
+status:"active"
+}
+);
 
 
 message.innerHTML="Account created successfully!";
 
+
 setTimeout(()=>{
+
 window.location.href="login.html";
+
 },1500);
 
 
@@ -150,7 +173,8 @@ message.innerHTML=error.message;
 
 }
 
-});
+
+};
 
 
 </script>
