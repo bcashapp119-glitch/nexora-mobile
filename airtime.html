@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
 <meta charset="UTF-8">
@@ -51,6 +52,7 @@ font-size:16px;
 
 </head>
 
+
 <body>
 
 
@@ -60,12 +62,10 @@ font-size:16px;
 
 
 <select id="network">
-
 <option>MTN</option>
 <option>Airtel</option>
 <option>Glo</option>
 <option>9mobile</option>
-
 </select>
 
 
@@ -86,22 +86,180 @@ Buy Airtime
 </div>
 
 
-<script>
 
-document.getElementById("buy").onclick=()=>{
+<script type="module">
 
-let network=document.getElementById("network").value;
 
-let phone=document.getElementById("phone").value;
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-let amount=document.getElementById("amount").value;
+
+import {
+getAuth,
+onAuthStateChanged
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc,
+collection,
+addDoc,
+serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+
+
+const firebaseConfig = {
+
+apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+
+authDomain:"nexora-mobile-af02f.firebaseapp.com",
+
+projectId:"nexora-mobile-af02f",
+
+storageBucket:"nexora-mobile-af02f.firebasestorage.app",
+
+messagingSenderId:"498265618137",
+
+appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+
+measurementId:"G-8494CNWZKL"
+
+};
+
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+
+let user = null;
+
+
+
+onAuthStateChanged(auth,(currentUser)=>{
+
+user=currentUser;
+
+});
+
+
+
+
+document.getElementById("buy").onclick = async()=>{
+
+
+if(!user){
+
+document.getElementById("message").innerHTML =
+"Please login first";
+
+return;
+
+}
+
+
+
+let network =
+document.getElementById("network").value;
+
+
+let phone =
+document.getElementById("phone").value;
+
+
+let amount =
+Number(document.getElementById("amount").value);
+
+
+
+if(amount <= 0){
+
+document.getElementById("message").innerHTML =
+"Enter valid amount";
+
+return;
+
+}
+
+
+
+const userRef = doc(
+db,
+"users",
+user.uid
+);
+
+
+
+const userSnap = await getDoc(userRef);
+
+
+
+let wallet =
+userSnap.data().wallet || 0;
+
+
+
+if(wallet < amount){
+
+document.getElementById("message").innerHTML =
+"Insufficient wallet balance";
+
+return;
+
+}
+
+
+
+
+await updateDoc(userRef,{
+
+wallet: wallet - amount
+
+});
+
+
+
+
+
+await addDoc(collection(db,"transactions"),{
+
+
+userId:user.uid,
+
+type:"Airtime Purchase",
+
+network:network,
+
+phone:phone,
+
+amount:amount,
+
+status:"Successful",
+
+createdAt:serverTimestamp()
+
+
+});
+
 
 
 document.getElementById("message").innerHTML =
-"Preparing "+network+" airtime for "+phone+" amount ₦"+amount;
+"Airtime purchase successful";
 
 
 };
+
 
 </script>
 
