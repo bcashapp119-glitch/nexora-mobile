@@ -8,7 +8,9 @@ import {
 import {
   getFirestore,
   collection,
-  getDocs
+  getDocs,
+  doc,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
@@ -24,7 +26,9 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
 
@@ -56,8 +60,6 @@ appDiv.innerHTML = `
 Loading users...
 </div>
 
-<hr>
-
 <div id="details"></div>
 
 `;
@@ -73,10 +75,10 @@ const snapshot = await getDocs(collection(db,"users"));
 let output = "";
 
 
-snapshot.forEach((doc)=>{
+snapshot.forEach((item)=>{
 
 
-const userData = doc.data();
+const user = item.data();
 
 
 output += `
@@ -84,24 +86,27 @@ output += `
 <div style="
 background:white;
 padding:15px;
-margin:10px;
+margin:15px;
 border-radius:12px;
+box-shadow:0 2px 8px #ddd;
 ">
 
-<h3>${userData.Name || "No Name"}</h3>
 
-<p>Email: ${userData.Email || "No Email"}</p>
+<h3>${user.Name || "No Name"}</h3>
 
-<p>Status: ${userData.Status || "No Status"}</p>
+<p>Email: ${user.Email || ""}</p>
 
-<p>Wallet: ₦${userData.Wallet || 0}</p>
+<p>Status: ${user.Status || ""}</p>
+
+<p>Wallet: ₦${user.Wallet || 0}</p>
 
 
-<button onclick="showUser(
-'${userData.Name}',
-'${userData.Email}',
-'${userData.Status}',
-'${userData.Wallet}'
+<button onclick="viewUser(
+'${item.id}',
+'${user.Name}',
+'${user.Email}',
+'${user.Status}',
+'${user.Wallet}'
 )">
 View Details
 </button>
@@ -117,29 +122,41 @@ View Details
 userList.innerHTML = output;
 
 
-});
 
-
-
-window.showUser = function(name,email,status,wallet){
+window.viewUser = function(id,name,email,status,wallet){
 
 
 document.getElementById("details").innerHTML = `
 
-<h2>User Details</h2>
+<hr>
 
-<p><b>Name:</b> ${name}</p>
+<h2>Edit User</h2>
 
-<p><b>Email:</b> ${email}</p>
+<p>Name: ${name}</p>
 
-<p><b>Status:</b> ${status}</p>
-
-<p><b>Wallet:</b> ₦${wallet}</p>
+<p>Email: ${email}</p>
 
 
-<button onclick="closeDetails()">
-Close
+<label>Status:</label>
+
+<input id="editStatus" value="${status}">
+
+
+<br><br>
+
+
+<label>Wallet:</label>
+
+<input id="editWallet" type="number" value="${wallet}">
+
+
+<br><br>
+
+
+<button onclick="saveUser('${id}')">
+Save Changes
 </button>
+
 
 `;
 
@@ -147,8 +164,35 @@ Close
 
 
 
-window.closeDetails = function(){
+window.saveUser = async function(id){
 
-document.getElementById("details").innerHTML = "";
+
+const newStatus =
+document.getElementById("editStatus").value;
+
+
+const newWallet =
+Number(document.getElementById("editWallet").value);
+
+
+
+await updateDoc(
+doc(db,"users",id),
+{
+Status:newStatus,
+Wallet:newWallet
+}
+);
+
+
+
+alert("User updated successfully");
+
+
+location.reload();
+
 
 };
+
+
+});
