@@ -1,126 +1,152 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nexora Mobile - Login</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
-
 body{
-background:#f5f7fb;
-display:flex;
-justify-content:center;
-align-items:center;
-min-height:100vh;
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
 }
 
-.login-box{
-background:white;
-width:90%;
-max-width:420px;
-padding:35px;
-border-radius:15px;
-box-shadow:0 10px 25px rgba(0,0,0,.1);
+.container{
+    background:white;
+    padding:30px;
+    width:90%;
+    max-width:400px;
+    border-radius:15px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.1);
 }
 
-.logo{
-text-align:center;
-font-size:30px;
-font-weight:700;
-color:#2563eb;
-margin-bottom:20px;
-}
-
-h2{
-text-align:center;
-margin-bottom:25px;
+h1{
+    text-align:center;
+    color:#2563eb;
 }
 
 input{
-width:100%;
-padding:15px;
-margin-bottom:15px;
-border:1px solid #ddd;
-border-radius:10px;
-font-size:16px;
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ccc;
+    border-radius:8px;
 }
 
 button{
-width:100%;
-padding:15px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:10px;
-font-weight:bold;
-font-size:16px;
+    width:100%;
+    padding:14px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:16px;
+    cursor:pointer;
 }
 
-.signup{
-text-align:center;
-margin-top:20px;
+button:hover{
+    background:#1d4ed8;
 }
 
-.signup a{
-color:#2563eb;
-text-decoration:none;
-font-weight:bold;
+a{
+    display:block;
+    text-align:center;
+    margin-top:15px;
 }
 
+#message{
+    text-align:center;
+    margin-top:15px;
+}
 </style>
 
 </head>
 
 <body>
 
-<div class="login-box">
+<div class="container">
 
-<div class="logo">
-Nexora Mobile
-</div>
+<h1>Nexora Login</h1>
 
-<h2>
-Login
-</h2>
+<input id="email" type="email" placeholder="Email Address">
 
-<form>
+<input id="password" type="password" placeholder="Password">
 
-<input type="email" placeholder="Email Address">
+<button id="loginBtn">Login</button>
 
-<input type="password" placeholder="Password">
+<p id="message"></p>
 
-<button type="button">
-Login
-</button>
-
-</form>
-
-<div class="signup">
-
-Don't have an account?
-
-<a href="signup.html">
-Create Account
-</a>
+<a href="signup.html">Create a new account</a>
 
 </div>
 
-</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
+
+const firebaseConfig = {
+apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+authDomain: "nexora-mobile-af02f.firebaseapp.com",
+projectId: "nexora-mobile-af02f",
+storageBucket: "nexora-mobile-af02f.firebasestorage.app",
+messagingSenderId: "498265618137",
+appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+measurementId: "G-8494CNWZKL"
+};
+
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+
+document.getElementById("loginBtn").addEventListener("click", async()=>{
+
+const email = document.getElementById("email").value;
+const password = document.getElementById("password").value;
+
+const message = document.getElementById("message");
+
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+email,
+password
+);
+
+message.innerHTML="Login successful!";
+
+setTimeout(()=>{
+window.location.href="index.html";
+},1500);
+
+
+}
+
+catch(error){
+
+message.innerHTML=error.message;
+
+}
+
+});
+
+
+</script>
 
 </body>
-
 </html>
