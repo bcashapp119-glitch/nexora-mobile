@@ -46,20 +46,19 @@ button{
     border:none;
     border-radius:8px;
     font-size:16px;
-    cursor:pointer;
 }
 
 button:hover{
     background:#1d4ed8;
 }
 
-a{
-    display:block;
+#message{
     text-align:center;
     margin-top:15px;
 }
 
-#message{
+a{
+    display:block;
     text-align:center;
     margin-top:15px;
 }
@@ -81,19 +80,21 @@ a{
 
 <p id="message"></p>
 
-<a href="signup.html">Create a new account</a>
+<a href="signup.html">Create Account</a>
 
 </div>
 
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
 getAuth,
 signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
 const firebaseConfig = {
@@ -114,10 +115,14 @@ const auth = getAuth(app);
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
 
-const email = document.getElementById("email").value;
-const password = document.getElementById("password").value;
+const email =
+document.getElementById("email").value;
 
-const message = document.getElementById("message");
+const password =
+document.getElementById("password").value;
+
+const message =
+document.getElementById("message");
 
 
 try{
@@ -128,11 +133,15 @@ email,
 password
 );
 
+
 message.innerHTML="Login successful!";
 
+
 setTimeout(()=>{
-window.location.href="index.html";
-},1500);
+
+window.location.href="dashboard.html";
+
+},1000);
 
 
 }
