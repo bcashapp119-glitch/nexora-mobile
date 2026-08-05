@@ -24,9 +24,7 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
 
@@ -38,14 +36,10 @@ onAuthStateChanged(auth, async (user)=>{
 
 if(!user){
 
-appDiv.innerHTML = `
-<h2>Please login first</h2>
-`;
-
+appDiv.innerHTML = "Please login first";
 return;
 
 }
-
 
 
 appDiv.innerHTML = `
@@ -62,6 +56,10 @@ appDiv.innerHTML = `
 Loading users...
 </div>
 
+<hr>
+
+<div id="details"></div>
+
 `;
 
 
@@ -69,13 +67,13 @@ Loading users...
 const userList = document.getElementById("userList");
 
 
-const usersSnapshot = await getDocs(collection(db,"users"));
+const snapshot = await getDocs(collection(db,"users"));
 
 
 let output = "";
 
 
-usersSnapshot.forEach((doc)=>{
+snapshot.forEach((doc)=>{
 
 
 const userData = doc.data();
@@ -83,7 +81,12 @@ const userData = doc.data();
 
 output += `
 
-<div class="card">
+<div style="
+background:white;
+padding:15px;
+margin:10px;
+border-radius:12px;
+">
 
 <h3>${userData.Name || "No Name"}</h3>
 
@@ -94,7 +97,12 @@ output += `
 <p>Wallet: ₦${userData.Wallet || 0}</p>
 
 
-<button onclick="showUser('${userData.Email}')">
+<button onclick="showUser(
+'${userData.Name}',
+'${userData.Email}',
+'${userData.Status}',
+'${userData.Wallet}'
+)">
 View Details
 </button>
 
@@ -112,8 +120,35 @@ userList.innerHTML = output;
 });
 
 
-window.showUser = function(email){
 
-alert("User details: " + email);
+window.showUser = function(name,email,status,wallet){
+
+
+document.getElementById("details").innerHTML = `
+
+<h2>User Details</h2>
+
+<p><b>Name:</b> ${name}</p>
+
+<p><b>Email:</b> ${email}</p>
+
+<p><b>Status:</b> ${status}</p>
+
+<p><b>Wallet:</b> ₦${wallet}</p>
+
+
+<button onclick="closeDetails()">
+Close
+</button>
+
+`;
+
+};
+
+
+
+window.closeDetails = function(){
+
+document.getElementById("details").innerHTML = "";
 
 };
