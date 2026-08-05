@@ -115,17 +115,16 @@ const auth = getAuth(app);
 
 document.getElementById("loginBtn").addEventListener("click", async()=>{
 
-const email =
-document.getElementById("email").value;
 
-const password =
-document.getElementById("password").value;
+const email = document.getElementById("email").value;
 
-const message =
-document.getElementById("message");
+const password = document.getElementById("password").value;
+
+const message = document.getElementById("message");
 
 
 try{
+
 
 await signInWithEmailAndPassword(
 auth,
@@ -139,13 +138,23 @@ message.innerHTML="Login successful!";
 
 setTimeout(()=>{
 
-if(email === "Sufiyanolawale36@gmail.com"){
-    window.location.href="admin.html";
+
+if(email.toLowerCase() === "sufiyanolawale36@gmail.com"){
+
+window.location.href="admin.html";
+
+
 }else{
-    window.location.href="dashboard.html";
+
+
+window.location.href="dashboard.html";
+
+
 }
 
+
 },1000);
+
 
 
 }
@@ -155,6 +164,8 @@ catch(error){
 message.innerHTML=error.message;
 
 }
+
+
 
 });
 
