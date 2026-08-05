@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nexora International eSIM</title>
+
+<style>
+
+body{
+font-family:Arial,sans-serif;
+background:#f3f6fb;
+padding:20px;
+}
+
+.container{
+max-width:420px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 5px 15px rgba(0,0,0,.1);
+}
+
+h1{
+text-align:center;
+color:#2563eb;
+}
+
+select,input{
+width:100%;
+padding:14px;
+margin:10px 0;
+border-radius:10px;
+border:1px solid #ccc;
+}
+
+.plan{
+background:#eef2ff;
+padding:15px;
+margin:10px 0;
+border-radius:15px;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#2563eb;
+color:white;
+border:none;
+border-radius:10px;
+font-size:16px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+<h1>🌍 International eSIM</h1>
+
+
+<select id="country">
+
+<option>USA 🇺🇸</option>
+<option>UK 🇬🇧</option>
+<option>Canada 🇨🇦</option>
+<option>UAE 🇦🇪</option>
+<option>France 🇫🇷</option>
+<option>Germany 🇩🇪</option>
+<option>Japan 🇯🇵</option>
+<option>South Africa 🇿🇦</option>
+
+</select>
+
+
+
+<div class="plan">
+
+<b>1GB Data</b>
+
+<p>7 Days</p>
+
+<p>₦5,000</p>
+
+</div>
+
+
+
+<div class="plan">
+
+<b>5GB Data</b>
+
+<p>30 Days</p>
+
+<p>₦15,000</p>
+
+</div>
+
+
+
+<div class="plan">
+
+<b>10GB Data</b>
+
+<p>30 Days</p>
+
+<p>₦25,000</p>
+
+</div>
+
+
+
+<button id="buy">
+Buy eSIM
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+
+<script>
+
+document.getElementById("buy").onclick=()=>{
+
+let country =
+document.getElementById("country").value;
+
+
+document.getElementById("message").innerHTML =
+"Preparing eSIM order for "+country;
+
+};
+
+</script>
+
+
+</body>
+
+</html>
