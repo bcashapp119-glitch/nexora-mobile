@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Nexora Mobile Dashboard</title>
+<title>Nexora Mobile Account</title>
 
 <style>
 body{
@@ -13,42 +13,62 @@ body{
     margin:0;
 }
 
-header{
-    background:#08152f;
+.header{
+    background:#2563eb;
     color:white;
-    padding:20px;
+    padding:25px;
     text-align:center;
 }
 
 .container{
-    padding:25px;
+    padding:20px;
 }
 
 .card{
     background:white;
     padding:20px;
-    margin:15px 0;
+    margin-bottom:15px;
     border-radius:15px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
 }
 
-h2{
-    color:#2563eb;
+.status{
+    color:green;
+    font-weight:bold;
 }
 
-.button{
-    display:block;
+.profile{
+    text-align:center;
+}
+
+.avatar{
+    width:70px;
+    height:70px;
+    border-radius:50%;
     background:#2563eb;
     color:white;
-    text-align:center;
-    padding:15px;
-    margin-top:10px;
-    border-radius:10px;
-    text-decoration:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin:auto;
+    font-size:30px;
 }
 
-.logout{
+button{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:10px;
     background:#dc2626;
+    color:white;
+    font-size:16px;
+}
+
+.service{
+    display:flex;
+    justify-content:space-between;
+    padding:12px;
+    border-bottom:1px solid #ddd;
 }
 
 </style>
@@ -57,43 +77,76 @@ h2{
 
 <body>
 
-<header>
+<div class="header">
 <h1>Nexora Mobile</h1>
-<p id="userEmail">Welcome</p>
-</header>
+<p>My Account</p>
+</div>
 
 
 <div class="container">
 
-<div class="card">
-<h2>💰 Wallet</h2>
-<p>Balance: ₦0.00</p>
+
+<div class="card profile">
+
+<div class="avatar">
+👤
+</div>
+
+<h2 id="username">Loading...</h2>
+
+<p id="email">Loading...</p>
+
+<p class="status">
+● Account Signed In
+</p>
+
 </div>
 
 
 <div class="card">
-<h2>📱 Airtime</h2>
-<p>Buy airtime instantly.</p>
-<a href="airtime.html" class="button">Buy Airtime</a>
+
+<h2>Wallet</h2>
+
+<h1>₦0.00</h1>
+
+<p>Your balance will appear here.</p>
+
 </div>
 
 
 <div class="card">
-<h2>📶 Data</h2>
-<p>Purchase data bundles.</p>
-<a href="data.html" class="button">Buy Data</a>
+
+<h2>Services</h2>
+
+<div class="service">
+<span>📱 Airtime</span>
+<span>Available</span>
+</div>
+
+<div class="service">
+<span>📶 Data</span>
+<span>Available</span>
+</div>
+
+<div class="service">
+<span>🌍 eSIM</span>
+<span>Available</span>
+</div>
+
+<div class="service">
+<span>🎟 E-PIN</span>
+<span>Available</span>
+</div>
+
 </div>
 
 
 <div class="card">
-<h2>🌍 eSIM</h2>
-<p>Get international eSIM plans.</p>
-<a href="esim.html" class="button">Buy eSIM</a>
-</div>
 
+<button id="logout">
+Logout
+</button>
 
-<div class="card">
-<a href="index.html" class="button logout">Logout</a>
 </div>
 
 
@@ -102,12 +155,15 @@ h2{
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+import { initializeApp } 
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
 getAuth,
-onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+onAuthStateChanged,
+signOut
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
 const firebaseConfig = {
@@ -130,10 +186,15 @@ onAuthStateChanged(auth,(user)=>{
 
 if(user){
 
-document.getElementById("userEmail").innerHTML =
-"Welcome, " + user.email;
+document.getElementById("email").innerHTML =
+user.email;
 
-}else{
+document.getElementById("username").innerHTML =
+user.displayName || "Nexora User";
+
+}
+
+else{
 
 window.location.href="login.html";
 
@@ -142,7 +203,19 @@ window.location.href="login.html";
 });
 
 
+document.getElementById("logout").onclick = ()=>{
+
+signOut(auth).then(()=>{
+
+window.location.href="login.html";
+
+});
+
+};
+
+
 </script>
+
 
 </body>
 </html>
