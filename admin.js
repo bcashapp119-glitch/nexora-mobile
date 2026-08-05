@@ -8,9 +8,7 @@ import {
 import {
   getFirestore,
   collection,
-  getDocs,
-  doc,
-  updateDoc
+  getDocs
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
@@ -29,11 +27,11 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
 const appDiv = document.getElementById("app");
 
 
 onAuthStateChanged(auth, async (admin)=>{
+
 
 if(!admin){
 
@@ -57,7 +55,6 @@ appDiv.innerHTML = `
 Loading users...
 </div>
 
-
 <hr>
 
 <h2>Transactions</h2>
@@ -66,10 +63,8 @@ Loading users...
 Loading transactions...
 </div>
 
-
-<div id="details"></div>
-
 `;
+
 
 
 loadUsers();
@@ -100,20 +95,15 @@ const u = item.data();
 
 html += `
 
-<div style="
-background:white;
-padding:15px;
-margin:10px;
-border-radius:12px;
-">
+<div class="card">
 
-<h3>${u.Name || "No Name"}</h3>
+<h3>${u.Name || u.name || "No Name"}</h3>
 
-<p>Email: ${u.Email || ""}</p>
+<p>Email: ${u.Email || u.email || "No Email"}</p>
 
-<p>Status: ${u.Status || ""}</p>
+<p>Status: ${u.Status || u.status || "No Status"}</p>
 
-<p>Wallet: ₦${u.Wallet || 0}</p>
+<p>Wallet: ₦${u.Wallet || u.wallet || 0}</p>
 
 
 <button onclick="viewUser('${item.id}')">
@@ -128,7 +118,7 @@ View User
 });
 
 
-usersDiv.innerHTML = html || "No users";
+usersDiv.innerHTML = html || "No users found";
 
 
 }
@@ -138,37 +128,46 @@ usersDiv.innerHTML = html || "No users";
 window.viewUser = async function(id){
 
 
-const userDoc = await getDocs(collection(db,"users"));
+const snap = await getDocs(collection(db,"users"));
 
-let found;
+let userData = null;
 
 
-userDoc.forEach((d)=>{
+snap.forEach((item)=>{
 
-if(d.id === id){
+if(item.id === id){
 
-found = d.data();
+userData = item.data();
 
 }
 
 });
 
 
-document.getElementById("details").innerHTML = `
+if(!userData){
 
-<h2>User Details</h2>
+alert("User not found");
+return;
 
-<p>Name: ${found.Name || ""}</p>
+}
 
-<p>Email: ${found.Email || ""}</p>
 
-<p>Status: ${found.Status || ""}</p>
+alert(`
 
-<p>Wallet: ₦${found.Wallet || 0}</p>
+Name: ${userData.Name || userData.name}
 
-`;
+Email: ${userData.Email || userData.email}
+
+Status: ${userData.Status || userData.status}
+
+Wallet: ₦${userData.Wallet || userData.wallet}
+
+`);
+
 
 };
+
+
 
 
 
@@ -176,7 +175,6 @@ async function loadTransactions(){
 
 
 const div = document.getElementById("transactions");
-
 
 const snap = await getDocs(collection(db,"transactions"));
 
@@ -192,21 +190,17 @@ const t = item.data();
 
 html += `
 
-<div style="
-background:white;
-padding:15px;
-margin:10px;
-border-radius:12px;
-">
+<div class="card">
 
+<h3>${t.type || "Transaction"}</h3>
 
-<h3>Transaction</h3>
+<p>Amount: ₦${t.amount || 0}</p>
 
+<p>Status: ${t.status || ""}</p>
 
-<pre>
-${JSON.stringify(t,null,2)}
-</pre>
+<p>Network: ${t.network || ""}</p>
 
+<p>Phone: ${t.phone || ""}</p>
 
 </div>
 
@@ -215,7 +209,7 @@ ${JSON.stringify(t,null,2)}
 });
 
 
-div.innerHTML = html || "No transactions found";
+div.innerHTML = html || "No transactions";
 
 
 }
