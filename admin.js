@@ -33,7 +33,7 @@ const db = getFirestore(app);
 const appDiv = document.getElementById("app");
 
 
-onAuthStateChanged(auth, async (user) => {
+onAuthStateChanged(auth, async (user)=>{
 
 
 if(!user){
@@ -69,10 +69,6 @@ Loading users...
 const userList = document.getElementById("userList");
 
 
-
-try{
-
-
 const usersSnapshot = await getDocs(collection(db,"users"));
 
 
@@ -87,13 +83,7 @@ const userData = doc.data();
 
 output += `
 
-<div style="
-background:white;
-padding:15px;
-margin:10px;
-border-radius:12px;
-box-shadow:0 2px 8px rgba(0,0,0,0.1);
-">
+<div class="card">
 
 <h3>${userData.Name || "No Name"}</h3>
 
@@ -103,38 +93,27 @@ box-shadow:0 2px 8px rgba(0,0,0,0.1);
 
 <p>Wallet: ₦${userData.Wallet || 0}</p>
 
+
+<button onclick="showUser('${userData.Email}')">
+View Details
+</button>
+
+
 </div>
 
 `;
 
-
-
 });
 
-
-if(output === ""){
-
-userList.innerHTML = "No users found";
-
-}else{
 
 userList.innerHTML = output;
 
-}
-
-
-
-}
-
-catch(error){
-
-userList.innerHTML = `
-<h3>Error loading users</h3>
-<p>${error.message}</p>
-`;
-
-}
-
-
 
 });
+
+
+window.showUser = function(email){
+
+alert("User details: " + email);
+
+};
