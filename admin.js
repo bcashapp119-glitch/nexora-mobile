@@ -26,19 +26,16 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
 
 const appDiv = document.getElementById("app");
 
 
-onAuthStateChanged(auth, async (user)=>{
+onAuthStateChanged(auth, async (admin)=>{
 
-
-if(!user){
+if(!admin){
 
 appDiv.innerHTML = "Please login first";
 return;
@@ -50,65 +47,77 @@ appDiv.innerHTML = `
 
 <h1>Nexora Admin Dashboard</h1>
 
-<p>Admin: ${user.email}</p>
+<p>Admin: ${admin.email}</p>
 
 <hr>
 
 <h2>Users</h2>
 
-<div id="userList">
+<div id="users">
 Loading users...
 </div>
+
+
+<hr>
+
+<h2>Transactions</h2>
+
+<div id="transactions">
+Loading transactions...
+</div>
+
 
 <div id="details"></div>
 
 `;
 
 
+loadUsers();
 
-const userList = document.getElementById("userList");
-
-
-const snapshot = await getDocs(collection(db,"users"));
+loadTransactions();
 
 
-let output = "";
+});
 
 
-snapshot.forEach((item)=>{
+
+async function loadUsers(){
 
 
-const user = item.data();
+const usersDiv = document.getElementById("users");
+
+const snap = await getDocs(collection(db,"users"));
 
 
-output += `
+let html = "";
+
+
+snap.forEach((item)=>{
+
+
+const u = item.data();
+
+
+html += `
 
 <div style="
 background:white;
 padding:15px;
-margin:15px;
+margin:10px;
 border-radius:12px;
-box-shadow:0 2px 8px #ddd;
 ">
 
+<h3>${u.Name || "No Name"}</h3>
 
-<h3>${user.Name || "No Name"}</h3>
+<p>Email: ${u.Email || ""}</p>
 
-<p>Email: ${user.Email || ""}</p>
+<p>Status: ${u.Status || ""}</p>
 
-<p>Status: ${user.Status || ""}</p>
-
-<p>Wallet: ₦${user.Wallet || 0}</p>
+<p>Wallet: ₦${u.Wallet || 0}</p>
 
 
-<button onclick="viewUser(
-'${item.id}',
-'${user.Name}',
-'${user.Email}',
-'${user.Status}',
-'${user.Wallet}'
-)">
-View Details
+<button onclick="viewUser('${item.id}')">
+View User
 </button>
 
 
@@ -119,44 +128,43 @@ View Details
 });
 
 
-userList.innerHTML = output;
+usersDiv.innerHTML = html || "No users";
+
+
+}
 
 
 
-window.viewUser = function(id,name,email,status,wallet){
+window.viewUser = async function(id){
+
+
+const userDoc = await getDocs(collection(db,"users"));
+
+let found;
+
+
+userDoc.forEach((d)=>{
+
+if(d.id === id){
+
+found = d.data();
+
+}
+
+});
 
 
 document.getElementById("details").innerHTML = `
 
-<hr>
+<h2>User Details</h2>
 
-<h2>Edit User</h2>
+<p>Name: ${found.Name || ""}</p>
 
-<p>Name: ${name}</p>
+<p>Email: ${found.Email || ""}</p>
 
-<p>Email: ${email}</p>
+<p>Status: ${found.Status || ""}</p>
 
-
-<label>Status:</label>
-
-<input id="editStatus" value="${status}">
-
-
-<br><br>
-
-
-<label>Wallet:</label>
-
-<input id="editWallet" type="number" value="${wallet}">
-
-
-<br><br>
-
-
-<button onclick="saveUser('${id}')">
-Save Changes
-</button>
-
+<p>Wallet: ₦${found.Wallet || 0}</p>
 
 `;
 
@@ -164,35 +172,50 @@ Save Changes
 
 
 
-window.saveUser = async function(id){
+async function loadTransactions(){
 
 
-const newStatus =
-document.getElementById("editStatus").value;
+const div = document.getElementById("transactions");
 
 
-const newWallet =
-Number(document.getElementById("editWallet").value);
+const snap = await getDocs(collection(db,"transactions"));
 
 
-
-await updateDoc(
-doc(db,"users",id),
-{
-Status:newStatus,
-Wallet:newWallet
-}
-);
+let html = "";
 
 
-
-alert("User updated successfully");
-
-
-location.reload();
+snap.forEach((item)=>{
 
 
-};
+const t = item.data();
 
+
+html += `
+
+<div style="
+background:white;
+padding:15px;
+margin:10px;
+border-radius:12px;
+">
+
+
+<h3>Transaction</h3>
+
+
+<pre>
+${JSON.stringify(t,null,2)}
+</pre>
+
+
+</div>
+
+`;
 
 });
+
+
+div.innerHTML = html || "No transactions found";
+
+
+}
