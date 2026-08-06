@@ -10,7 +10,11 @@ import {
   collection,
   getDocs,
   query,
-  where
+  where,
+  doc,
+  updateDoc,
+  addDoc,
+  serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
@@ -50,6 +54,7 @@ function showDashboard(user) {
     <div class="card">
       <h2>Admin Dashboard</h2>
       <p>Welcome to Nexora Mobile Admin.</p>
+
       <p>
         <strong>Signed in:</strong>
         ${escapeHTML(user.email || "Admin")}
@@ -107,7 +112,7 @@ function showDashboard(user) {
 
 
 /* =========================
-   USERS
+   LOAD USERS
 ========================= */
 
 async function loadUsers() {
@@ -122,7 +127,9 @@ async function loadUsers() {
   try {
 
     const snapshot =
-      await getDocs(collection(db, "users"));
+      await getDocs(
+        collection(db, "users")
+      );
 
 
     if (snapshot.empty) {
@@ -146,16 +153,13 @@ async function loadUsers() {
         user.fullName ||
         "User";
 
-
       const email =
         user.email ||
         "Not available";
 
-
       const phone =
         user.phone ||
         "Not available";
-
 
       const balance =
         Number(user.balance || 0);
@@ -185,12 +189,38 @@ async function loadUsers() {
 
         <p>
           <strong>Wallet Balance:</strong>
-          ₦${balance.toLocaleString()}
+          ₦<span class="balance">
+            ${balance.toLocaleString()}
+          </span>
         </p>
+
+
+        <input
+          class="walletAmount"
+          type="number"
+          min="1"
+          step="1"
+          placeholder="Enter amount"
+        />
+
+
+        <button class="addFundsButton">
+          Add Funds
+        </button>
+
+
+        <button class="deductFundsButton">
+          Deduct Funds
+        </button>
+
+
+        <br>
+
 
         <button class="viewUserButton">
           View Customer
         </button>
+
 
         <div
           class="customerDetails"
@@ -200,50 +230,308 @@ async function loadUsers() {
       `;
 
 
-      const button =
-        card.querySelector(".viewUserButton");
+      const balanceElement =
+        card.querySelector(".balance");
+
+
+      const amountInput =
+        card.querySelector(".walletAmount");
+
+
+      const addButton =
+        card.querySelector(
+          ".addFundsButton"
+        );
+
+
+      const deductButton =
+        card.querySelector(
+          ".deductFundsButton"
+        );
+
+
+      const viewButton =
+        card.querySelector(
+          ".viewUserButton"
+        );
 
 
       const details =
-        card.querySelector(".customerDetails");
+        card.querySelector(
+          ".customerDetails"
+        );
 
 
-      button.addEventListener("click", async () => {
+      /* ADD FUNDS */
 
-        if (
-          details.style.display === "none"
-        ) {
+      addButton.addEventListener(
+        "click",
+        async () => {
 
-          details.style.display = "block";
-
-          button.disabled = true;
-
-          button.textContent =
-            "Loading details...";
+          const amount =
+            Number(amountInput.value);
 
 
-          await showCustomerDetails(
-            details,
-            userDoc.id,
-            user
-          );
+          if (
+            !Number.isFinite(amount) ||
+            amount <= 0
+          ) {
+
+            alert(
+              "Please enter a valid amount."
+            );
+
+            return;
+          }
 
 
-          button.disabled = false;
+          const confirmed =
+            confirm(
+              `Add ₦${amount.toLocaleString()} to this customer's wallet?`
+            );
 
-          button.textContent =
-            "Hide Customer";
 
-        } else {
+          if (!confirmed) return;
 
-          details.style.display = "none";
 
-          button.textContent =
-            "View Customer";
+          addButton.disabled = true;
+
+          addButton.textContent =
+            "Adding...";
+
+
+          try {
+
+            const newBalance =
+              balance +
+              amount;
+
+
+            await updateDoc(
+              doc(
+                db,
+                "users",
+                userDoc.id
+              ),
+              {
+                balance: newBalance
+              }
+            );
+
+
+            await addDoc(
+              collection(
+                db,
+                "transactions"
+              ),
+              {
+                userId: userDoc.id,
+                type: "Admin Wallet Credit",
+                amount: amount,
+                status: "Successful",
+                direction: "credit",
+                createdAt:
+                  serverTimestamp()
+              }
+            );
+
+
+            balanceElement.textContent =
+              newBalance.toLocaleString();
+
+
+            amountInput.value = "";
+
+
+            alert(
+              `₦${amount.toLocaleString()} added successfully.`
+            );
+
+
+          } catch (error) {
+
+            console.error(error);
+
+            alert(
+              "Unable to add funds: " +
+              error.message
+            );
+
+          }
+
+
+          addButton.disabled = false;
+
+          addButton.textContent =
+            "Add Funds";
 
         }
+      );
 
-      });
+
+      /* DEDUCT FUNDS */
+
+      deductButton.addEventListener(
+        "click",
+        async () => {
+
+          const amount =
+            Number(amountInput.value);
+
+
+          if (
+            !Number.isFinite(amount) ||
+            amount <= 0
+          ) {
+
+            alert(
+              "Please enter a valid amount."
+            );
+
+            return;
+          }
+
+
+          if (amount > balance) {
+
+            alert(
+              "This customer does not have enough wallet balance."
+            );
+
+            return;
+          }
+
+
+          const confirmed =
+            confirm(
+              `Deduct ₦${amount.toLocaleString()} from this customer's wallet?`
+            );
+
+
+          if (!confirmed) return;
+
+
+          deductButton.disabled = true;
+
+          deductButton.textContent =
+            "Deducting...";
+
+
+          try {
+
+            const newBalance =
+              balance -
+              amount;
+
+
+            await updateDoc(
+              doc(
+                db,
+                "users",
+                userDoc.id
+              ),
+              {
+                balance: newBalance
+              }
+            );
+
+
+            await addDoc(
+              collection(
+                db,
+                "transactions"
+              ),
+              {
+                userId: userDoc.id,
+                type: "Admin Wallet Debit",
+                amount: amount,
+                status: "Successful",
+                direction: "debit",
+                createdAt:
+                  serverTimestamp()
+              }
+            );
+
+
+            balanceElement.textContent =
+              newBalance.toLocaleString();
+
+
+            amountInput.value = "";
+
+
+            alert(
+              `₦${amount.toLocaleString()} deducted successfully.`
+            );
+
+
+          } catch (error) {
+
+            console.error(error);
+
+            alert(
+              "Unable to deduct funds: " +
+              error.message
+            );
+
+          }
+
+
+          deductButton.disabled = false;
+
+          deductButton.textContent =
+            "Deduct Funds";
+
+        }
+      );
+
+
+      /* VIEW CUSTOMER */
+
+      viewButton.addEventListener(
+        "click",
+        async () => {
+
+          if (
+            details.style.display ===
+            "none"
+          ) {
+
+            details.style.display =
+              "block";
+
+            viewButton.disabled =
+              true;
+
+            viewButton.textContent =
+              "Loading...";
+
+
+            await showCustomerDetails(
+              details,
+              userDoc.id,
+              user
+            );
+
+
+            viewButton.disabled =
+              false;
+
+            viewButton.textContent =
+              "Hide Customer";
+
+          } else {
+
+            details.style.display =
+              "none";
+
+            viewButton.textContent =
+              "View Customer";
+
+          }
+
+        }
+      );
 
 
       area.appendChild(card);
@@ -280,6 +568,7 @@ async function showCustomerDetails(
 ) {
 
   details.innerHTML = `
+
     <hr>
 
     <h3>
@@ -332,6 +621,7 @@ async function showCustomerDetails(
     <div id="customerTransactions">
       Loading transactions...
     </div>
+
   `;
 
 
@@ -346,8 +636,15 @@ async function showCustomerDetails(
     const transactionSnapshot =
       await getDocs(
         query(
-          collection(db, "transactions"),
-          where("userId", "==", userId)
+          collection(
+            db,
+            "transactions"
+          ),
+          where(
+            "userId",
+            "==",
+            userId
+          )
         )
       );
 
@@ -357,7 +654,7 @@ async function showCustomerDetails(
     ) {
 
       transactionArea.innerHTML =
-        "<p>No transactions found for this customer.</p>";
+        "<p>No transactions found.</p>";
 
       return;
     }
@@ -373,24 +670,9 @@ async function showCustomerDetails(
           transactionDoc.data();
 
 
-        const type =
-          transaction.type ||
-          "Transaction";
-
-
-        const amount =
-          Number(
-            transaction.amount || 0
-          );
-
-
-        const status =
-          transaction.status ||
-          "Unknown";
-
-
         const transactionCard =
           document.createElement("div");
+
 
         transactionCard.className =
           "card";
@@ -399,17 +681,25 @@ async function showCustomerDetails(
         transactionCard.innerHTML = `
 
           <h4>
-            ${escapeHTML(type)}
+            ${escapeHTML(
+              transaction.type ||
+              "Transaction"
+            )}
           </h4>
 
           <p>
             <strong>Amount:</strong>
-            ₦${amount.toLocaleString()}
+            ₦${Number(
+              transaction.amount || 0
+            ).toLocaleString()}
           </p>
 
           <p>
             <strong>Status:</strong>
-            ${escapeHTML(status)}
+            ${escapeHTML(
+              transaction.status ||
+              "Unknown"
+            )}
           </p>
 
           <p>
@@ -436,7 +726,7 @@ async function showCustomerDetails(
 
     transactionArea.innerHTML = `
       <p>
-        Could not load customer transactions.
+        Could not load transactions.
       </p>
 
       <small>
@@ -497,7 +787,9 @@ async function loadTransactions() {
         const card =
           document.createElement("div");
 
-        card.className = "card";
+
+        card.className =
+          "card";
 
 
         card.innerHTML = `
@@ -653,7 +945,7 @@ async function loadTransactions() {
 
 
 /* =========================
-   AUTHENTICATION
+   ADMIN AUTH
 ========================= */
 
 onAuthStateChanged(
