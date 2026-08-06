@@ -7,6 +7,11 @@
 <title>Nexora Dashboard</title>
 
 <style>
+
+*{
+box-sizing:border-box;
+}
+
 body{
 font-family:Arial,sans-serif;
 background:#f3f6fb;
@@ -22,6 +27,8 @@ border-radius:0 0 25px 25px;
 
 .container{
 padding:20px;
+max-width:700px;
+margin:auto;
 }
 
 .card{
@@ -60,14 +67,165 @@ border-bottom:1px solid #ddd;
 padding:10px 0;
 }
 
-button{
+.logout-button{
 width:100%;
 padding:15px;
 background:#dc2626;
 color:white;
 border:none;
 border-radius:12px;
+font-size:16px;
+cursor:pointer;
 }
+
+
+/* =========================
+   NEXORA AI BUTTON
+========================= */
+
+#nexora-ai-button{
+position:fixed;
+right:20px;
+bottom:20px;
+z-index:9999;
+}
+
+#open-ai{
+border:none;
+border-radius:50px;
+padding:14px 20px;
+background:#2563eb;
+color:white;
+font-size:15px;
+font-weight:bold;
+box-shadow:0 5px 15px rgba(0,0,0,0.2);
+cursor:pointer;
+}
+
+
+/* =========================
+   AI CHAT WINDOW
+========================= */
+
+#ai-chat{
+display:none;
+position:fixed;
+right:15px;
+bottom:80px;
+width:calc(100% - 30px);
+max-width:380px;
+height:520px;
+background:white;
+border-radius:20px;
+box-shadow:0 10px 35px rgba(0,0,0,0.25);
+z-index:10000;
+overflow:hidden;
+}
+
+
+/* AI HEADER */
+
+.ai-header{
+background:#2563eb;
+color:white;
+padding:16px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.ai-header h3{
+margin:0;
+font-size:17px;
+}
+
+#close-ai{
+background:transparent;
+border:none;
+color:white;
+font-size:22px;
+cursor:pointer;
+}
+
+
+/* CHAT MESSAGES */
+
+#ai-messages{
+height:380px;
+overflow-y:auto;
+padding:15px;
+background:#f7f8fc;
+}
+
+.ai-message{
+background:#e8edff;
+padding:11px 13px;
+border-radius:14px;
+margin-bottom:10px;
+max-width:85%;
+line-height:1.4;
+}
+
+.user-message{
+background:#2563eb;
+color:white;
+padding:11px 13px;
+border-radius:14px;
+margin-bottom:10px;
+margin-left:auto;
+max-width:85%;
+line-height:1.4;
+}
+
+
+/* AI INPUT */
+
+.ai-input-area{
+display:flex;
+gap:8px;
+padding:10px;
+border-top:1px solid #ddd;
+}
+
+#ai-input{
+flex:1;
+padding:12px;
+border:1px solid #ccc;
+border-radius:10px;
+outline:none;
+}
+
+#send-ai{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 15px;
+border-radius:10px;
+cursor:pointer;
+}
+
+
+/* QUICK QUESTIONS */
+
+.quick-actions{
+display:flex;
+gap:6px;
+padding:8px;
+overflow-x:auto;
+background:white;
+}
+
+.quick-actions button{
+white-space:nowrap;
+border:1px solid #2563eb;
+background:white;
+color:#2563eb;
+padding:7px 10px;
+border-radius:20px;
+cursor:pointer;
+font-size:12px;
+}
+
 </style>
 
 </head>
@@ -76,13 +234,20 @@ border-radius:12px;
 
 
 <div class="top">
-<h1>Hello, <span id="name">User</span> 👋</h1>
+
+<h1>
+Hello, <span id="name">User</span> 👋
+</h1>
+
 <p>Nexora Mobile</p>
+
 </div>
 
 
 <div class="container">
 
+
+<!-- WALLET -->
 
 <div class="card wallet">
 
@@ -95,20 +260,28 @@ border-radius:12px;
 </div>
 
 
+<!-- ACCOUNT -->
 
 <div class="card">
 
 <h2>Account</h2>
 
 <p>Email:</p>
-<b id="email">Loading...</b>
+
+<b id="email">
+Loading...
+</b>
 
 <p>Status:</p>
-<b id="status">Loading...</b>
+
+<b id="status">
+Loading...
+</b>
 
 </div>
 
 
+<!-- SERVICES -->
 
 <div class="card">
 
@@ -116,39 +289,67 @@ border-radius:12px;
 
 <div class="services">
 
-<a href="fund-wallet.html" style="text-decoration:none;color:black;">
+
+<a
+href="fund-wallet.html"
+style="text-decoration:none;color:black;"
+>
+
 <div class="service">
 💰 Fund Wallet
 </div>
+
 </a>
 
-<a href="airtime.html" style="text-decoration:none;color:black;">
+
+<a
+href="airtime.html"
+style="text-decoration:none;color:black;"
+>
+
 <div class="service">
 📱 Airtime
 </div>
+
 </a>
 
-<a href="data.html" style="text-decoration:none;color:black;">
+
+<a
+href="data.html"
+style="text-decoration:none;color:black;"
+>
+
 <div class="service">
 📶 Data
 </div>
+
 </a>
 
-<a href="esim.html" style="text-decoration:none;color:black;">
-  <div class="service">
-    🌍 eSIM
-  </div>
+
+<a
+href="esim.html"
+style="text-decoration:none;color:black;"
+>
+
+<div class="service">
+🌍 eSIM
+</div>
+
 </a>
+
 
 </div>
 
 </div>
 
 
+<!-- TRANSACTIONS -->
 
 <div class="card">
 
-<h2>Transaction History</h2>
+<h2>
+Transaction History
+</h2>
 
 <div id="transactions">
 Loading...
@@ -157,10 +358,14 @@ Loading...
 </div>
 
 
+<!-- LOGOUT -->
 
 <div class="card">
 
-<button id="logout">
+<button
+class="logout-button"
+id="logout"
+>
 Logout
 </button>
 
@@ -170,8 +375,105 @@ Logout
 </div>
 
 
+<!-- =========================
+     NEXORA AI CHAT
+========================= -->
+
+
+<div id="nexora-ai-button">
+
+<button id="open-ai">
+🤖 Nexora AI
+</button>
+
+</div>
+
+
+<div id="ai-chat">
+
+
+<!-- HEADER -->
+
+<div class="ai-header">
+
+<h3>
+🤖 Nexora AI Support
+</h3>
+
+<button id="close-ai">
+×
+</button>
+
+</div>
+
+
+<!-- QUICK QUESTIONS -->
+
+<div class="quick-actions">
+
+<button data-question="How do I fund my wallet?">
+Fund Wallet
+</button>
+
+<button data-question="How do I buy airtime?">
+Airtime
+</button>
+
+<button data-question="How do I buy data?">
+Data
+</button>
+
+<button data-question="How do I get an eSIM?">
+eSIM
+</button>
+
+</div>
+
+
+<!-- MESSAGES -->
+
+<div id="ai-messages">
+
+<div class="ai-message">
+
+👋 Hello! I'm <b>Nexora AI Support</b>.
+
+<br><br>
+
+How can I help you today?
+
+</div>
+
+</div>
+
+
+<!-- INPUT -->
+
+<div class="ai-input-area">
+
+<input
+id="ai-input"
+type="text"
+placeholder="Type your question..."
+autocomplete="off"
+/>
+
+<button id="send-ai">
+Send
+</button>
+
+</div>
+
+
+</div>
+
 
 <script type="module">
+
+
+/* =========================
+   FIREBASE
+========================= */
 
 
 import { initializeApp }
@@ -179,109 +481,194 @@ from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 
 import {
+
 getAuth,
+
 onAuthStateChanged,
+
 signOut
+
 }
+
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
 import {
+
 getFirestore,
+
 doc,
+
 getDoc,
+
 collection,
+
 query,
+
 where,
-getDocs,
-orderBy
+
+getDocs
+
 }
+
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
 const firebaseConfig = {
-apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-authDomain:"nexora-mobile-af02f.firebaseapp.com",
-projectId:"nexora-mobile-af02f",
-storageBucket:"nexora-mobile-af02f.firebasestorage.app",
-messagingSenderId:"498265618137",
-appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
-measurementId:"G-8494CNWZKL"
+
+apiKey:
+"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+
+authDomain:
+"nexora-mobile-af02f.firebaseapp.com",
+
+projectId:
+"nexora-mobile-af02f",
+
+storageBucket:
+"nexora-mobile-af02f.firebasestorage.app",
+
+messagingSenderId:
+"498265618137",
+
+appId:
+"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+
+measurementId:
+"G-8494CNWZKL"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+const app =
+initializeApp(firebaseConfig);
 
 
+const auth =
+getAuth(app);
 
-onAuthStateChanged(auth, async(user)=>{
+
+const db =
+getFirestore(app);
+
+
+/* =========================
+   CUSTOMER ACCOUNT
+========================= */
+
+
+onAuthStateChanged(
+auth,
+async(user)=>{
 
 
 if(user){
 
 
-const userRef = doc(db,"users",user.uid);
+const userRef =
+doc(
+db,
+"users",
+user.uid
+);
 
-const userSnap = await getDoc(userRef);
 
+const userSnap =
+await getDoc(userRef);
 
 
 if(userSnap.exists()){
 
-const data=userSnap.data();
+
+const data =
+userSnap.data();
 
 
-document.getElementById("name").innerHTML=data.name;
+document.getElementById(
+"name"
+).innerHTML =
+data.name || "User";
 
-document.getElementById("email").innerHTML=data.email;
 
-document.getElementById("wallet").innerHTML=data.wallet;
+document.getElementById(
+"email"
+).innerHTML =
+data.email || user.email;
 
-document.getElementById("status").innerHTML=data.status;
+
+document.getElementById(
+"wallet"
+).innerHTML =
+Number(
+data.wallet ??
+data.balance ??
+0
+).toLocaleString();
+
+
+document.getElementById(
+"status"
+).innerHTML =
+data.status || "Active";
 
 
 }
 
 
+/* TRANSACTIONS */
 
-const q = query(
 
-collection(db,"transactions"),
+const q =
+query(
 
-where("userId","==",user.uid)
+collection(
+db,
+"transactions"
+),
+
+where(
+"userId",
+"==",
+user.uid
+)
 
 );
 
 
-const result = await getDocs(q);
+const result =
+await getDocs(q);
 
 
-let html="";
+let html = "";
 
 
-result.forEach((item)=>{
+result.forEach(
+(item)=>{
 
 
-const t=item.data();
+const t =
+item.data();
 
 
 html += `
 
 <div class="transaction">
 
-<b>${t.type}</b>
+<b>
+${t.type || "Transaction"}
+</b>
 
 <br>
 
-Amount: ₦${t.amount}
+Amount:
+₦${Number(
+t.amount || 0
+).toLocaleString()}
 
 <br>
 
-Status: ${t.status}
+Status:
+${t.status || "Unknown"}
 
 </div>
 
@@ -290,66 +677,396 @@ Status: ${t.status}
 });
 
 
-document.getElementById("transactions").innerHTML =
-html || "No transactions yet";
+document.getElementById(
+"transactions"
+).innerHTML =
+html ||
+"No transactions yet";
 
 
 }else{
 
-window.location.href="login.html";
+
+window.location.href =
+"login.html";
+
 
 }
 
-
 });
 
 
+/* =========================
+   LOGOUT
+========================= */
 
-document.getElementById("logout").onclick=()=>{
 
-signOut(auth).then(()=>{
+document.getElementById(
+"logout"
+).onclick =
+()=>{
 
-window.location.href="login.html";
+
+signOut(auth)
+.then(()=>{
+
+
+window.location.href =
+"login.html";
+
 
 });
+
 
 };
 
 
+/* =========================
+   AI CHAT
+========================= */
+
+
+const openAI =
+document.getElementById(
+"open-ai"
+);
+
+
+const closeAI =
+document.getElementById(
+"close-ai"
+);
+
+
+const aiChat =
+document.getElementById(
+"ai-chat"
+);
+
+
+const aiInput =
+document.getElementById(
+"ai-input"
+);
+
+
+const sendAI =
+document.getElementById(
+"send-ai"
+);
+
+
+const aiMessages =
+document.getElementById(
+"ai-messages"
+);
+
+
+/* OPEN */
+
+
+openAI.onclick =
+()=>{
+
+
+aiChat.style.display =
+"block";
+
+
+openAI.style.display =
+"none";
+
+
+aiInput.focus();
+
+
+};
+
+
+/* CLOSE */
+
+
+closeAI.onclick =
+()=>{
+
+
+aiChat.style.display =
+"none";
+
+
+openAI.style.display =
+"block";
+
+
+};
+
+
+/* ADD MESSAGE */
+
+
+function addMessage(
+text,
+type
+){
+
+
+const message =
+document.createElement(
+"div"
+);
+
+
+message.className =
+type === "user"
+?
+"user-message"
+:
+"ai-message";
+
+
+message.textContent =
+text;
+
+
+aiMessages.appendChild(
+message
+);
+
+
+aiMessages.scrollTop =
+aiMessages.scrollHeight;
+
+
+}
+
+
+/* AI DEMO RESPONSE */
+
+
+function getSupportResponse(
+question
+){
+
+
+const q =
+question.toLowerCase();
+
+
+if(
+q.includes("fund") ||
+q.includes("wallet")
+){
+
+
+return `
+You can fund your Nexora wallet by opening "Fund Wallet" from your dashboard and following the payment instructions.
+`;
+
+
+}
+
+
+if(
+q.includes("airtime")
+){
+
+
+return `
+To buy airtime, open "Airtime" from your Nexora dashboard, choose your network and amount, then follow the instructions.
+`;
+
+
+}
+
+
+if(
+q.includes("data")
+){
+
+
+return `
+To buy data, open "Data" from your Nexora dashboard, select your network and data plan, then continue with your purchase.
+`;
+
+
+}
+
+
+if(
+q.includes("esim") ||
+q.includes("e-sim")
+){
+
+
+return `
+To purchase an eSIM, open "eSIM" from your Nexora dashboard and choose the destination and plan you want.
+`;
+
+
+}
+
+
+if(
+q.includes("transaction") ||
+q.includes("history")
+){
+
+
+return `
+You can see your recent transactions in the Transaction History section of your Nexora dashboard.
+`;
+
+
+}
+
+
+if(
+q.includes("hello") ||
+q.includes("hi") ||
+q.includes("hey")
+){
+
+
+return `
+Hello 👋 Welcome to Nexora Mobile! How can I help you today?
+`;
+
+
+}
+
+
+return `
+I'm Nexora AI Support 🤖. I can currently help with Wallet Funding, Airtime, Data, eSIM and Transaction History.
+
+What would you like help with?
+`;
+
+
+}
+
+
+/* SEND MESSAGE */
+
+
+function sendMessage(){
+
+
+const question =
+aiInput.value.trim();
+
+
+if(!question)
+return;
+
+
+addMessage(
+question,
+"user"
+);
+
+
+aiInput.value = "";
+
+
+/* TEMPORARY RESPONSE */
+
+
+setTimeout(()=>{
+
+
+const response =
+getSupportResponse(
+question
+);
+
+
+addMessage(
+response,
+"ai"
+);
+
+
+},500);
+
+
+}
+
+
+/* SEND BUTTON */
+
+
+sendAI.onclick =
+sendMessage;
+
+
+/* ENTER KEY */
+
+
+aiInput.addEventListener(
+"keydown",
+(event)=>{
+
+
+if(
+event.key === "Enter"
+){
+
+sendMessage();
+
+}
+
+});
+
+
+/* QUICK QUESTIONS */
+
+
+document
+.querySelectorAll(
+".quick-actions button"
+)
+.forEach(
+(button)=>{
+
+
+button.addEventListener(
+"click",
+()=>{
+
+
+const question =
+button.dataset.question;
+
+
+addMessage(
+question,
+"user"
+);
+
+
+setTimeout(()=>{
+
+
+addMessage(
+getSupportResponse(
+question
+),
+"ai"
+);
+
+
+},500);
+
+
+}
+);
+
+
+});
+
+
 </script>
 
-<!-- Nexora AI Support -->
-<div id="nexora-ai-button"
-     style="
-       position: fixed;
-       right: 20px;
-       bottom: 20px;
-       z-index: 9999;
-     ">
 
-  <button
-    onclick="openNexoraAI()"
-    style="
-      border: none;
-      border-radius: 50px;
-      padding: 14px 20px;
-      background: #2563eb;
-      color: white;
-      font-size: 15px;
-      font-weight: bold;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      cursor: pointer;
-    "
-  >
-    🤖 Nexora AI
-  </button>
-
-</div>
-
-<script>
-  function openNexoraAI() {
-    alert("Nexora AI Support is coming online...");
-  }
-</script>
 </body>
 </html>
