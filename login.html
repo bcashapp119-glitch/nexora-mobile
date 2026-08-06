@@ -4,775 +4,229 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Mobile - Login</title>
+
 <style>
-*{
-    box-sizing:border-box;
-}
+*{box-sizing:border-box}
+
 body{
-    margin:0;
-    font-family:Arial,sans-serif;
-    background:#f5f7fb;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
-    color:#111827;
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
 }
+
 .container{
-    background:white;
-    padding:30px;
-    width:100%;
-    max-width:410px;
-    border-radius:18px;
-    box-shadow:0 8px 30px rgba(0,0,0,0.10);
+  background:white;
+  width:100%;
+  max-width:400px;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 5px 25px rgba(0,0,0,.1);
 }
+
 .logo{
-    text-align:center;
-    font-size:27px;
-    font-weight:bold;
-    color:#2563eb;
-    margin-bottom:5px;
+  text-align:center;
+  font-size:27px;
+  font-weight:bold;
+  color:#2563eb;
+  margin-bottom:8px;
 }
+
 .subtitle{
-    text-align:center;
-    color:#6b7280;
-    font-size:14px;
-    margin-bottom:25px;
+  text-align:center;
+  color:#6b7280;
+  margin-bottom:25px;
 }
-h2{
-    text-align:center;
-    margin-bottom:20px;
-}
-.form-group{
-    margin-bottom:14px;
-}
-label{
-    display:block;
-    font-size:14px;
-    font-weight:bold;
-    margin-bottom:6px;
-}
+
 input{
-    width:100%;
-    padding:13px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    font-size:15px;
-    outline:none;
+  width:100%;
+  padding:14px;
+  margin-bottom:14px;
+  border:1px solid #d1d5db;
+  border-radius:9px;
+  font-size:16px;
 }
-input:focus{
-    border-color:#2563eb;
+
+button{
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:9px;
+  background:#2563eb;
+  color:white;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
 }
-.password-box{
-    position:relative;
+
+button:hover{
+  background:#1d4ed8;
 }
-.password-box input{
-    padding-right:80px;
-}
-.show-password{
-    position:absolute;
-    right:10px;
-    top:50%;
-    transform:translateY(-50%);
-    background:none;
-    color:#2563eb;
-    border:none;
-    width:auto;
-    padding:5px;
-    font-size:13px;
-    cursor:pointer;
-}
-button.main-button{
-    width:100%;
-    padding:14px;
-    margin-top:8px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:9px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-}
-button.main-button:hover{
-    background:#1d4ed8;
-}
-button.main-button:disabled{
-    background:#93c5fd;
-    cursor:not-allowed;
-}
+
 .forgot{
-    display:block;
-    text-align:right;
-    margin-top:10px;
-    color:#2563eb;
-    font-size:14px;
-    cursor:pointer;
+  display:block;
+  text-align:right;
+  margin:-3px 0 18px;
+  color:#2563eb;
+  text-decoration:none;
+  font-size:14px;
 }
-.switch{
-    text-align:center;
-    margin-top:20px;
-    color:#6b7280;
-    font-size:14px;
+
+.links{
+  text-align:center;
+  margin-top:20px;
+  color:#6b7280;
 }
-.switch a{
-    color:#2563eb;
-    font-weight:bold;
-    text-decoration:none;
+
+.links a{
+  color:#2563eb;
+  text-decoration:none;
+  font-weight:bold;
 }
+
 #message{
-    text-align:center;
-    margin-top:15px;
-    font-size:14px;
-    line-height:1.5;
-}
-.success{
-    color:#15803d;
-}
-.error{
-    color:#dc2626;
-}
-.hidden{
-    display:none;
-}
-.back-login{
-    display:block;
-    text-align:center;
-    margin-top:15px;
-    color:#2563eb;
-    cursor:pointer;
-    font-size:14px;
-}
-.info{
-    background:#eff6ff;
-    color:#1e40af;
-    padding:12px;
-    border-radius:9px;
-    font-size:13px;
-    line-height:1.5;
-    margin-bottom:15px;
-}
-@media(max-width:500px){
-    .container{
-        padding:24px 20px;
-    }
+  text-align:center;
+  margin-top:15px;
+  font-size:14px;
 }
 </style>
 </head>
+
 <body>
+
 <div class="container">
-<div class="logo">Nexora Mobile</div>
-<div class="subtitle">
-    Your mobile services, data and eSIM platform
+
+  <div class="logo">Nexora Mobile</div>
+
+  <div class="subtitle">Login to your account</div>
+
+  <input
+    id="email"
+    type="email"
+    placeholder="Email Address"
+    autocomplete="email"
+  >
+
+  <input
+    id="password"
+    type="password"
+    placeholder="Password"
+    autocomplete="current-password"
+  >
+
+  <a class="forgot" href="forgot-password.html">
+    Forgot Password?
+  </a>
+
+  <button id="loginBtn">
+    Login
+  </button>
+
+  <p id="message"></p>
+
+  <div class="links">
+    Don't have an account?
+    <a href="signup.html">Create Account</a>
+  </div>
+
 </div>
-<!-- LOGIN -->
-<div id="loginSection">
-    <h2>Welcome Back</h2>
-    <div class="form-group">
-        <label for="loginEmail">Email Address</label>
-        <input
-            id="loginEmail"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-        >
-    </div>
-    <div class="form-group">
-        <label for="loginPassword">Password</label>
-        <div class="password-box">
-            <input
-                id="loginPassword"
-                type="password"
-                placeholder="Enter your password"
-                autocomplete="current-password"
-            >
-            <button
-                type="button"
-                class="show-password"
-                id="showLoginPassword"
-            >
-                Show
-            </button>
-        </div>
-    </div>
-    <span
-        class="forgot"
-        id="forgotPasswordLink"
-    >
-        Forgot Password?
-    </span>
-    <button
-        type="button"
-        class="main-button"
-        id="loginBtn"
-    >
-        Login
-    </button>
-    <p id="loginMessage"></p>
-    <div class="switch">
-        Don't have an account?
-        <a href="#" id="showSignup">
-            Create Account
-        </a>
-    </div>
-</div>
-<!-- SIGN UP -->
-<div id="signupSection" class="hidden">
-    <h2>Create Account</h2>
-    <div class="info">
-        Create your Nexora Mobile account to buy airtime,
-        mobile data and eSIM plans and manage your transactions.
-    </div>
-    <div class="form-group">
-        <label for="signupName">
-            Full Name
-        </label>
-        <input
-            id="signupName"
-            type="text"
-            placeholder="Enter your full name"
-            autocomplete="name"
-        >
-    </div>
-    <div class="form-group">
-        <label for="signupEmail">
-            Email Address
-        </label>
-        <input
-            id="signupEmail"
-            type="email"
-            placeholder="Enter your email"
-            autocomplete="email"
-        >
-    </div>
-    <div class="form-group">
-        <label for="signupPassword">
-            Password
-        </label>
-        <div class="password-box">
-            <input
-                id="signupPassword"
-                type="password"
-                placeholder="Create a password"
-                autocomplete="new-password"
-            >
-            <button
-                type="button"
-                class="show-password"
-                id="showSignupPassword"
-            >
-                Show
-            </button>
-        </div>
-    </div>
-    <div class="form-group">
-        <label for="signupConfirmPassword">
-            Confirm Password
-        </label>
-        <div class="password-box">
-            <input
-                id="signupConfirmPassword"
-                type="password"
-                placeholder="Confirm your password"
-                autocomplete="new-password"
-            >
-            <button
-                type="button"
-                class="show-password"
-                id="showConfirmPassword"
-            >
-                Show
-            </button>
-        </div>
-    </div>
-    <button
-        type="button"
-        class="main-button"
-        id="signupBtn"
-    >
-        Create Account
-    </button>
-    <p id="signupMessage"></p>
-    <div class="switch">
-        Already have an account?
-        <a href="#" id="showLogin">
-            Login
-        </a>
-    </div>
-</div>
-<!-- FORGOT PASSWORD -->
-<div id="forgotSection" class="hidden">
-    <h2>Reset Password</h2>
-    <div class="info">
-        Enter the email address connected to your
-        Nexora Mobile account. Firebase will send
-        you a password-reset email.
-    </div>
-    <div class="form-group">
-        <label for="resetEmail">
-            Email Address
-        </label>
-        <input
-            id="resetEmail"
-            type="email"
-            placeholder="Enter your account email"
-            autocomplete="email"
-        >
-    </div>
-    <button
-        type="button"
-        class="main-button"
-        id="resetBtn"
-    >
-        Send Reset Email
-    </button>
-    <p id="resetMessage"></p>
-    <span
-        class="back-login"
-        id="backToLogin"
-    >
-        ← Back to Login
-    </span>
-</div>
-</div>
+
 <script type="module">
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 import {
-    getAuth,
-    signInWithEmailAndPassword,
-    createUserWithEmailAndPassword,
-    sendPasswordResetEmail,
-    updateProfile
+  getAuth,
+  signInWithEmailAndPassword
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-/*
-============================================================
-NEXORA MOBILE FIREBASE CONFIGURATION
-============================================================
-*/
+
+
 const firebaseConfig = {
-    apiKey:
-        "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-    authDomain:
-        "nexora-mobile-af02f.firebaseapp.com",
-    projectId:
-        "nexora-mobile-af02f",
-    storageBucket:
-        "nexora-mobile-af02f.firebasestorage.app",
-    messagingSenderId:
-        "498265618137",
-    appId:
-        "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-    measurementId:
-        "G-8494CNWZKL"
+  apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+  authDomain: "nexora-mobile-af02f.firebaseapp.com",
+  projectId: "nexora-mobile-af02f",
+  storageBucket: "nexora-mobile-af02f.firebasestorage.app",
+  messagingSenderId: "498265618137",
+  appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+  measurementId: "G-8494CNWZKL"
 };
-/*
-============================================================
-START FIREBASE
-============================================================
-*/
-const app =
-    initializeApp(firebaseConfig);
-const auth =
-    getAuth(app);
-/*
-============================================================
-PAGE SECTIONS
-============================================================
-*/
-const loginSection =
-    document.getElementById("loginSection");
-const signupSection =
-    document.getElementById("signupSection");
-const forgotSection =
-    document.getElementById("forgotSection");
-/*
-============================================================
-MESSAGES
-============================================================
-*/
-function showMessage(element, message, type){
-    element.textContent = message;
-    element.className = type;
-}
-/*
-============================================================
-SWITCH TO LOGIN
-============================================================
-*/
+
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
 document
-    .getElementById("showLogin")
-    .addEventListener("click", function(event){
-        event.preventDefault();
-        loginSection.classList.remove("hidden");
-        signupSection.classList.add("hidden");
-        forgotSection.classList.add("hidden");
-    });
-/*
-============================================================
-SWITCH TO SIGN UP
-============================================================
-*/
-document
-    .getElementById("showSignup")
-    .addEventListener("click", function(event){
-        event.preventDefault();
-        loginSection.classList.add("hidden");
-        signupSection.classList.remove("hidden");
-        forgotSection.classList.add("hidden");
-    });
-/*
-============================================================
-SWITCH TO FORGOT PASSWORD
-============================================================
-*/
-document
-    .getElementById("forgotPasswordLink")
-    .addEventListener("click", function(){
-        loginSection.classList.add("hidden");
-        signupSection.classList.add("hidden");
-        forgotSection.classList.remove("hidden");
-        const loginEmail =
-            document.getElementById("loginEmail").value.trim();
-        if(loginEmail){
-            document.getElementById("resetEmail").value =
-                loginEmail;
+  .getElementById("loginBtn")
+  .addEventListener("click", async () => {
+
+    const email =
+      document.getElementById("email").value.trim();
+
+    const password =
+      document.getElementById("password").value;
+
+    const message =
+      document.getElementById("message");
+
+
+    if (!email || !password) {
+      message.textContent =
+        "Please enter your email and password.";
+      return;
+    }
+
+
+    message.textContent = "Logging in...";
+
+
+    try {
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+
+      message.textContent =
+        "Login successful!";
+
+
+      setTimeout(() => {
+
+        if (
+          email.toLowerCase() ===
+          "sufiyanolawale36@gmail.com"
+        ) {
+
+          window.location.href = "admin.html";
+
+        } else {
+
+          window.location.href = "dashboard.html";
+
         }
-    });
-/*
-============================================================
-BACK TO LOGIN
-============================================================
-*/
-document
-    .getElementById("backToLogin")
-    .addEventListener("click", function(){
-        forgotSection.classList.add("hidden");
-        signupSection.classList.add("hidden");
-        loginSection.classList.remove("hidden");
-    });
-/*
-============================================================
-SHOW / HIDE LOGIN PASSWORD
-============================================================
-*/
-document
-    .getElementById("showLoginPassword")
-    .addEventListener("click", function(){
-        const password =
-            document.getElementById("loginPassword");
-        if(password.type === "password"){
-            password.type = "text";
-            this.textContent = "Hide";
-        }else{
-            password.type = "password";
-            this.textContent = "Show";
-        }
-    });
-/*
-============================================================
-SHOW / HIDE SIGNUP PASSWORD
-============================================================
-*/
-document
-    .getElementById("showSignupPassword")
-    .addEventListener("click", function(){
-        const password =
-            document.getElementById("signupPassword");
-        if(password.type === "password"){
-            password.type = "text";
-            this.textContent = "Hide";
-        }else{
-            password.type = "password";
-            this.textContent = "Show";
-        }
-    });
-/*
-============================================================
-SHOW / HIDE CONFIRM PASSWORD
-============================================================
-*/
-document
-    .getElementById("showConfirmPassword")
-    .addEventListener("click", function(){
-        const password =
-            document.getElementById("signupConfirmPassword");
-        if(password.type === "password"){
-            password.type = "text";
-            this.textContent = "Hide";
-        }else{
-            password.type = "password";
-            this.textContent = "Show";
-        }
-    });
-/*
-============================================================
-LOGIN
-============================================================
-*/
-document
-    .getElementById("loginBtn")
-    .addEventListener("click", async function(){
-        const email =
-            document
-                .getElementById("loginEmail")
-                .value
-                .trim();
-        const password =
-            document
-                .getElementById("loginPassword")
-                .value;
-        const message =
-            document.getElementById("loginMessage");
-        const button = this;
-        if(!email || !password){
-            showMessage(
-                message,
-                "Please enter your email and password.",
-                "error"
-            );
-            return;
-        }
-        button.disabled = true;
-        button.textContent = "Logging in...";
-        try{
-            await signInWithEmailAndPassword(
-                auth,
-                email,
-                password
-            );
-            showMessage(
-                message,
-                "Login successful. Opening your account...",
-                "success"
-            );
-            setTimeout(function(){
-                if(
-                    email.toLowerCase() ===
-                    "sufiyanolawale36@gmail.com"
-                ){
-                    window.location.href =
-                        "admin.html";
-                }else{
-                    window.location.href =
-                        "dashboard.html";
-                }
-            }, 800);
-        }catch(error){
-            console.error(error);
-            let errorMessage =
-                "Unable to log in. Please check your details.";
-            if(error.code === "auth/invalid-credential"){
-                errorMessage =
-                    "Incorrect email or password.";
-            }
-            else if(error.code === "auth/user-not-found"){
-                errorMessage =
-                    "No account was found with this email.";
-            }
-            else if(error.code === "auth/wrong-password"){
-                errorMessage =
-                    "Incorrect password.";
-            }
-            else if(error.code === "auth/invalid-email"){
-                errorMessage =
-                    "Please enter a valid email address.";
-            }
-            else if(error.code === "auth/too-many-requests"){
-                errorMessage =
-                    "Too many attempts. Please wait and try again.";
-            }
-            showMessage(
-                message,
-                errorMessage,
-                "error"
-            );
-            button.disabled = false;
-            button.textContent = "Login";
-        }
-    });
-/*
-============================================================
-CREATE ACCOUNT
-============================================================
-*/
-document
-    .getElementById("signupBtn")
-    .addEventListener("click", async function(){
-        const name =
-            document
-                .getElementById("signupName")
-                .value
-                .trim();
-        const email =
-            document
-                .getElementById("signupEmail")
-                .value
-                .trim();
-        const password =
-            document
-                .getElementById("signupPassword")
-                .value;
-        const confirmPassword =
-            document
-                .getElementById("signupConfirmPassword")
-                .value;
-        const message =
-            document.getElementById("signupMessage");
-        const button = this;
-        if(!name){
-            showMessage(
-                message,
-                "Please enter your full name.",
-                "error"
-            );
-            return;
-        }
-        if(!email){
-            showMessage(
-                message,
-                "Please enter your email address.",
-                "error"
-            );
-            return;
-        }
-        if(password.length < 6){
-            showMessage(
-                message,
-                "Password must contain at least 6 characters.",
-                "error"
-            );
-            return;
-        }
-        if(password !== confirmPassword){
-            showMessage(
-                message,
-                "The passwords do not match.",
-                "error"
-            );
-            return;
-        }
-        button.disabled = true;
-        button.textContent =
-            "Creating Account...";
-        try{
-            const userCredential =
-                await createUserWithEmailAndPassword(
-                    auth,
-                    email,
-                    password
-                );
-            const user =
-                userCredential.user;
-            await updateProfile(
-                user,
-                {
-                    displayName: name
-                }
-            );
-            showMessage(
-                message,
-                "Account created successfully. Opening your dashboard...",
-                "success"
-            );
-            setTimeout(function(){
-                window.location.href =
-                    "dashboard.html";
-            }, 1000);
-        }catch(error){
-            console.error(error);
-            let errorMessage =
-                "Unable to create your account.";
-            if(error.code === "auth/email-already-in-use"){
-                errorMessage =
-                    "An account already exists with this email.";
-            }
-            else if(error.code === "auth/invalid-email"){
-                errorMessage =
-                    "Please enter a valid email address.";
-            }
-            else if(error.code === "auth/weak-password"){
-                errorMessage =
-                    "Your password is too weak. Use at least 6 characters.";
-            }
-            showMessage(
-                message,
-                errorMessage,
-                "error"
-            );
-            button.disabled = false;
-            button.textContent =
-                "Create Account";
-        }
-    });
-/*
-============================================================
-FORGOT PASSWORD
-============================================================
-*/
-document
-    .getElementById("resetBtn")
-    .addEventListener("click", async function(){
-        const email =
-            document
-                .getElementById("resetEmail")
-                .value
-                .trim();
-        const message =
-            document.getElementById("resetMessage");
-        const button = this;
-        if(!email){
-            showMessage(
-                message,
-                "Please enter your account email.",
-                "error"
-            );
-            return;
-        }
-        button.disabled = true;
-        button.textContent =
-            "Sending...";
-        try{
-            await sendPasswordResetEmail(
-                auth,
-                email
-            );
-            showMessage(
-                message,
-                "Password reset email sent. Check your inbox and follow the link to create a new password.",
-                "success"
-            );
-            button.disabled = false;
-            button.textContent =
-                "Send Reset Email";
-        }catch(error){
-            console.error(error);
-            let errorMessage =
-                "Unable to send the password reset email.";
-            if(error.code === "auth/user-not-found"){
-                errorMessage =
-                    "No Nexora Mobile account was found with this email.";
-            }
-            else if(error.code === "auth/invalid-email"){
-                errorMessage =
-                    "Please enter a valid email address.";
-            }
-            else if(error.code === "auth/too-many-requests"){
-                errorMessage =
-                    "Too many requests. Please wait and try again.";
-            }
-            showMessage(
-                message,
-                errorMessage,
-                "error"
-            );
-            button.disabled = false;
-            button.textContent =
-                "Send Reset Email";
-        }
-    });
+
+      }, 800);
+
+
+    } catch (error) {
+
+      message.textContent =
+        error.message;
+
+    }
+
+  });
+
 </script>
+
 </body>
 </html>
