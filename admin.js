@@ -54,7 +54,6 @@ function showDashboard(user) {
     <div class="card">
       <h2>Admin Dashboard</h2>
       <p>Welcome to Nexora Mobile Admin.</p>
-
       <p>
         <strong>Signed in:</strong>
         ${escapeHTML(user.email || "Admin")}
@@ -88,61 +87,44 @@ function showDashboard(user) {
     </div>
   `;
 
-
   document
     .getElementById("usersButton")
     .addEventListener("click", loadUsers);
-
 
   document
     .getElementById("transactionsButton")
     .addEventListener("click", loadTransactions);
 
-
   document
     .getElementById("logoutButton")
     .addEventListener("click", async () => {
-
       await auth.signOut();
-
       location.reload();
-
     });
 }
 
 
 /* =========================
-   LOAD USERS
+   USERS
 ========================= */
 
 async function loadUsers() {
 
-  const area =
-    document.getElementById("usersArea");
+  const area = document.getElementById("usersArea");
 
-  area.innerHTML =
-    "<p>Loading customers...</p>";
-
+  area.innerHTML = "<p>Loading customers...</p>";
 
   try {
 
     const snapshot =
-      await getDocs(
-        collection(db, "users")
-      );
-
+      await getDocs(collection(db, "users"));
 
     if (snapshot.empty) {
-
-      area.innerHTML =
-        "<p>No customers found.</p>";
-
+      area.innerHTML = "<p>No customers found.</p>";
       return;
     }
 
-
     area.innerHTML = "";
-
 
     snapshot.forEach((userDoc) => {
 
@@ -173,9 +155,7 @@ async function loadUsers() {
 
       card.innerHTML = `
 
-        <h3>
-          ${escapeHTML(name)}
-        </h3>
+        <h3>${escapeHTML(name)}</h3>
 
         <p>
           <strong>Email:</strong>
@@ -194,36 +174,35 @@ async function loadUsers() {
           </span>
         </p>
 
+        <hr>
+
+        <h4>Manage Wallet</h4>
 
         <input
           class="walletAmount"
           type="number"
           min="1"
-          step="1"
           placeholder="Enter amount"
-        />
-
-
-        <button class="addFundsButton">
-          Add Funds
-        </button>
-
-
-        <button class="deductFundsButton">
-          Deduct Funds
-        </button>
-
+        >
 
         <br>
 
+        <button class="addButton">
+          Add Funds
+        </button>
 
-        <button class="viewUserButton">
+        <button class="deductButton">
+          Deduct Funds
+        </button>
+
+        <br>
+
+        <button class="viewButton">
           View Customer
         </button>
 
-
         <div
-          class="customerDetails"
+          class="details"
           style="display:none;"
         ></div>
 
@@ -233,36 +212,23 @@ async function loadUsers() {
       const balanceElement =
         card.querySelector(".balance");
 
-
       const amountInput =
         card.querySelector(".walletAmount");
 
-
       const addButton =
-        card.querySelector(
-          ".addFundsButton"
-        );
-
+        card.querySelector(".addButton");
 
       const deductButton =
-        card.querySelector(
-          ".deductFundsButton"
-        );
-
+        card.querySelector(".deductButton");
 
       const viewButton =
-        card.querySelector(
-          ".viewUserButton"
-        );
-
+        card.querySelector(".viewButton");
 
       const details =
-        card.querySelector(
-          ".customerDetails"
-        );
+        card.querySelector(".details");
 
 
-      /* ADD FUNDS */
+      /* ADD */
 
       addButton.addEventListener(
         "click",
@@ -271,105 +237,70 @@ async function loadUsers() {
           const amount =
             Number(amountInput.value);
 
-
-          if (
-            !Number.isFinite(amount) ||
-            amount <= 0
-          ) {
-
-            alert(
-              "Please enter a valid amount."
-            );
-
+          if (!Number.isFinite(amount) || amount <= 0) {
+            alert("Enter a valid amount.");
             return;
           }
 
-
-          const confirmed =
-            confirm(
-              `Add ₦${amount.toLocaleString()} to this customer's wallet?`
-            );
-
-
-          if (!confirmed) return;
-
+          if (
+            !confirm(
+              `Add ₦${amount.toLocaleString()} to ${name}'s wallet?`
+            )
+          ) {
+            return;
+          }
 
           addButton.disabled = true;
-
-          addButton.textContent =
-            "Adding...";
-
 
           try {
 
             const newBalance =
-              balance +
-              amount;
-
+              balance + amount;
 
             await updateDoc(
-              doc(
-                db,
-                "users",
-                userDoc.id
-              ),
+              doc(db, "users", userDoc.id),
               {
                 balance: newBalance
               }
             );
 
-
             await addDoc(
-              collection(
-                db,
-                "transactions"
-              ),
+              collection(db, "transactions"),
               {
                 userId: userDoc.id,
                 type: "Admin Wallet Credit",
                 amount: amount,
                 status: "Successful",
                 direction: "credit",
-                createdAt:
-                  serverTimestamp()
+                createdAt: serverTimestamp()
               }
             );
-
 
             balanceElement.textContent =
               newBalance.toLocaleString();
 
-
             amountInput.value = "";
 
-
-            alert(
-              `₦${amount.toLocaleString()} added successfully.`
-            );
-
+            alert("Funds added successfully.");
 
           } catch (error) {
 
             console.error(error);
 
             alert(
-              "Unable to add funds: " +
+              "Could not add funds: " +
               error.message
             );
 
           }
 
-
           addButton.disabled = false;
-
-          addButton.textContent =
-            "Add Funds";
 
         }
       );
 
 
-      /* DEDUCT FUNDS */
+      /* DEDUCT */
 
       deductButton.addEventListener(
         "click",
@@ -378,109 +309,71 @@ async function loadUsers() {
           const amount =
             Number(amountInput.value);
 
-
-          if (
-            !Number.isFinite(amount) ||
-            amount <= 0
-          ) {
-
-            alert(
-              "Please enter a valid amount."
-            );
-
+          if (!Number.isFinite(amount) || amount <= 0) {
+            alert("Enter a valid amount.");
             return;
           }
-
 
           if (amount > balance) {
-
             alert(
-              "This customer does not have enough wallet balance."
+              "The customer does not have enough balance."
             );
-
             return;
           }
 
-
-          const confirmed =
-            confirm(
-              `Deduct ₦${amount.toLocaleString()} from this customer's wallet?`
-            );
-
-
-          if (!confirmed) return;
-
+          if (
+            !confirm(
+              `Deduct ₦${amount.toLocaleString()} from ${name}'s wallet?`
+            )
+          ) {
+            return;
+          }
 
           deductButton.disabled = true;
-
-          deductButton.textContent =
-            "Deducting...";
-
 
           try {
 
             const newBalance =
-              balance -
-              amount;
-
+              balance - amount;
 
             await updateDoc(
-              doc(
-                db,
-                "users",
-                userDoc.id
-              ),
+              doc(db, "users", userDoc.id),
               {
                 balance: newBalance
               }
             );
 
-
             await addDoc(
-              collection(
-                db,
-                "transactions"
-              ),
+              collection(db, "transactions"),
               {
                 userId: userDoc.id,
                 type: "Admin Wallet Debit",
                 amount: amount,
                 status: "Successful",
                 direction: "debit",
-                createdAt:
-                  serverTimestamp()
+                createdAt: serverTimestamp()
               }
             );
-
 
             balanceElement.textContent =
               newBalance.toLocaleString();
 
-
             amountInput.value = "";
 
-
-            alert(
-              `₦${amount.toLocaleString()} deducted successfully.`
-            );
-
+            alert("Funds deducted successfully.");
 
           } catch (error) {
 
             console.error(error);
 
             alert(
-              "Unable to deduct funds: " +
+              "Could not deduct funds: " +
               error.message
             );
 
           }
 
-
           deductButton.disabled = false;
-
-          deductButton.textContent =
-            "Deduct Funds";
 
         }
       );
@@ -492,20 +385,12 @@ async function loadUsers() {
         "click",
         async () => {
 
-          if (
-            details.style.display ===
-            "none"
-          ) {
+          if (details.style.display === "none") {
 
-            details.style.display =
-              "block";
-
-            viewButton.disabled =
-              true;
+            details.style.display = "block";
 
             viewButton.textContent =
               "Loading...";
-
 
             await showCustomerDetails(
               details,
@@ -513,17 +398,12 @@ async function loadUsers() {
               user
             );
 
-
-            viewButton.disabled =
-              false;
-
             viewButton.textContent =
               "Hide Customer";
 
           } else {
 
-            details.style.display =
-              "none";
+            details.style.display = "none";
 
             viewButton.textContent =
               "View Customer";
@@ -538,19 +418,13 @@ async function loadUsers() {
 
     });
 
-
   } catch (error) {
 
     console.error(error);
 
     area.innerHTML = `
-      <p>
-        Unable to load customers.
-      </p>
-
-      <small>
-        ${escapeHTML(error.message)}
-      </small>
+      <p>Unable to load customers.</p>
+      <small>${escapeHTML(error.message)}</small>
     `;
 
   }
@@ -571,9 +445,7 @@ async function showCustomerDetails(
 
     <hr>
 
-    <h3>
-      Customer Details
-    </h3>
+    <h3>Customer Details</h3>
 
     <p>
       <strong>User ID:</strong>
@@ -591,32 +463,15 @@ async function showCustomerDetails(
 
     <p>
       <strong>Email:</strong>
-      ${escapeHTML(
-        user.email ||
-        "Not available"
-      )}
+      ${escapeHTML(user.email || "Not available")}
     </p>
 
     <p>
       <strong>Phone:</strong>
-      ${escapeHTML(
-        user.phone ||
-        "Not available"
-      )}
+      ${escapeHTML(user.phone || "Not available")}
     </p>
 
-    <p>
-      <strong>Wallet:</strong>
-      ₦${Number(
-        user.balance || 0
-      ).toLocaleString()}
-    </p>
-
-    <hr>
-
-    <h3>
-      Customer Transactions
-    </h3>
+    <h3>Customer Transactions</h3>
 
     <div id="customerTransactions">
       Loading transactions...
@@ -633,25 +488,16 @@ async function showCustomerDetails(
 
   try {
 
-    const transactionSnapshot =
+    const snapshot =
       await getDocs(
         query(
-          collection(
-            db,
-            "transactions"
-          ),
-          where(
-            "userId",
-            "==",
-            userId
-          )
+          collection(db, "transactions"),
+          where("userId", "==", userId)
         )
       );
 
 
-    if (
-      transactionSnapshot.empty
-    ) {
+    if (snapshot.empty) {
 
       transactionArea.innerHTML =
         "<p>No transactions found.</p>";
@@ -663,76 +509,53 @@ async function showCustomerDetails(
     transactionArea.innerHTML = "";
 
 
-    transactionSnapshot.forEach(
-      (transactionDoc) => {
+    snapshot.forEach((transactionDoc) => {
 
-        const transaction =
-          transactionDoc.data();
-
-
-        const transactionCard =
-          document.createElement("div");
+      const transaction =
+        transactionDoc.data();
 
 
-        transactionCard.className =
-          "card";
+      const item =
+        document.createElement("div");
+
+      item.className = "card";
 
 
-        transactionCard.innerHTML = `
+      item.innerHTML = `
 
-          <h4>
-            ${escapeHTML(
-              transaction.type ||
-              "Transaction"
-            )}
-          </h4>
+        <h4>
+          ${escapeHTML(
+            transaction.type ||
+            "Transaction"
+          )}
+        </h4>
 
-          <p>
-            <strong>Amount:</strong>
-            ₦${Number(
-              transaction.amount || 0
-            ).toLocaleString()}
-          </p>
+        <p>
+          <strong>Amount:</strong>
+          ₦${Number(
+            transaction.amount || 0
+          ).toLocaleString()}
+        </p>
 
-          <p>
-            <strong>Status:</strong>
-            ${escapeHTML(
-              transaction.status ||
-              "Unknown"
-            )}
-          </p>
+        <p>
+          <strong>Status:</strong>
+          ${escapeHTML(
+            transaction.status ||
+            "Unknown"
+          )}
+        </p>
 
-          <p>
-            <strong>Transaction ID:</strong>
-            ${escapeHTML(
-              transactionDoc.id
-            )}
-          </p>
-
-        `;
+      `;
 
 
-        transactionArea.appendChild(
-          transactionCard
-        );
+      transactionArea.appendChild(item);
 
-      }
-    );
-
+    });
 
   } catch (error) {
 
-    console.error(error);
-
-    transactionArea.innerHTML = `
-      <p>
-        Could not load transactions.
-      </p>
-
-      <small>
-        ${escapeHTML(error.message)}
-      </small>
-    `;
+    transactionArea.innerHTML =
+      "<p>Could not load transactions.</p>";
 
   }
 }
@@ -749,7 +572,6 @@ async function loadTransactions() {
       "transactionsArea"
     );
 
-
   area.innerHTML =
     "<p>Loading transactions...</p>";
 
@@ -758,10 +580,7 @@ async function loadTransactions() {
 
     const snapshot =
       await getDocs(
-        collection(
-          db,
-          "transactions"
-        )
+        collection(db, "transactions")
       );
 
 
@@ -777,175 +596,146 @@ async function loadTransactions() {
     area.innerHTML = "";
 
 
-    snapshot.forEach(
-      (transactionDoc) => {
+    snapshot.forEach((transactionDoc) => {
 
-        const transaction =
-          transactionDoc.data();
-
-
-        const card =
-          document.createElement("div");
+      const transaction =
+        transactionDoc.data();
 
 
-        card.className =
-          "card";
+      const card =
+        document.createElement("div");
+
+      card.className = "card";
 
 
-        card.innerHTML = `
+      card.innerHTML = `
 
-          <h3>
-            ${escapeHTML(
-              transaction.type ||
-              "Transaction"
-            )}
-          </h3>
+        <h3>
+          ${escapeHTML(
+            transaction.type ||
+            "Transaction"
+          )}
+        </h3>
 
-          <p>
-            <strong>Amount:</strong>
-            ₦${Number(
-              transaction.amount || 0
-            ).toLocaleString()}
-          </p>
+        <p>
+          <strong>Amount:</strong>
+          ₦${Number(
+            transaction.amount || 0
+          ).toLocaleString()}
+        </p>
 
-          <p>
-            <strong>Status:</strong>
-            ${escapeHTML(
-              transaction.status ||
-              "Unknown"
-            )}
-          </p>
+        <p>
+          <strong>Status:</strong>
+          ${escapeHTML(
+            transaction.status ||
+            "Unknown"
+          )}
+        </p>
 
-          <button class="viewTransactionButton">
-            View Details
-          </button>
+        <button class="viewTransaction">
+          View Details
+        </button>
 
-          <div
-            class="transactionDetails"
-            style="display:none;"
-          ></div>
+        <div
+          class="transactionDetails"
+          style="display:none;"
+        ></div>
 
-        `;
-
-
-        const button =
-          card.querySelector(
-            ".viewTransactionButton"
-          );
+      `;
 
 
-        const details =
-          card.querySelector(
-            ".transactionDetails"
-          );
+      const button =
+        card.querySelector(
+          ".viewTransaction"
+        );
 
-
-        button.addEventListener(
-          "click",
-          () => {
-
-            if (
-              details.style.display ===
-              "none"
-            ) {
-
-              details.style.display =
-                "block";
-
-
-              details.innerHTML = `
-
-                <hr>
-
-                <p>
-                  <strong>
-                    Transaction ID:
-                  </strong>
-
-                  ${escapeHTML(
-                    transactionDoc.id
-                  )}
-                </p>
-
-                <p>
-                  <strong>
-                    User ID:
-                  </strong>
-
-                  ${escapeHTML(
-                    transaction.userId ||
-                    "Not available"
-                  )}
-                </p>
-
-                <p>
-                  <strong>
-                    Phone:
-                  </strong>
-
-                  ${escapeHTML(
-                    transaction.phone ||
-                    "Not available"
-                  )}
-                </p>
-
-                <p>
-                  <strong>
-                    Network:
-                  </strong>
-
-                  ${escapeHTML(
-                    transaction.network ||
-                    "Not available"
-                  )}
-                </p>
-
-              `;
-
-
-              button.textContent =
-                "Hide Details";
-
-            } else {
-
-              details.style.display =
-                "none";
-
-              button.textContent =
-                "View Details";
-
-            }
-
-          }
+      const details =
+        card.querySelector(
+          ".transactionDetails"
         );
 
 
-        area.appendChild(card);
+      button.addEventListener(
+        "click",
+        () => {
 
-      }
-    );
+          if (
+            details.style.display ===
+            "none"
+          ) {
 
+            details.style.display =
+              "block";
+
+            details.innerHTML = `
+
+              <hr>
+
+              <p>
+                <strong>Transaction ID:</strong>
+                ${escapeHTML(
+                  transactionDoc.id
+                )}
+              </p>
+
+              <p>
+                <strong>User ID:</strong>
+                ${escapeHTML(
+                  transaction.userId ||
+                  "Not available"
+                )}
+              </p>
+
+              <p>
+                <strong>Phone:</strong>
+                ${escapeHTML(
+                  transaction.phone ||
+                  "Not available"
+                )}
+              </p>
+
+              <p>
+                <strong>Network:</strong>
+                ${escapeHTML(
+                  transaction.network ||
+                  "Not available"
+                )}
+              </p>
+
+            `;
+
+            button.textContent =
+              "Hide Details";
+
+          } else {
+
+            details.style.display =
+              "none";
+
+            button.textContent =
+              "View Details";
+
+          }
+
+        }
+      );
+
+
+      area.appendChild(card);
+
+    });
 
   } catch (error) {
 
-    console.error(error);
-
-    area.innerHTML = `
-      <p>
-        Unable to load transactions.
-      </p>
-
-      <small>
-        ${escapeHTML(error.message)}
-      </small>
-    `;
+    area.innerHTML =
+      "<p>Unable to load transactions.</p>";
 
   }
 }
 
 
 /* =========================
-   ADMIN AUTH
+   AUTH
 ========================= */
 
 onAuthStateChanged(
@@ -956,22 +746,13 @@ onAuthStateChanged(
 
       appDiv.innerHTML = `
         <div class="card">
-
-          <h2>
-            Admin Login Required
-          </h2>
-
-          <p>
-            Please sign in with your
-            Nexora admin account.
-          </p>
-
+          <h2>Admin Login Required</h2>
+          <p>Please sign in with your Nexora admin account.</p>
         </div>
       `;
 
       return;
     }
-
 
     showDashboard(user);
 
