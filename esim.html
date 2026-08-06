@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Nexora Mobile — eSIM Plans</title>
-
   <style>
     * {
       box-sizing: border-box;
@@ -13,12 +11,10 @@
       padding: 0;
       font-family: Arial, sans-serif;
     }
-
     body {
       background: #f5f7fb;
       color: #111827;
     }
-
     header {
       background: #111827;
       color: white;
@@ -27,44 +23,36 @@
       top: 0;
       z-index: 100;
     }
-
     .header-inner {
       max-width: 1100px;
       margin: auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 15px;
     }
-
     .logo {
       font-size: 21px;
       font-weight: bold;
     }
-
     .back {
       color: white;
       text-decoration: none;
       font-size: 14px;
     }
-
     main {
       max-width: 1100px;
       margin: auto;
       padding: 25px 16px 60px;
     }
-
     h1 {
       font-size: 28px;
       margin-bottom: 8px;
     }
-
     .subtitle {
       color: #6b7280;
-      margin-bottom: 22px;
       line-height: 1.5;
+      margin-bottom: 22px;
     }
-
     .search-box {
       background: white;
       padding: 15px;
@@ -72,7 +60,6 @@
       box-shadow: 0 3px 15px rgba(0,0,0,.06);
       margin-bottom: 20px;
     }
-
     input {
       width: 100%;
       padding: 14px;
@@ -81,11 +68,9 @@
       font-size: 16px;
       outline: none;
     }
-
     input:focus {
       border-color: #111827;
     }
-
     .status {
       background: white;
       padding: 16px;
@@ -94,33 +79,28 @@
       text-align: center;
       color: #6b7280;
     }
-
     .plans {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
       gap: 16px;
     }
-
     .plan {
       background: white;
       border-radius: 16px;
       padding: 18px;
       box-shadow: 0 3px 15px rgba(0,0,0,.06);
     }
-
     .country {
       font-size: 20px;
       font-weight: bold;
       margin-bottom: 8px;
     }
-
     .plan-name {
       color: #6b7280;
       font-size: 13px;
       margin-bottom: 15px;
       line-height: 1.4;
     }
-
     .details {
       display: grid;
       gap: 8px;
@@ -128,13 +108,11 @@
       font-size: 14px;
       line-height: 1.4;
     }
-
     .price {
       font-size: 23px;
       font-weight: bold;
       margin-bottom: 14px;
     }
-
     .buy-button {
       width: 100%;
       border: none;
@@ -146,11 +124,9 @@
       font-weight: bold;
       cursor: pointer;
     }
-
     .buy-button:hover {
       opacity: .9;
     }
-
     .empty {
       background: white;
       padding: 30px;
@@ -159,7 +135,6 @@
       color: #6b7280;
       grid-column: 1 / -1;
     }
-
     .modal {
       display: none;
       position: fixed;
@@ -170,11 +145,9 @@
       align-items: center;
       justify-content: center;
     }
-
     .modal.show {
       display: flex;
     }
-
     .modal-card {
       background: white;
       width: 100%;
@@ -184,17 +157,14 @@
       max-height: 90vh;
       overflow-y: auto;
     }
-
     .modal-card h2 {
       margin-bottom: 10px;
     }
-
     .modal-card p {
       color: #6b7280;
       line-height: 1.5;
       margin-bottom: 18px;
     }
-
     .modal-details {
       background: #f5f7fb;
       padding: 15px;
@@ -204,7 +174,6 @@
       gap: 9px;
       font-size: 14px;
     }
-
     .close-button {
       margin-top: 10px;
       width: 100%;
@@ -215,11 +184,13 @@
       cursor: pointer;
       font-weight: bold;
     }
-
     .error {
       color: #b91c1c;
     }
-
+    .success {
+      color: #047857;
+      font-weight: bold;
+    }
     @media (max-width: 600px) {
       h1 {
         font-size: 24px;
@@ -227,28 +198,21 @@
     }
   </style>
 </head>
-
 <body>
-
 <header>
   <div class="header-inner">
     <div class="logo">Nexora Mobile</div>
-
-    <a class="back" href="index.html">
-      ← Home
-    </a>
+<a class="back" href="index.html">
+  ← Home
+</a>
   </div>
 </header>
-
 <main>
-
   <h1>🌍 eSIM Plans</h1>
-
   <p class="subtitle">
-    Browse real eSIM plans available through Nexora Mobile.
+    Browse available eSIM plans through Nexora Mobile.
     Search by country, plan name, or region.
   </p>
-
   <div class="search-box">
     <input
       id="searchInput"
@@ -257,724 +221,556 @@
       autocomplete="off"
     >
   </div>
-
   <div id="status" class="status">
     Connecting to Nexora Mobile...
   </div>
-
   <div id="plans" class="plans"></div>
-
 </main>
-
-
-<!-- PLAN MODAL -->
-
+<!-- PLAN DETAILS -->
 <div id="planModal" class="modal">
-
   <div class="modal-card">
-
-    <h2 id="modalCountry">
-      eSIM Plan
-    </h2>
-
-    <p>
-      Review the plan information before continuing.
-    </p>
-
-    <div id="modalDetails" class="modal-details"></div>
-
-    <button
-      id="continueButton"
-      class="buy-button"
-      type="button"
-    >
-      Continue
-    </button>
-
-    <button
-      id="closeButton"
-      class="close-button"
-      type="button"
-    >
-      Close
-    </button>
-
+<h2 id="modalCountry">
+  eSIM Plan
+</h2>
+<p>
+  Review this eSIM plan before continuing.
+</p>
+<div id="modalDetails" class="modal-details"></div>
+<button
+  id="continueButton"
+  class="buy-button"
+  type="button"
+>
+  Continue
+</button>
+<button
+  id="closeButton"
+  class="close-button"
+  type="button"
+>
+  Close
+</button>
   </div>
-
 </div>
-
-
 <script>
-
   /*
   ============================================================
-  NEXORA MOBILE eSIM FRONTEND
+  NEXORA MOBILE eSIM PAGE
   ============================================================
-
-  IMPORTANT:
-
-  This page DOES NOT contain the eSIM Go API key.
-
-  Customer:
-      ↓
-  Nexora Mobile eSIM page
-      ↓
-  Nexora AI Backend
-      ↓
-  eSIM Go
-
-  The eSIM Go secret stays on the backend.
+  CUSTOMER PAGE
+        ↓
+  NEXORA AI BACKEND
+        ↓
+  eSIM GO
+  The eSIM Go API key is NOT stored in this file.
   ============================================================
   */
-
-
   /*
   ============================================================
-  YOUR REAL NEXORA AI BACKEND
+  IMPORTANT BACKEND ADDRESS
   ============================================================
   */
-
   const API_BASE =
     "https://nexora-ai-backend-git-main-nexora-mobile.vercel.app";
-
-
+  /*
+  ============================================================
+  BACKEND ENDPOINT
+  ============================================================
+  */
+  const PLANS_ENDPOINT =
+    `${API_BASE}/api/esim/plans`;
   /*
   ============================================================
   PAGE ELEMENTS
   ============================================================
   */
-
   const plansContainer =
     document.getElementById("plans");
-
   const statusBox =
     document.getElementById("status");
-
   const searchInput =
     document.getElementById("searchInput");
-
   const planModal =
     document.getElementById("planModal");
-
   const modalCountry =
     document.getElementById("modalCountry");
-
   const modalDetails =
     document.getElementById("modalDetails");
-
   const closeButton =
     document.getElementById("closeButton");
-
   const continueButton =
     document.getElementById("continueButton");
-
-
   /*
   ============================================================
-  STORE PLANS
+  VARIABLES
   ============================================================
   */
-
   let allPlans = [];
-
   let selectedPlan = null;
-
-
   /*
   ============================================================
-  SECURITY: ESCAPE HTML
+  SAFE HTML
   ============================================================
   */
-
   function escapeHTML(value) {
-
     return String(value ?? "")
       .replaceAll("&", "&amp;")
       .replaceAll("<", "&lt;")
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
-
   }
-
-
   /*
   ============================================================
   COUNTRY
   ============================================================
   */
-
   function getCountry(plan) {
-
-    return (
-      plan?.countries?.[0]?.name ||
-      "International"
-    );
-
+    if (
+      plan &&
+      Array.isArray(plan.countries) &&
+      plan.countries.length > 0
+    ) {
+      return (
+        plan.countries[0].name ||
+        "International"
+      );
+    }
+    return "International";
   }
-
-
   /*
   ============================================================
   DATA
   ============================================================
   */
-
   function getData(plan) {
-
-    if (Number(plan?.dataAmountMB) === -1) {
-
+    const amount =
+      Number(plan?.dataAmountMB ?? 0);
+    if (amount === -1) {
       return "Unlimited data";
-
     }
-
-    const mb =
-      Number(plan?.dataAmountMB || 0);
-
-    const gb =
-      mb / 1000;
-
-    if (gb >= 1) {
-
+    if (amount >= 1000) {
+      const gb =
+        amount / 1000;
       return `${gb} GB`;
-
     }
-
-    return `${mb} MB`;
-
+    return `${amount} MB`;
   }
-
-
   /*
   ============================================================
   SPEED
   ============================================================
   */
-
   function getSpeed(plan) {
-
     if (
-      !Array.isArray(plan?.speed) ||
-      plan.speed.length === 0
+      Array.isArray(plan?.speed) &&
+      plan.speed.length > 0
     ) {
-
-      return "Network speed varies";
-
+      return plan.speed.join(" / ");
     }
-
-    return plan.speed.join(" / ");
-
+    return "Network speed varies";
   }
-
-
+  /*
+  ============================================================
+  VALIDITY
+  ============================================================
+  */
+  function getValidity(plan) {
+    const duration =
+      Number(plan?.duration ?? 0);
+    if (duration > 0) {
+      return `${duration} days`;
+    }
+    return "Validity varies";
+  }
   /*
   ============================================================
   PRICE
   ============================================================
   */
-
   /*
     IMPORTANT:
-
-    This is ONLY a temporary display price.
-
+    This is ONLY a temporary display calculation.
     We are NOT charging customers yet.
-
-    We are also NOT pretending that this is the final
-    Nexora Mobile price.
-
-    The proper pricing system will be added later so you
-    can decide your markup and profit safely.
+    We will create the proper Nexora pricing system
+    before real payments are activated.
   */
-
   function getSellingPrice(plan) {
-
     const providerPrice =
-      Number(plan?.providerPrice || 0);
-
-    if (!providerPrice) {
-
+      Number(plan?.providerPrice ?? 0);
+    if (
+      !Number.isFinite(providerPrice) ||
+      providerPrice <= 0
+    ) {
       return "Price unavailable";
-
     }
-
     /*
-      TEMPORARY TEST MARKUP
-
+      Temporary test markup:
       Provider price × 2
-
       Example:
-
-      Provider = $1.50
-      Display = $3.00
-
-      This is NOT our final production pricing.
+      Provider = $2
+      Nexora display = $4
+      This is NOT the final pricing system.
     */
-
     const sellingPrice =
       providerPrice * 2;
-
     return `$${sellingPrice.toFixed(2)}`;
-
   }
-
-
   /*
   ============================================================
   RENDER PLANS
   ============================================================
   */
-
   function renderPlans(plans) {
-
-    if (!Array.isArray(plans) || plans.length === 0) {
-
+    if (
+      !Array.isArray(plans) ||
+      plans.length === 0
+    ) {
       plansContainer.innerHTML = `
         <div class="empty">
-          No eSIM plans found for your search.
+          No eSIM plans found.
         </div>
       `;
-
       return;
-
     }
-
-
     plansContainer.innerHTML =
       plans.map((plan, index) => {
-
         const country =
           getCountry(plan);
-
         const data =
           getData(plan);
-
         const speed =
           getSpeed(plan);
-
+        const validity =
+          getValidity(plan);
         const price =
           getSellingPrice(plan);
-
+        const name =
+          plan?.name ||
+          "eSIM Plan";
         return `
           <div class="plan">
-
             <div class="country">
               ${escapeHTML(country)}
             </div>
-
             <div class="plan-name">
-              ${escapeHTML(
-                plan.name || "eSIM Plan"
-              )}
+              ${escapeHTML(name)}
             </div>
-
             <div class="details">
-
               <div>
-                📶 Data:
+                📶 <strong>Data:</strong>
                 ${escapeHTML(data)}
               </div>
-
               <div>
-                📅 Validity:
-                ${escapeHTML(plan.duration)} days
+                📅 <strong>Validity:</strong>
+                ${escapeHTML(validity)}
               </div>
-
               <div>
-                📡 Speed:
+                📡 <strong>Speed:</strong>
                 ${escapeHTML(speed)}
               </div>
-
             </div>
-
             <div class="price">
               ${escapeHTML(price)}
             </div>
-
             <button
               class="buy-button"
               type="button"
-              data-plan-index="${index}"
+              data-index="${index}"
             >
               View Plan
             </button>
-
           </div>
         `;
-
       }).join("");
-
-
     /*
-      Attach buttons safely after rendering.
+      Connect View Plan buttons.
     */
-
     const buttons =
       plansContainer.querySelectorAll(
-        "[data-plan-index]"
+        "[data-index]"
       );
-
-
     buttons.forEach(button => {
-
       button.addEventListener(
         "click",
-        () => {
-
+        function() {
           const index =
             Number(
-              button.getAttribute(
-                "data-plan-index"
-              )
+              this.getAttribute("data-index")
             );
-
           const plan =
             plans[index];
-
           if (plan) {
-
             openPlan(plan);
-
           }
-
         }
       );
-
     });
-
   }
-
-
   /*
   ============================================================
-  OPEN PLAN
+  OPEN PLAN DETAILS
   ============================================================
   */
-
   function openPlan(plan) {
-
-    selectedPlan = plan;
-
+    selectedPlan =
+      plan;
     const country =
       getCountry(plan);
-
     const data =
       getData(plan);
-
     const speed =
       getSpeed(plan);
-
+    const validity =
+      getValidity(plan);
     const price =
       getSellingPrice(plan);
-
     modalCountry.textContent =
       country;
-
     modalDetails.innerHTML = `
-
       <div>
         🌍 <strong>Country:</strong>
         ${escapeHTML(country)}
       </div>
-
+      <div>
+        📦 <strong>Plan:</strong>
+        ${escapeHTML(
+          plan?.name || "eSIM Plan"
+        )}
+      </div>
       <div>
         📶 <strong>Data:</strong>
         ${escapeHTML(data)}
       </div>
-
       <div>
         📅 <strong>Validity:</strong>
-        ${escapeHTML(plan.duration)} days
+        ${escapeHTML(validity)}
       </div>
-
       <div>
         📡 <strong>Speed:</strong>
         ${escapeHTML(speed)}
       </div>
-
       <div>
-        💰 <strong>Nexora price:</strong>
+        💰 <strong>Price:</strong>
         ${escapeHTML(price)}
       </div>
-
     `;
-
     planModal.classList.add("show");
-
   }
-
-
   /*
   ============================================================
   CLOSE MODAL
   ============================================================
   */
-
   function closeModal() {
-
     planModal.classList.remove("show");
-
     selectedPlan = null;
-
   }
-
-
   closeButton.addEventListener(
     "click",
     closeModal
   );
-
-
   planModal.addEventListener(
     "click",
-    event => {
-
-      if (event.target === planModal) {
-
+    function(event) {
+      if (
+        event.target === planModal
+      ) {
         closeModal();
-
       }
-
     }
   );
-
-
   /*
   ============================================================
   CONTINUE BUTTON
   ============================================================
   */
-
   continueButton.addEventListener(
     "click",
-    () => {
-
+    function() {
       if (!selectedPlan) {
-
         return;
-
       }
-
-
       /*
-        IMPORTANT:
-
-        We are NOT purchasing an eSIM yet.
-
-        We are only testing the real catalog.
-
-        Payment + order creation + QR delivery will be
-        connected after the customer payment system is ready.
+        Payment is NOT connected yet.
+        We are currently testing the real catalog only.
       */
-
       alert(
-        "Nexora Mobile\\n\\n" +
-        "The eSIM catalog is connected successfully.\\n\\n" +
-        "Payment and automatic eSIM delivery will be connected next."
+        "Nexora Mobile\n\n" +
+        "Plan selected successfully.\n\n" +
+        "Automatic payment and eSIM delivery will be connected next."
       );
-
     }
   );
-
-
   /*
   ============================================================
-  LOAD REAL PLANS
+  LOAD REAL eSIM PLANS
   ============================================================
   */
-
   async function loadPlans() {
-
+    statusBox.textContent =
+      "Connecting to Nexora AI Backend...";
+    plansContainer.innerHTML = `
+      <div class="empty">
+        Loading eSIM plans...
+      </div>
+    `;
     try {
-
-      statusBox.textContent =
-        "Connecting to Nexora AI Backend...";
-
-
-      /*
-        Backend endpoint:
-
-        /api/esim/plans
-      */
-
       const response =
         await fetch(
-          `${API_BASE}/api/esim/plans`,
+          PLANS_ENDPOINT,
           {
             method: "GET",
             headers: {
               "Accept": "application/json"
-            }
+            },
+            cache: "no-store"
           }
         );
-
-
       /*
-        Convert response to JSON.
+        Try to read JSON response.
       */
-
-      const data =
-        await response.json();
-
-
-      /*
-        Backend returned an error.
-      */
-
-      if (
-        !response.ok ||
-        !data.success
-      ) {
-
+      let data;
+      try {
+        data =
+          await response.json();
+      } catch {
         throw new Error(
-          data.message ||
-          "Unable to load eSIM plans."
+          "Backend did not return JSON."
         );
-
       }
-
-
       /*
-        Make sure plans is actually an array.
+        Backend error.
       */
-
+      if (!response.ok) {
+        throw new Error(
+          data?.message ||
+          `Backend returned HTTP ${response.status}`
+        );
+      }
+      /*
+        Backend must return success:true.
+      */
+      if (!data || data.success !== true) {
+        throw new Error(
+          data?.message ||
+          "Backend did not return a successful response."
+        );
+      }
+      /*
+        Make sure plans is an array.
+      */
+      if (!Array.isArray(data.plans)) {
+        throw new Error(
+          "Backend returned an invalid plans list."
+        );
+      }
+      /*
+        Save plans.
+      */
       allPlans =
-        Array.isArray(data.plans)
-          ? data.plans
-          : [];
-
-
+        data.plans;
       /*
-        Update status.
+        Show success.
       */
-
-      statusBox.textContent =
-        `${allPlans.length} real eSIM plans available`;
-
-
+      statusBox.innerHTML = `
+        <span class="success">
+          ${allPlans.length}
+          eSIM plans available
+        </span>
+      `;
       /*
         Display plans.
       */
-
       renderPlans(allPlans);
-
-
     } catch (error) {
-
       console.error(
-        "Nexora eSIM error:",
+        "Nexora Mobile eSIM error:",
         error
       );
-
-
-      statusBox.innerHTML =
-        `<span class="error">
+      statusBox.innerHTML = `
+        <span class="error">
           Unable to connect to the eSIM service right now.
-        </span>`;
-
-
+        </span>
+      `;
       plansContainer.innerHTML = `
-
         <div class="empty">
-
           <strong>
             eSIM plans are temporarily unavailable.
           </strong>
-
           <br><br>
-
-          Please try again shortly.
-
+          We could not load the eSIM catalog from
+          the Nexora backend.
+          <br><br>
+          Please try again later.
         </div>
-
       `;
-
     }
-
   }
-
-
   /*
   ============================================================
   SEARCH
   ============================================================
   */
-
   searchInput.addEventListener(
     "input",
-    () => {
-
+    function() {
       const query =
-        searchInput.value
+        this.value
           .trim()
           .toLowerCase();
-
-
       /*
-        Empty search = show everything.
+        Empty search:
+        show every plan.
       */
-
       if (!query) {
-
         renderPlans(allPlans);
-
         return;
-
       }
-
-
       /*
-        Search country, plan name and description.
+        Search country, plan name,
+        description and region.
       */
-
       const filtered =
         allPlans.filter(plan => {
-
           const country =
             getCountry(plan)
               .toLowerCase();
-
           const name =
             String(
               plan?.name || ""
             ).toLowerCase();
-
           const description =
             String(
               plan?.description || ""
             ).toLowerCase();
-
-          const region =
-            String(
-              plan?.countries?.[0]?.region || ""
-            ).toLowerCase();
-
-
+          let region = "";
+          if (
+            plan?.countries &&
+            Array.isArray(plan.countries) &&
+            plan.countries.length > 0
+          ) {
+            region =
+              String(
+                plan.countries[0]?.region || ""
+              ).toLowerCase();
+          }
           return (
             country.includes(query) ||
             name.includes(query) ||
             description.includes(query) ||
             region.includes(query)
           );
-
         });
-
-
       renderPlans(filtered);
-
     }
   );
-
-
   /*
   ============================================================
-  START
+  START PAGE
   ============================================================
   */
-
   loadPlans();
-
 </script>
-
 </body>
 </html>
