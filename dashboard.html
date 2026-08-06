@@ -77,6 +77,11 @@ body {
   cursor: pointer;
 }
 
+
+/* =========================
+   NEXORA AI BUTTON
+========================= */
+
 #nexora-ai-button {
   position: fixed;
   right: 20px;
@@ -87,37 +92,74 @@ body {
 #open-ai {
   border: none;
   border-radius: 50px;
-  padding: 14px 20px;
+  padding: 15px 22px;
   background: #2563eb;
   color: white;
   font-size: 15px;
   font-weight: bold;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+  box-shadow: 0 5px 18px rgba(0,0,0,0.25);
   cursor: pointer;
 }
 
+
+/* =========================
+   FULL SCREEN AI
+========================= */
+
 #ai-chat {
   display: none;
+
   position: fixed;
-  right: 15px;
-  bottom: 80px;
-  width: calc(100% - 30px);
-  max-width: 380px;
-  height: 520px;
-  background: white;
-  border-radius: 20px;
-  box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+  inset: 0;
+
+  width: 100%;
+  height: 100dvh;
+
+  background: #f7f8fc;
+
   z-index: 10000;
-  overflow: hidden;
+
+  flex-direction: column;
 }
+
+
+/* AI HEADER */
 
 .ai-header {
   background: #2563eb;
   color: white;
-  padding: 16px;
+
+  min-height: 70px;
+
+  padding: 15px 18px;
+
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+.ai-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ai-avatar {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 50%;
+
+  background: white;
+  color: #2563eb;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 22px;
 }
 
 .ai-header h3 {
@@ -125,212 +167,510 @@ body {
   font-size: 17px;
 }
 
+.ai-status {
+  margin: 3px 0 0;
+  font-size: 12px;
+  opacity: 0.9;
+}
+
 #close-ai {
   background: transparent;
   border: none;
   color: white;
-  font-size: 22px;
+  font-size: 30px;
   cursor: pointer;
+  padding: 5px 10px;
 }
 
-#ai-messages {
-  height: 380px;
-  overflow-y: auto;
-  padding: 15px;
-  background: #f7f8fc;
-}
 
-.ai-message {
-  background: #e8edff;
-  padding: 11px 13px;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  max-width: 85%;
-  line-height: 1.4;
-}
-
-.user-message {
-  background: #2563eb;
-  color: white;
-  padding: 11px 13px;
-  border-radius: 14px;
-  margin-bottom: 10px;
-  margin-left: auto;
-  max-width: 85%;
-  line-height: 1.4;
-}
-
-.ai-input-area {
-  display: flex;
-  gap: 8px;
-  padding: 10px;
-  border-top: 1px solid #ddd;
-}
-
-#ai-input {
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  outline: none;
-}
-
-#send-ai {
-  background: #2563eb;
-  color: white;
-  border: none;
-  padding: 12px 15px;
-  border-radius: 10px;
-  cursor: pointer;
-}
+/* QUICK ACTIONS */
 
 .quick-actions {
   display: flex;
-  gap: 6px;
-  padding: 8px;
+  gap: 8px;
+
+  padding: 12px;
+
   overflow-x: auto;
+
   background: white;
+
+  border-bottom: 1px solid #ddd;
 }
 
 .quick-actions button {
   white-space: nowrap;
+
   border: 1px solid #2563eb;
+
   background: white;
+
   color: #2563eb;
-  padding: 7px 10px;
+
+  padding: 8px 13px;
+
   border-radius: 20px;
+
   cursor: pointer;
+
   font-size: 12px;
+}
+
+
+/* MESSAGES */
+
+#ai-messages {
+  flex: 1;
+
+  overflow-y: auto;
+
+  padding: 20px;
+
+  background: #f7f8fc;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* AI MESSAGE */
+
+.ai-message {
+  background: white;
+
+  color: #111827;
+
+  padding: 13px 15px;
+
+  border-radius: 5px 18px 18px 18px;
+
+  margin-bottom: 12px;
+
+  max-width: 85%;
+
+  line-height: 1.5;
+
+  box-shadow: 0 2px 7px rgba(0,0,0,0.07);
+
+  align-self: flex-start;
+}
+
+
+/* USER MESSAGE */
+
+.user-message {
+  background: #2563eb;
+
+  color: white;
+
+  padding: 13px 15px;
+
+  border-radius: 18px 5px 18px 18px;
+
+  margin-bottom: 12px;
+
+  margin-left: auto;
+
+  max-width: 85%;
+
+  line-height: 1.5;
+
+  align-self: flex-end;
+}
+
+
+/* TYPING */
+
+.typing-message {
+  background: white;
+
+  color: #555;
+
+  padding: 12px 15px;
+
+  border-radius: 5px 18px 18px 18px;
+
+  margin-bottom: 12px;
+
+  max-width: 100px;
+
+  font-size: 13px;
+}
+
+
+/* INPUT AREA */
+
+.ai-input-area {
+  display: flex;
+
+  gap: 8px;
+
+  padding: 12px;
+
+  background: white;
+
+  border-top: 1px solid #ddd;
+
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+}
+
+#ai-input {
+  flex: 1;
+
+  padding: 14px;
+
+  border: 1px solid #d1d5db;
+
+  border-radius: 25px;
+
+  outline: none;
+
+  font-size: 15px;
+
+  min-width: 0;
+}
+
+#ai-input:focus {
+  border-color: #2563eb;
+}
+
+#send-ai {
+  background: #2563eb;
+
+  color: white;
+
+  border: none;
+
+  width: 52px;
+
+  height: 52px;
+
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  font-size: 18px;
+
+  flex-shrink: 0;
+}
+
+#send-ai:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+  .container {
+    padding: 15px;
+  }
+
+  .ai-header {
+    min-height: 65px;
+  }
+
+  #ai-messages {
+    padding: 15px;
+  }
+
+  .ai-message,
+  .user-message {
+    max-width: 88%;
+  }
+
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 700px) {
+
+  #ai-chat {
+    width: 100%;
+    max-width: 100%;
+  }
+
 }
 </style>
 </head>
 
+
 <body>
 
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
 <div class="top">
-  <h1>Hello, <span id="name">User</span> 👋</h1>
+
+  <h1>
+    Hello, <span id="name">User</span> 👋
+  </h1>
+
   <p>Nexora Mobile</p>
+
 </div>
+
 
 <div class="container">
 
+
+  <!-- WALLET -->
+
   <div class="card wallet">
+
     <h2>Wallet Balance</h2>
+
     <div class="balance">
       ₦<span id="wallet">0</span>
     </div>
+
   </div>
 
+
+  <!-- ACCOUNT -->
+
   <div class="card">
+
     <h2>Account</h2>
 
     <p>Email:</p>
+
     <b id="email">Loading...</b>
 
     <p>Status:</p>
+
     <b id="status">Loading...</b>
+
   </div>
 
+
+  <!-- SERVICES -->
+
   <div class="card">
+
     <h2>Services</h2>
 
     <div class="services">
 
-      <a href="fund-wallet.html" style="text-decoration:none;color:black;">
-        <div class="service">💰 Fund Wallet</div>
+
+      <a
+        href="fund-wallet.html"
+        style="text-decoration:none;color:black;"
+      >
+
+        <div class="service">
+          💰 Fund Wallet
+        </div>
+
       </a>
 
-      <a href="airtime.html" style="text-decoration:none;color:black;">
-        <div class="service">📱 Airtime</div>
+
+      <a
+        href="airtime.html"
+        style="text-decoration:none;color:black;"
+      >
+
+        <div class="service">
+          📱 Airtime
+        </div>
+
       </a>
 
-      <a href="data.html" style="text-decoration:none;color:black;">
-        <div class="service">📶 Data</div>
+
+      <a
+        href="data.html"
+        style="text-decoration:none;color:black;"
+      >
+
+        <div class="service">
+          📶 Data
+        </div>
+
       </a>
 
-      <a href="esim.html" style="text-decoration:none;color:black;">
-        <div class="service">🌍 eSIM</div>
+
+      <a
+        href="esim.html"
+        style="text-decoration:none;color:black;"
+      >
+
+        <div class="service">
+          🌍 eSIM
+        </div>
+
       </a>
+
 
     </div>
+
   </div>
 
+
+  <!-- TRANSACTIONS -->
+
   <div class="card">
+
     <h2>Transaction History</h2>
-    <div id="transactions">Loading...</div>
+
+    <div id="transactions">
+      Loading...
+    </div>
+
   </div>
 
+
+  <!-- LOGOUT -->
+
   <div class="card">
-    <button class="logout-button" id="logout">
+
+    <button
+      class="logout-button"
+      id="logout"
+    >
       Logout
     </button>
+
   </div>
 
+
 </div>
 
+
+<!-- =========================
+     AI BUTTON
+========================= -->
+
 <div id="nexora-ai-button">
-  <button id="open-ai">🤖 Nexora AI</button>
+
+  <button id="open-ai">
+    🤖 Nexora AI
+  </button>
+
 </div>
+
+
+<!-- =========================
+     FULL SCREEN AI CHAT
+========================= -->
 
 <div id="ai-chat">
 
-  <div class="ai-header">
-    <h3>🤖 Nexora AI Support</h3>
 
-    <button id="close-ai">×</button>
+  <!-- HEADER -->
+
+  <div class="ai-header">
+
+    <div class="ai-title">
+
+      <div class="ai-avatar">
+        🤖
+      </div>
+
+      <div>
+
+        <h3>
+          Nexora AI
+        </h3>
+
+        <div class="ai-status">
+          ● Online • Nexora Mobile Support
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <button id="close-ai">
+      ×
+    </button>
+
   </div>
+
+
+  <!-- QUICK ACTIONS -->
 
   <div class="quick-actions">
 
     <button data-question="How do I fund my wallet?">
-      Fund Wallet
+      💰 Fund Wallet
     </button>
 
     <button data-question="How do I buy airtime?">
-      Airtime
+      📱 Airtime
     </button>
 
     <button data-question="How do I buy data?">
-      Data
+      📶 Data
     </button>
 
     <button data-question="How do I get an eSIM?">
-      eSIM
+      🌍 eSIM
     </button>
 
   </div>
+
+
+  <!-- MESSAGES -->
 
   <div id="ai-messages">
 
     <div class="ai-message">
-      👋 Hello! I'm <b>Nexora AI Support</b>.
+
+      👋 Hello!
+
       <br><br>
+
+      I'm <b>Nexora AI</b>, your Nexora Mobile customer support assistant.
+
+      <br><br>
+
       How can I help you today?
+
     </div>
 
   </div>
+
+
+  <!-- INPUT -->
 
   <div class="ai-input-area">
 
     <input
       id="ai-input"
       type="text"
-      placeholder="Type your question..."
+      placeholder="Message Nexora AI..."
       autocomplete="off"
     >
 
     <button id="send-ai">
-      Send
+      ➤
     </button>
 
   </div>
 
+
 </div>
+
+
 
 <script type="module">
 
+
+/* =========================
+   FIREBASE
+========================= */
+
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 
 import {
   getAuth,
@@ -338,6 +678,7 @@ import {
   signOut
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
+
 
 import {
   getFirestore,
@@ -376,150 +717,247 @@ const firebaseConfig = {
 };
 
 
-const app = initializeApp(firebaseConfig);
-
-const auth = getAuth(app);
-
-const db = getFirestore(app);
+const app =
+  initializeApp(firebaseConfig);
 
 
-/* CUSTOMER ACCOUNT */
+const auth =
+  getAuth(app);
 
-onAuthStateChanged(auth, async (user) => {
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+const db =
+  getFirestore(app);
 
-  try {
 
-    const userRef = doc(
-      db,
-      "users",
-      user.uid
-    );
+/* =========================
+   CUSTOMER ACCOUNT
+========================= */
 
-    const userSnap = await getDoc(userRef);
+onAuthStateChanged(
+  auth,
+  async (user) => {
 
-    if (userSnap.exists()) {
+    if (!user) {
 
-      const data = userSnap.data();
+      window.location.href =
+        "login.html";
 
-      document.getElementById("name").textContent =
-        data.name || "User";
+      return;
 
-      document.getElementById("email").textContent =
-        data.email || user.email || "";
-
-      document.getElementById("wallet").textContent =
-        Number(
-          data.wallet ?? data.balance ?? 0
-        ).toLocaleString();
-
-      document.getElementById("status").textContent =
-        data.status || "Active";
     }
 
 
-    /* TRANSACTIONS */
+    try {
 
-    const q = query(
-      collection(db, "transactions"),
-      where("userId", "==", user.uid)
-    );
+      const userRef =
+        doc(
+          db,
+          "users",
+          user.uid
+        );
 
-    const result = await getDocs(q);
 
-    let html = "";
+      const userSnap =
+        await getDoc(userRef);
 
-    result.forEach((item) => {
 
-      const t = item.data();
+      if (userSnap.exists()) {
 
-      html += `
-        <div class="transaction">
+        const data =
+          userSnap.data();
 
-          <b>
-            ${t.type || "Transaction"}
-          </b>
 
-          <br>
+        document
+          .getElementById("name")
+          .textContent =
+          data.name || "User";
 
-          Amount:
-          ₦${Number(t.amount || 0).toLocaleString()}
 
-          <br>
+        document
+          .getElementById("email")
+          .textContent =
+          data.email ||
+          user.email ||
+          "";
 
-          Status:
-          ${t.status || "Unknown"}
 
-        </div>
-      `;
-    });
+        document
+          .getElementById("wallet")
+          .textContent =
+          Number(
+            data.wallet ??
+            data.balance ??
+            0
+          ).toLocaleString();
 
-    document.getElementById("transactions").innerHTML =
-      html || "No transactions yet";
 
-  } catch (error) {
+        document
+          .getElementById("status")
+          .textContent =
+          data.status ||
+          "Active";
 
-    console.error(error);
+      }
 
-    document.getElementById("transactions").textContent =
-      "Unable to load transactions.";
+
+      /* TRANSACTIONS */
+
+      const q =
+        query(
+          collection(
+            db,
+            "transactions"
+          ),
+          where(
+            "userId",
+            "==",
+            user.uid
+          )
+        );
+
+
+      const result =
+        await getDocs(q);
+
+
+      let html = "";
+
+
+      result.forEach(
+        (item) => {
+
+          const t =
+            item.data();
+
+
+          html += `
+
+            <div class="transaction">
+
+              <b>
+                ${t.type || "Transaction"}
+              </b>
+
+              <br>
+
+              Amount:
+              ₦${Number(
+                t.amount || 0
+              ).toLocaleString()}
+
+              <br>
+
+              Status:
+              ${t.status || "Unknown"}
+
+            </div>
+
+          `;
+
+        }
+      );
+
+
+      document
+        .getElementById("transactions")
+        .innerHTML =
+        html ||
+        "No transactions yet";
+
+
+    } catch (error) {
+
+      console.error(error);
+
+
+      document
+        .getElementById("transactions")
+        .textContent =
+        "Unable to load transactions.";
+
+    }
 
   }
-
-});
-
-
-/* LOGOUT */
-
-document.getElementById("logout").onclick = async () => {
-
-  try {
-
-    await signOut(auth);
-
-    window.location.href = "login.html";
-
-  } catch (error) {
-
-    console.error(error);
-
-  }
-
-};
+);
 
 
-/* AI CHAT */
+/* =========================
+   LOGOUT
+========================= */
+
+document
+  .getElementById("logout")
+  .onclick =
+  async () => {
+
+    try {
+
+      await signOut(auth);
+
+      window.location.href =
+        "login.html";
+
+    } catch (error) {
+
+      console.error(error);
+
+    }
+
+  };
+
+
+/* =========================
+   NEXORA AI
+========================= */
 
 const openAI =
-  document.getElementById("open-ai");
+  document.getElementById(
+    "open-ai"
+  );
+
 
 const closeAI =
-  document.getElementById("close-ai");
+  document.getElementById(
+    "close-ai"
+  );
+
 
 const aiChat =
-  document.getElementById("ai-chat");
+  document.getElementById(
+    "ai-chat"
+  );
+
 
 const aiInput =
-  document.getElementById("ai-input");
+  document.getElementById(
+    "ai-input"
+  );
+
 
 const sendAI =
-  document.getElementById("send-ai");
+  document.getElementById(
+    "send-ai"
+  );
+
 
 const aiMessages =
-  document.getElementById("ai-messages");
+  document.getElementById(
+    "ai-messages"
+  );
 
 
-/* OPEN AI */
+/* OPEN FULL SCREEN AI */
 
 openAI.onclick = () => {
 
-  aiChat.style.display = "block";
+  aiChat.style.display =
+    "flex";
 
-  openAI.style.display = "none";
+  document.body.style.overflow =
+    "hidden";
+
+  openAI.style.display =
+    "none";
 
   aiInput.focus();
 
@@ -530,66 +968,152 @@ openAI.onclick = () => {
 
 closeAI.onclick = () => {
 
-  aiChat.style.display = "none";
+  aiChat.style.display =
+    "none";
 
-  openAI.style.display = "block";
+  document.body.style.overflow =
+    "";
+
+  openAI.style.display =
+    "block";
 
 };
 
 
 /* ADD MESSAGE */
 
-function addMessage(text, type) {
+function addMessage(
+  text,
+  type
+) {
 
   const message =
-    document.createElement("div");
+    document.createElement(
+      "div"
+    );
+
 
   message.className =
     type === "user"
       ? "user-message"
       : "ai-message";
 
-  message.textContent = text;
 
-  aiMessages.appendChild(message);
+  message.textContent =
+    text;
+
+
+  aiMessages.appendChild(
+    message
+  );
+
 
   aiMessages.scrollTop =
     aiMessages.scrollHeight;
+
 }
 
 
-/* CONNECT TO NEXORA BACKEND */
+/* TYPING MESSAGE */
 
-async function getSupportResponse(question) {
+function showTyping() {
+
+  const typing =
+    document.createElement(
+      "div"
+    );
+
+
+  typing.id =
+    "typing-message";
+
+
+  typing.className =
+    "typing-message";
+
+
+  typing.textContent =
+    "Nexora AI is typing...";
+
+
+  aiMessages.appendChild(
+    typing
+  );
+
+
+  aiMessages.scrollTop =
+    aiMessages.scrollHeight;
+
+}
+
+
+/* REMOVE TYPING */
+
+function removeTyping() {
+
+  const typing =
+    document.getElementById(
+      "typing-message"
+    );
+
+
+  if (typing) {
+
+    typing.remove();
+
+  }
+
+}
+
+
+/* =========================
+   BACKEND CONNECTION
+========================= */
+
+async function getSupportResponse(
+  question
+) {
 
   try {
 
-    const response = await fetch(
-      "https://nexora-ai-backend-omega.vercel.app/api/ai/support",
-      {
-        method: "POST",
+    const response =
+      await fetch(
+        "https://nexora-ai-backend-omega.vercel.app/api/ai/support",
+        {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json"
-        },
+          headers: {
+            "Content-Type":
+              "application/json"
+          },
 
-        body: JSON.stringify({
-          message: question
-        })
-      }
-    );
+          body: JSON.stringify({
+            message:
+              question
+          })
 
-    const data = await response.json();
+        }
+      );
+
+
+    const data =
+      await response.json();
+
 
     if (data.success) {
+
       return data.reply;
+
     }
 
+
     return "Sorry, Nexora AI is temporarily unavailable.";
+
 
   } catch (error) {
 
     console.error(error);
+
 
     return "Sorry, I couldn't connect to Nexora AI right now.";
 
@@ -598,25 +1122,67 @@ async function getSupportResponse(question) {
 }
 
 
-/* SEND MESSAGE */
+/* =========================
+   SEND MESSAGE
+========================= */
 
 async function sendMessage() {
 
   const question =
     aiInput.value.trim();
 
+
   if (!question) {
+
     return;
+
   }
 
-  addMessage(question, "user");
+
+  addMessage(
+    question,
+    "user"
+  );
+
 
   aiInput.value = "";
 
-  const response =
-    await getSupportResponse(question);
 
-  addMessage(response, "ai");
+  sendAI.disabled =
+    true;
+
+
+  aiInput.disabled =
+    true;
+
+
+  showTyping();
+
+
+  const response =
+    await getSupportResponse(
+      question
+    );
+
+
+  removeTyping();
+
+
+  addMessage(
+    response,
+    "ai"
+  );
+
+
+  sendAI.disabled =
+    false;
+
+
+  aiInput.disabled =
+    false;
+
+
+  aiInput.focus();
 
 }
 
@@ -627,52 +1193,73 @@ sendAI.onclick =
   sendMessage;
 
 
-/* ENTER KEY */
+/* ENTER */
 
 aiInput.addEventListener(
   "keydown",
   (event) => {
 
-    if (event.key === "Enter") {
+    if (
+      event.key ===
+      "Enter"
+    ) {
+
       sendMessage();
+
     }
 
   }
 );
 
 
-/* QUICK QUESTIONS */
+/* =========================
+   QUICK QUESTIONS
+========================= */
 
 document
-  .querySelectorAll(".quick-actions button")
-  .forEach((button) => {
+  .querySelectorAll(
+    ".quick-actions button"
+  )
+  .forEach(
+    (button) => {
 
-    button.addEventListener(
-      "click",
-      async () => {
+      button.addEventListener(
+        "click",
+        async () => {
 
-        const question =
-          button.dataset.question;
+          const question =
+            button.dataset.question;
 
-        addMessage(
-          question,
-          "user"
-        );
 
-        const response =
-          await getSupportResponse(
-            question
+          addMessage(
+            question,
+            "user"
           );
 
-        addMessage(
-          response,
-          "ai"
-        );
 
-      }
-    );
+          showTyping();
 
-  });
+
+          const response =
+            await getSupportResponse(
+              question
+            );
+
+
+          removeTyping();
+
+
+          addMessage(
+            response,
+            "ai"
+          );
+
+        }
+      );
+
+    }
+  );
+
 
 </script>
 
