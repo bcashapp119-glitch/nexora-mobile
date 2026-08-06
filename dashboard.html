@@ -3,1265 +3,589 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexora Dashboard</title>
-
+<title>Nexora Mobile 2.0</title>
 <style>
-* {
-  box-sizing: border-box;
+*{
+  box-sizing:border-box;
 }
-
-body {
-  font-family: Arial, sans-serif;
-  background: #f3f6fb;
-  margin: 0;
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+  padding-bottom:90px;
 }
-
-.top {
-  background: #2563eb;
-  color: white;
-  padding: 25px;
-  border-radius: 0 0 25px 25px;
+button{
+  font-family:inherit;
 }
-
-.container {
-  padding: 20px;
-  max-width: 700px;
-  margin: auto;
+.app{
+  width:100%;
+  max-width:650px;
+  margin:auto;
 }
-
-.card {
-  background: white;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+/* HEADER */
+.header{
+  background:#2563eb;
+  color:white;
+  padding:24px 20px 30px;
+  border-radius:0 0 28px 28px;
 }
-
-.wallet {
-  background: #2563eb;
-  color: white;
+.header-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-
-.balance {
-  font-size: 35px;
-  font-weight: bold;
+.brand{
+  font-size:22px;
+  font-weight:bold;
 }
-
-.services {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 15px;
+.profile-circle{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  background:white;
+  color:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:bold;
 }
-
-.service {
-  background: #eef2ff;
-  padding: 20px;
-  border-radius: 15px;
-  text-align: center;
+.greeting{
+  margin-top:24px;
+  font-size:14px;
+  opacity:.9;
 }
-
-.transaction {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 0;
+.username{
+  font-size:25px;
+  font-weight:bold;
+  margin-top:5px;
 }
-
-.logout-button {
-  width: 100%;
-  padding: 15px;
-  background: #dc2626;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
+/* WALLET */
+.wallet{
+  margin:18px;
+  margin-top:-15px;
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 5px 20px rgba(0,0,0,.08);
 }
-
-
-/* =========================
-   NEXORA AI BUTTON
-========================= */
-
-#nexora-ai-button {
-  position: fixed;
-  right: 20px;
-  bottom: 20px;
-  z-index: 9999;
+.wallet-title{
+  color:#6b7280;
+  font-size:13px;
 }
-
-#open-ai {
-  border: none;
-  border-radius: 50px;
-  padding: 15px 22px;
-  background: #2563eb;
-  color: white;
-  font-size: 15px;
-  font-weight: bold;
-  box-shadow: 0 5px 18px rgba(0,0,0,0.25);
-  cursor: pointer;
+.balance{
+  font-size:30px;
+  font-weight:bold;
+  margin:8px 0 15px;
 }
-
-
-/* =========================
-   FULL SCREEN AI
-========================= */
-
-#ai-chat {
-  display: none;
-
-  position: fixed;
-  inset: 0;
-
-  width: 100%;
-  height: 100dvh;
-
-  background: #f7f8fc;
-
-  z-index: 10000;
-
-  flex-direction: column;
+.wallet-buttons{
+  display:flex;
+  gap:10px;
 }
-
-
-/* AI HEADER */
-
-.ai-header {
-  background: #2563eb;
-  color: white;
-
-  min-height: 70px;
-
-  padding: 15px 18px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+.wallet-buttons button{
+  flex:1;
+  border:0;
+  border-radius:10px;
+  padding:12px;
+  background:#eff6ff;
+  color:#2563eb;
+  font-weight:bold;
 }
-
-.ai-title {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+/* CONTENT */
+.content{
+  padding:0 18px;
 }
-
-.ai-avatar {
-  width: 42px;
-  height: 42px;
-
-  border-radius: 50%;
-
-  background: white;
-  color: #2563eb;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  font-size: 22px;
+.section-title{
+  font-size:19px;
+  font-weight:bold;
+  margin:24px 0 13px;
 }
-
-.ai-header h3 {
-  margin: 0;
-  font-size: 17px;
-}
-
-.ai-status {
-  margin: 3px 0 0;
-  font-size: 12px;
-  opacity: 0.9;
-}
-
-#close-ai {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 30px;
-  cursor: pointer;
-  padding: 5px 10px;
-}
-
-
 /* QUICK ACTIONS */
-
-.quick-actions {
-  display: flex;
-  gap: 8px;
-
-  padding: 12px;
-
-  overflow-x: auto;
-
-  background: white;
-
-  border-bottom: 1px solid #ddd;
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
-
-.quick-actions button {
-  white-space: nowrap;
-
-  border: 1px solid #2563eb;
-
-  background: white;
-
-  color: #2563eb;
-
-  padding: 8px 13px;
-
-  border-radius: 20px;
-
-  cursor: pointer;
-
-  font-size: 12px;
+.quick{
+  background:white;
+  border:0;
+  border-radius:16px;
+  padding:15px 5px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
-
-
-/* MESSAGES */
-
-#ai-messages {
-  flex: 1;
-
-  overflow-y: auto;
-
-  padding: 20px;
-
-  background: #f7f8fc;
-
-  display: flex;
-
-  flex-direction: column;
+.quick-icon{
+  font-size:25px;
 }
-
-
-/* AI MESSAGE */
-
-.ai-message {
-  background: white;
-
-  color: #111827;
-
-  padding: 13px 15px;
-
-  border-radius: 5px 18px 18px 18px;
-
-  margin-bottom: 12px;
-
-  max-width: 85%;
-
-  line-height: 1.5;
-
-  box-shadow: 0 2px 7px rgba(0,0,0,0.07);
-
-  align-self: flex-start;
+.quick-name{
+  display:block;
+  font-size:12px;
+  margin-top:8px;
+  font-weight:bold;
 }
-
-
-/* USER MESSAGE */
-
-.user-message {
-  background: #2563eb;
-
-  color: white;
-
-  padding: 13px 15px;
-
-  border-radius: 18px 5px 18px 18px;
-
-  margin-bottom: 12px;
-
-  margin-left: auto;
-
-  max-width: 85%;
-
-  line-height: 1.5;
-
-  align-self: flex-end;
+/* eSIM CARD */
+.esim-card{
+  background:linear-gradient(135deg,#111827,#2563eb);
+  color:white;
+  border-radius:22px;
+  padding:22px;
+  margin-top:10px;
 }
-
-
-/* TYPING */
-
-.typing-message {
-  background: white;
-
-  color: #555;
-
-  padding: 12px 15px;
-
-  border-radius: 5px 18px 18px 18px;
-
-  margin-bottom: 12px;
-
-  max-width: 100px;
-
-  font-size: 13px;
+.esim-card h3{
+  margin:0 0 8px;
+  font-size:21px;
 }
-
-
-/* INPUT AREA */
-
-.ai-input-area {
-  display: flex;
-
-  gap: 8px;
-
-  padding: 12px;
-
-  background: white;
-
-  border-top: 1px solid #ddd;
-
-  padding-bottom: max(12px, env(safe-area-inset-bottom));
+.esim-card p{
+  color:#dbeafe;
+  line-height:1.5;
+  font-size:14px;
 }
-
-#ai-input {
-  flex: 1;
-
-  padding: 14px;
-
-  border: 1px solid #d1d5db;
-
-  border-radius: 25px;
-
-  outline: none;
-
-  font-size: 15px;
-
-  min-width: 0;
+.esim-button{
+  border:0;
+  background:white;
+  color:#2563eb;
+  border-radius:10px;
+  padding:12px 18px;
+  font-weight:bold;
 }
-
-#ai-input:focus {
-  border-color: #2563eb;
+/* DESTINATIONS */
+.destination-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
 }
-
-#send-ai {
-  background: #2563eb;
-
-  color: white;
-
-  border: none;
-
-  width: 52px;
-
-  height: 52px;
-
-  border-radius: 50%;
-
-  cursor: pointer;
-
-  font-size: 18px;
-
-  flex-shrink: 0;
+.destination{
+  border:0;
+  background:white;
+  border-radius:16px;
+  padding:16px;
+  text-align:left;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
 }
-
-#send-ai:disabled {
-  opacity: 0.6;
-
-  cursor: not-allowed;
+.flag{
+  font-size:28px;
 }
-
-
-/* MOBILE */
-
-@media (max-width: 600px) {
-
-  .container {
-    padding: 15px;
+.destination strong{
+  display:block;
+  margin-top:8px;
+}
+.destination small{
+  color:#6b7280;
+}
+/* TOOLS */
+.tools{
+  display:grid;
+  gap:10px;
+}
+.tool{
+  background:white;
+  border:0;
+  border-radius:15px;
+  padding:16px;
+  text-align:left;
+  display:flex;
+  align-items:center;
+  gap:13px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.tool-icon{
+  font-size:24px;
+}
+/* TRANSACTIONS */
+.transaction{
+  background:white;
+  border-radius:15px;
+  padding:15px;
+  margin-bottom:10px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+.transaction-name{
+  font-weight:bold;
+}
+.transaction-date{
+  color:#6b7280;
+  font-size:12px;
+  margin-top:4px;
+}
+.transaction-amount{
+  font-weight:bold;
+  color:#111827;
+}
+/* BOTTOM NAV */
+.bottom-nav{
+  position:fixed;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:100%;
+  max-width:650px;
+  background:white;
+  border-top:1px solid #e5e7eb;
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+  z-index:100;
+}
+.nav-button{
+  border:0;
+  background:none;
+  color:#6b7280;
+  font-size:11px;
+  padding:5px;
+}
+.nav-icon{
+  display:block;
+  font-size:22px;
+  margin-bottom:4px;
+}
+.nav-button.active{
+  color:#2563eb;
+  font-weight:bold;
+}
+/* RESPONSIVE */
+@media(max-width:380px){
+  .quick-grid{
+    grid-template-columns:repeat(2,1fr);
   }
-
-  .ai-header {
-    min-height: 65px;
-  }
-
-  #ai-messages {
-    padding: 15px;
-  }
-
-  .ai-message,
-  .user-message {
-    max-width: 88%;
-  }
-
-}
-
-
-/* DESKTOP */
-
-@media (min-width: 700px) {
-
-  #ai-chat {
-    width: 100%;
-    max-width: 100%;
-  }
-
 }
 </style>
 </head>
-
-
 <body>
-
-
-<!-- =========================
-     DASHBOARD
-========================= -->
-
-<div class="top">
-
-  <h1>
-    Hello, <span id="name">User</span> 👋
-  </h1>
-
-  <p>Nexora Mobile</p>
-
+<div class="app">
+<!-- HEADER -->
+<header class="header">
+  <div class="header-top">
+<div class="brand">
+  Nexora Mobile
 </div>
-
-
-<div class="container">
-
-
-  <!-- WALLET -->
-
-  <div class="card wallet">
-
-    <h2>Wallet Balance</h2>
-
-    <div class="balance">
-      ₦<span id="wallet">0</span>
-    </div>
-
+<button
+  class="profile-circle"
+  id="profileBtn"
+>
+  👤
+</button>
   </div>
-
-
-  <!-- ACCOUNT -->
-
-  <div class="card">
-
-    <h2>Account</h2>
-
-    <p>Email:</p>
-
-    <b id="email">Loading...</b>
-
-    <p>Status:</p>
-
-    <b id="status">Loading...</b>
-
+  <div class="greeting">
+    Welcome back
   </div>
-
-
-  <!-- SERVICES -->
-
-  <div class="card">
-
-    <h2>Services</h2>
-
-    <div class="services">
-
-
-      <a
-        href="fund-wallet.html"
-        style="text-decoration:none;color:black;"
-      >
-
-        <div class="service">
-          💰 Fund Wallet
-        </div>
-
-      </a>
-
-
-      <a
-        href="airtime.html"
-        style="text-decoration:none;color:black;"
-      >
-
-        <div class="service">
-          📱 Airtime
-        </div>
-
-      </a>
-
-
-      <a
-        href="data.html"
-        style="text-decoration:none;color:black;"
-      >
-
-        <div class="service">
-          📶 Data
-        </div>
-
-      </a>
-
-
-      <a
-        href="esim.html"
-        style="text-decoration:none;color:black;"
-      >
-
-        <div class="service">
-          🌍 eSIM
-        </div>
-
-      </a>
-
-
-    </div>
-
+  <div
+    class="username"
+    id="username"
+  >
+    Nexora Customer
   </div>
-
-
-  <!-- TRANSACTIONS -->
-
-  <div class="card">
-
-    <h2>Transaction History</h2>
-
-    <div id="transactions">
-      Loading...
-    </div>
-
+</header>
+<!-- WALLET -->
+<section class="wallet">
+  <div class="wallet-title">
+    Available Balance
   </div>
-
-
-  <!-- LOGOUT -->
-
-  <div class="card">
-
-    <button
-      class="logout-button"
-      id="logout"
-    >
-      Logout
-    </button>
-
+  <div class="balance">
+    ₦0.00
   </div>
-
-
+  <div class="wallet-buttons">
+<button id="fundBtn">
+  + Fund Wallet
+</button>
+<button id="historyBtn">
+  Transactions
+</button>
+  </div>
+</section>
+<main class="content">
+<!-- QUICK ACTIONS -->
+<div class="section-title">
+  Quick Services
 </div>
+<div class="quick-grid">
+  <button class="quick" id="airtimeBtn">
+    <span class="quick-icon">📞</span>
+    <span class="quick-name">Airtime</span>
+  </button>
+  <button class="quick" id="dataBtn">
+    <span class="quick-icon">📶</span>
+    <span class="quick-name">Data</span>
+  </button>
+  <button class="quick" id="esimBtn">
+    <span class="quick-icon">🌍</span>
+    <span class="quick-name">eSIM</span>
+  </button>
+  <button class="quick" id="epinBtn">
+    <span class="quick-icon">🎫</span>
+    <span class="quick-name">ePIN</span>
+  </button>
+</div>
+<!-- ESIM -->
+<div class="section-title">
+  Travel eSIM
+</div>
+<div class="esim-card">
+  <h3>
+    Stay connected worldwide
+  </h3>
+  <p>
+    Find mobile data plans by country,
+    region or global destination and manage
+    your eSIM directly from Nexora Mobile.
+  </p>
 
+<button
+class=“esim-button”
+id=“exploreEsimBtn”
 
-<!-- =========================
-     AI BUTTON
-========================= -->
-
-<div id="nexora-ai-button">
-
-  <button id="open-ai">
-    🤖 Nexora AI
+Explore eSIM
+  </button>
+</div>
+<!-- POPULAR DESTINATIONS -->
+<div class="section-title">
+  Popular Destinations
+</div>
+<div class="destination-grid">
+  <button class="destination">
+    <span class="flag">🇺🇸</span>
+    <strong>United States</strong>
+    <small>View plans</small>
+  </button>
+  <button class="destination">
+    <span class="flag">🇬🇧</span>
+    <strong>United Kingdom</strong>
+    <small>View plans</small>
+  </button>
+  <button class="destination">
+    <span class="flag">🇫🇷</span>
+    <strong>France</strong>
+    <small>View plans</small>
+  </button>
+  <button class="destination">
+    <span class="flag">🇪🇸</span>
+    <strong>Spain</strong>
+    <small>View plans</small>
+  </button>
+</div>
+<!-- ESIM TOOLS -->
+<div class="section-title">
+  eSIM Tools
+</div>
+<div class="tools">
+  <button class="tool">
+    <span class="tool-icon">📱</span>
+    <span>
+      <strong>Check Compatibility</strong><br>
+      <small>Check if your device supports eSIM</small>
+    </span>
+  </button>
+  <button class="tool">
+    <span class="tool-icon">⚙️</span>
+    <span>
+      <strong>Installation Guide</strong><br>
+      <small>Learn how to install your eSIM</small>
+    </span>
+  </button>
+  <button class="tool">
+    <span class="tool-icon">🩺</span>
+    <span>
+      <strong>eSIM Diagnostics</strong><br>
+      <small>Get help with connection problems</small>
+    </span>
+  </button>
+</div>
+<!-- RECENT TRANSACTIONS -->
+<div class="section-title">
+  Recent Transactions
+</div>
+<div class="transaction">
+  <div>
+    <div class="transaction-name">
+      No transactions yet
+    </div>
+<div class="transaction-date">
+  Your purchases will appear here
+</div>
+  </div>
+  <div class="transaction-amount">
+    —
+  </div>
+</div>
+</main>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-button active">
+    <span class="nav-icon">🏠</span>
+    Home
   </button>
 
+<button
+class=“nav-button”
+id=“exploreNav”
+
+<span class="nav-icon">🌍</span>
+Explore
+  </button>
+
+<button
+class=“nav-button”
+id=“manageNav”
+
+<span class="nav-icon">📋</span>
+Manage
+  </button>
+
+<button
+class=“nav-button”
+id=“supportNav”
+
+<span class="nav-icon">🎧</span>
+Support
+  </button>
+
+<button
+class=“nav-button”
+id=“profileNav”
+
+<span class="nav-icon">👤</span>
+Profile
+  </button>
+</nav>
 </div>
-
-
-<!-- =========================
-     FULL SCREEN AI CHAT
-========================= -->
-
-<div id="ai-chat">
-
-
-  <!-- HEADER -->
-
-  <div class="ai-header">
-
-    <div class="ai-title">
-
-      <div class="ai-avatar">
-        🤖
-      </div>
-
-      <div>
-
-        <h3>
-          Nexora AI
-        </h3>
-
-        <div class="ai-status">
-          ● Online • Nexora Mobile Support
-        </div>
-
-      </div>
-
-    </div>
-
-
-    <button id="close-ai">
-      ×
-    </button>
-
-  </div>
-
-
-  <!-- QUICK ACTIONS -->
-
-  <div class="quick-actions">
-
-    <button data-question="How do I fund my wallet?">
-      💰 Fund Wallet
-    </button>
-
-    <button data-question="How do I buy airtime?">
-      📱 Airtime
-    </button>
-
-    <button data-question="How do I buy data?">
-      📶 Data
-    </button>
-
-    <button data-question="How do I get an eSIM?">
-      🌍 eSIM
-    </button>
-
-  </div>
-
-
-  <!-- MESSAGES -->
-
-  <div id="ai-messages">
-
-    <div class="ai-message">
-
-      👋 Hello!
-
-      <br><br>
-
-      I'm <b>Nexora AI</b>, your Nexora Mobile customer support assistant.
-
-      <br><br>
-
-      How can I help you today?
-
-    </div>
-
-  </div>
-
-
-  <!-- INPUT -->
-
-  <div class="ai-input-area">
-
-    <input
-      id="ai-input"
-      type="text"
-      placeholder="Message Nexora AI..."
-      autocomplete="off"
-    >
-
-    <button id="send-ai">
-      ➤
-    </button>
-
-  </div>
-
-
-</div>
-
-
-
 <script type="module">
-
-
-/* =========================
-   FIREBASE
-========================= */
-
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
-
 import {
   getAuth,
-  onAuthStateChanged,
-  signOut
+  onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  collection,
-  query,
-  where,
-  getDocs
-}
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-
 const firebaseConfig = {
-
   apiKey:
-  "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-
+    "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
   authDomain:
-  "nexora-mobile-af02f.firebaseapp.com",
-
+    "nexora-mobile-af02f.firebaseapp.com",
   projectId:
-  "nexora-mobile-af02f",
-
+    "nexora-mobile-af02f",
   storageBucket:
-  "nexora-mobile-af02f.firebasestorage.app",
-
+    "nexora-mobile-af02f.firebasestorage.app",
   messagingSenderId:
-  "498265618137",
-
+    "498265618137",
   appId:
-  "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-
+    "1:498265618137:web:a1ffebae8eda0b88abf0c8",
   measurementId:
-  "G-8494CNWZKL"
+    "G-8494CNWZKL"
 };
-
-
 const app =
   initializeApp(firebaseConfig);
-
-
 const auth =
   getAuth(app);
-
-
-const db =
-  getFirestore(app);
-
-
-/* =========================
-   CUSTOMER ACCOUNT
-========================= */
-
+/*
+  Protect the dashboard.
+  Customers must be logged in.
+*/
 onAuthStateChanged(
   auth,
-  async (user) => {
-
+  (user) => {
     if (!user) {
-
       window.location.href =
         "login.html";
-
       return;
-
     }
-
-
-    try {
-
-      const userRef =
-        doc(
-          db,
-          "users",
-          user.uid
-        );
-
-
-      const userSnap =
-        await getDoc(userRef);
-
-
-      if (userSnap.exists()) {
-
-        const data =
-          userSnap.data();
-
-
-        document
-          .getElementById("name")
-          .textContent =
-          data.name || "User";
-
-
-        document
-          .getElementById("email")
-          .textContent =
-          data.email ||
-          user.email ||
-          "";
-
-
-        document
-          .getElementById("wallet")
-          .textContent =
-          Number(
-            data.wallet ??
-            data.balance ??
-            0
-          ).toLocaleString();
-
-
-        document
-          .getElementById("status")
-          .textContent =
-          data.status ||
-          "Active";
-
-      }
-
-
-      /* TRANSACTIONS */
-
-      const q =
-        query(
-          collection(
-            db,
-            "transactions"
-          ),
-          where(
-            "userId",
-            "==",
-            user.uid
-          )
-        );
-
-
-      const result =
-        await getDocs(q);
-
-
-      let html = "";
-
-
-      result.forEach(
-        (item) => {
-
-          const t =
-            item.data();
-
-
-          html += `
-
-            <div class="transaction">
-
-              <b>
-                ${t.type || "Transaction"}
-              </b>
-
-              <br>
-
-              Amount:
-              ₦${Number(
-                t.amount || 0
-              ).toLocaleString()}
-
-              <br>
-
-              Status:
-              ${t.status || "Unknown"}
-
-            </div>
-
-          `;
-
-        }
-      );
-
-
-      document
-        .getElementById("transactions")
-        .innerHTML =
-        html ||
-        "No transactions yet";
-
-
-    } catch (error) {
-
-      console.error(error);
-
-
-      document
-        .getElementById("transactions")
-        .textContent =
-        "Unable to load transactions.";
-
-    }
-
-  }
-);
-
-
-/* =========================
-   LOGOUT
-========================= */
-
-document
-  .getElementById("logout")
-  .onclick =
-  async () => {
-
-    try {
-
-      await signOut(auth);
-
-      window.location.href =
-        "login.html";
-
-    } catch (error) {
-
-      console.error(error);
-
-    }
-
-  };
-
-
-/* =========================
-   NEXORA AI
-========================= */
-
-const openAI =
-  document.getElementById(
-    "open-ai"
-  );
-
-
-const closeAI =
-  document.getElementById(
-    "close-ai"
-  );
-
-
-const aiChat =
-  document.getElementById(
-    "ai-chat"
-  );
-
-
-const aiInput =
-  document.getElementById(
-    "ai-input"
-  );
-
-
-const sendAI =
-  document.getElementById(
-    "send-ai"
-  );
-
-
-const aiMessages =
-  document.getElementById(
-    "ai-messages"
-  );
-
-
-/* OPEN FULL SCREEN AI */
-
-openAI.onclick = () => {
-
-  aiChat.style.display =
-    "flex";
-
-  document.body.style.overflow =
-    "hidden";
-
-  openAI.style.display =
-    "none";
-
-  aiInput.focus();
-
-};
-
-
-/* CLOSE AI */
-
-closeAI.onclick = () => {
-
-  aiChat.style.display =
-    "none";
-
-  document.body.style.overflow =
-    "";
-
-  openAI.style.display =
-    "block";
-
-};
-
-
-/* ADD MESSAGE */
-
-function addMessage(
-  text,
-  type
-) {
-
-  const message =
-    document.createElement(
-      "div"
-    );
-
-
-  message.className =
-    type === "user"
-      ? "user-message"
-      : "ai-message";
-
-
-  message.textContent =
-    text;
-
-
-  aiMessages.appendChild(
-    message
-  );
-
-
-  aiMessages.scrollTop =
-    aiMessages.scrollHeight;
-
-}
-
-
-/* TYPING MESSAGE */
-
-function showTyping() {
-
-  const typing =
-    document.createElement(
-      "div"
-    );
-
-
-  typing.id =
-    "typing-message";
-
-
-  typing.className =
-    "typing-message";
-
-
-  typing.textContent =
-    "Nexora AI is typing...";
-
-
-  aiMessages.appendChild(
-    typing
-  );
-
-
-  aiMessages.scrollTop =
-    aiMessages.scrollHeight;
-
-}
-
-
-/* REMOVE TYPING */
-
-function removeTyping() {
-
-  const typing =
+    const name =
+      user.displayName ||
+      user.email?.split("@")[0] ||
+      "Nexora Customer";
     document.getElementById(
-      "typing-message"
-    );
-
-
-  if (typing) {
-
-    typing.remove();
-
-  }
-
-}
-
-
-/* =========================
-   BACKEND CONNECTION
-========================= */
-
-async function getSupportResponse(
-  question
-) {
-
-  try {
-
-    const response =
-      await fetch(
-        "https://nexora-ai-backend-omega.vercel.app/api/ai/support",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type":
-              "application/json"
-          },
-
-          body: JSON.stringify({
-            message:
-              question
-          })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
-
-
-    if (data.success) {
-
-      return data.reply;
-
-    }
-
-
-    return "Sorry, Nexora AI is temporarily unavailable.";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-
-    return "Sorry, I couldn't connect to Nexora AI right now.";
-
-  }
-
-}
-
-
-/* =========================
-   SEND MESSAGE
-========================= */
-
-async function sendMessage() {
-
-  const question =
-    aiInput.value.trim();
-
-
-  if (!question) {
-
-    return;
-
-  }
-
-
-  addMessage(
-    question,
-    "user"
-  );
-
-
-  aiInput.value = "";
-
-
-  sendAI.disabled =
-    true;
-
-
-  aiInput.disabled =
-    true;
-
-
-  showTyping();
-
-
-  const response =
-    await getSupportResponse(
-      question
-    );
-
-
-  removeTyping();
-
-
-  addMessage(
-    response,
-    "ai"
-  );
-
-
-  sendAI.disabled =
-    false;
-
-
-  aiInput.disabled =
-    false;
-
-
-  aiInput.focus();
-
-}
-
-
-/* SEND BUTTON */
-
-sendAI.onclick =
-  sendMessage;
-
-
-/* ENTER */
-
-aiInput.addEventListener(
-  "keydown",
-  (event) => {
-
-    if (
-      event.key ===
-      "Enter"
-    ) {
-
-      sendMessage();
-
-    }
-
+      "username"
+    ).textContent = name;
   }
 );
-
-
-/* =========================
-   QUICK QUESTIONS
-========================= */
-
-document
-  .querySelectorAll(
-    ".quick-actions button"
-  )
-  .forEach(
-    (button) => {
-
-      button.addEventListener(
-        "click",
-        async () => {
-
-          const question =
-            button.dataset.question;
-
-
-          addMessage(
-            question,
-            "user"
-          );
-
-
-          showTyping();
-
-
-          const response =
-            await getSupportResponse(
-              question
-            );
-
-
-          removeTyping();
-
-
-          addMessage(
-            response,
-            "ai"
-          );
-
-        }
-      );
-
-    }
+/*
+  Temporary navigation.
+  These buttons will later connect
+  to the real Nexora service pages.
+*/
+document.getElementById(
+  "airtimeBtn"
+).onclick = () => {
+  alert(
+    "Airtime service is coming next."
   );
-
-
+};
+document.getElementById(
+  "dataBtn"
+).onclick = () => {
+  alert(
+    "Mobile Data service is coming next."
+  );
+};
+document.getElementById(
+  "esimBtn"
+).onclick = () => {
+  alert(
+    "eSIM Explore is coming next."
+  );
+};
+document.getElementById(
+  "exploreEsimBtn"
+).onclick = () => {
+  alert(
+    "eSIM Explore is coming next."
+  );
+};
+document.getElementById(
+  "epinBtn"
+).onclick = () => {
+  alert(
+    "ePIN service is coming next."
+  );
+};
+document.getElementById(
+  "fundBtn"
+).onclick = () => {
+  alert(
+    "Wallet funding will be connected to the real payment gateway."
+  );
+};
+document.getElementById(
+  "historyBtn"
+).onclick = () => {
+  alert(
+    "Transaction history will open here."
+  );
+};
+document.getElementById(
+  "profileBtn"
+).onclick = () => {
+  alert(
+    "Profile will open here."
+  );
+};
+document.getElementById(
+  "exploreNav"
+).onclick = () => {
+  alert(
+    "Explore will open here."
+  );
+};
+document.getElementById(
+  "manageNav"
+).onclick = () => {
+  alert(
+    "Manage will open here."
+  );
+};
+document.getElementById(
+  "supportNav"
+).onclick = () => {
+  alert(
+    "Support will open here."
+  );
+};
+document.getElementById(
+  "profileNav"
+).onclick = () => {
+  alert(
+    "Profile will open here."
+  );
+};
 </script>
-
 </body>
 </html>
