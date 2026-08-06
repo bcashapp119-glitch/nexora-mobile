@@ -12,11 +12,6 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
 
 
-/* TEST */
-alert("Nexora admin.js is connected!");
-
-
-/* FIREBASE CONFIG */
 const firebaseConfig = {
   apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
   authDomain: "nexora-mobile-af02f.firebaseapp.com",
@@ -28,13 +23,10 @@ const firebaseConfig = {
 };
 
 
-/* START FIREBASE */
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-
-/* PAGE */
 const appDiv = document.getElementById("app");
 
 
@@ -66,16 +58,13 @@ function showDashboard(user) {
     </div>
   `;
 
-
   document
     .getElementById("usersButton")
     .addEventListener("click", loadUsers);
 
-
   document
     .getElementById("transactionsButton")
     .addEventListener("click", loadTransactions);
-
 
   document
     .getElementById("logoutButton")
@@ -86,7 +75,6 @@ function showDashboard(user) {
 }
 
 
-/* LOAD USERS */
 async function loadUsers() {
 
   const area = document.getElementById("usersArea");
@@ -132,20 +120,13 @@ async function loadUsers() {
           ₦${Number(user.balance || 0).toLocaleString()}
         </p>
 
-        <button class="viewButton">
-          View
-        </button>
+        <button class="viewButton">View</button>
 
         <div class="details" style="display:none;"></div>
       `;
 
-
-      const viewButton =
-        card.querySelector(".viewButton");
-
-      const details =
-        card.querySelector(".details");
-
+      const viewButton = card.querySelector(".viewButton");
+      const details = card.querySelector(".details");
 
       viewButton.addEventListener("click", () => {
 
@@ -155,26 +136,16 @@ async function loadUsers() {
 
           details.innerHTML = `
             <hr>
-
-            <p>
-              <strong>User ID:</strong>
-              ${userDoc.id}
-            </p>
-
-            <p>
-              <strong>Name:</strong>
-              ${user.name || user.fullName || "Not available"}
-            </p>
-
-            <p>
-              <strong>Email:</strong>
-              ${user.email || "Not available"}
-            </p>
-
-            <p>
-              <strong>Phone:</strong>
-              ${user.phone || "Not available"}
-            </p>
+            <p><strong>User ID:</strong> ${userDoc.id}</p>
+            <p><strong>Name:</strong> ${
+              user.name || user.fullName || "Not available"
+            }</p>
+            <p><strong>Email:</strong> ${
+              user.email || "Not available"
+            }</p>
+            <p><strong>Phone:</strong> ${
+              user.phone || "Not available"
+            }</p>
           `;
 
           viewButton.textContent = "Hide";
@@ -182,12 +153,11 @@ async function loadUsers() {
         } else {
 
           details.style.display = "none";
-
           viewButton.textContent = "View";
+
         }
 
       });
-
 
       area.appendChild(card);
 
@@ -203,18 +173,15 @@ async function loadUsers() {
     `;
 
   }
-
 }
 
 
-/* LOAD TRANSACTIONS */
 async function loadTransactions() {
 
   const area =
     document.getElementById("transactionsArea");
 
-  area.innerHTML =
-    "<p>Loading transactions...</p>";
+  area.innerHTML = "<p>Loading transactions...</p>";
 
   try {
 
@@ -243,9 +210,7 @@ async function loadTransactions() {
       card.className = "card";
 
       card.innerHTML = `
-        <h3>
-          ${transaction.type || "Transaction"}
-        </h3>
+        <h3>${transaction.type || "Transaction"}</h3>
 
         <p>
           <strong>Amount:</strong>
@@ -267,13 +232,11 @@ async function loadTransactions() {
         ></div>
       `;
 
-
       const button =
         card.querySelector(".viewTransaction");
 
       const details =
         card.querySelector(".transactionDetails");
-
 
       button.addEventListener("click", () => {
 
@@ -310,13 +273,11 @@ async function loadTransactions() {
         } else {
 
           details.style.display = "none";
-
           button.textContent = "View";
 
         }
 
       });
-
 
       area.appendChild(card);
 
@@ -332,30 +293,22 @@ async function loadTransactions() {
     `;
 
   }
-
 }
 
 
-/* CHECK LOGIN */
 onAuthStateChanged(auth, (user) => {
 
   if (!user) {
 
     appDiv.innerHTML = `
       <div class="card">
-
         <h2>Admin Login Required</h2>
-
-        <p>
-          Please sign in with your Nexora admin account.
-        </p>
-
+        <p>Please sign in with your Nexora admin account.</p>
       </div>
     `;
 
     return;
   }
-
 
   showDashboard(user);
 
