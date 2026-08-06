@@ -1,1133 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nexora Mobile — eSIM</title>
 
-<meta charset="UTF-8">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+    body {
+      background: #f5f7fb;
+      color: #111827;
+    }
 
-<title>Nexora eSIM</title>
+    header {
+      background: #111827;
+      color: white;
+      padding: 18px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
 
-<style>
+    .header-inner {
+      max-width: 1000px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
 
-* {
-  box-sizing: border-box;
-}
+    .logo {
+      font-size: 21px;
+      font-weight: bold;
+    }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  background: #f3f6fb;
-  color: #111827;
-}
+    .back {
+      color: white;
+      text-decoration: none;
+      font-size: 14px;
+    }
 
-.header {
-  background: #2563eb;
-  color: white;
-  padding: 22px 18px;
-  border-radius: 0 0 25px 25px;
-}
+    main {
+      max-width: 1000px;
+      margin: auto;
+      padding: 25px 16px 50px;
+    }
 
-.header h1 {
-  margin: 0;
-  font-size: 24px;
-}
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
 
-.header p {
-  margin: 7px 0 0;
-  opacity: .9;
-}
+    .subtitle {
+      color: #6b7280;
+      margin-bottom: 22px;
+    }
 
-.container {
-  width: 100%;
-  max-width: 600px;
-  margin: auto;
-  padding: 20px 15px 40px;
-}
+    .search-box {
+      background: white;
+      padding: 15px;
+      border-radius: 14px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.06);
+      margin-bottom: 22px;
+    }
 
-.card {
-  background: white;
-  padding: 20px;
-  margin-bottom: 18px;
-  border-radius: 20px;
-  box-shadow: 0 5px 18px rgba(0,0,0,.08);
-}
+    input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #d1d5db;
+      border-radius: 10px;
+      font-size: 16px;
+      outline: none;
+    }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 8px;
-}
+    input:focus {
+      border-color: #111827;
+    }
 
-select {
-  width: 100%;
-  padding: 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 12px;
-  font-size: 15px;
-  background: white;
-}
+    .status {
+      background: white;
+      padding: 18px;
+      border-radius: 14px;
+      margin-bottom: 20px;
+      text-align: center;
+      color: #6b7280;
+    }
 
-.plans {
-  display: grid;
-  gap: 12px;
-  margin-top: 12px;
-}
+    .plans {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 16px;
+    }
 
-.plan {
-  border: 2px solid #e5e7eb;
-  padding: 17px;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: .2s;
-}
+    .plan {
+      background: white;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 3px 15px rgba(0,0,0,.06);
+    }
 
-.plan:hover {
-  border-color: #93c5fd;
-}
+    .country {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
 
-.plan.active {
-  border-color: #2563eb;
-  background: #eef4ff;
-}
+    .plan-name {
+      color: #6b7280;
+      font-size: 13px;
+      margin-bottom: 15px;
+    }
 
-.plan-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .details {
+      display: grid;
+      gap: 8px;
+      margin-bottom: 18px;
+      font-size: 14px;
+    }
 
-.plan-name {
-  font-size: 17px;
-  font-weight: bold;
-}
+    .price {
+      font-size: 23px;
+      font-weight: bold;
+      margin-bottom: 14px;
+    }
 
-.plan-price {
-  color: #2563eb;
-  font-size: 17px;
-  font-weight: bold;
-}
+    button {
+      width: 100%;
+      border: none;
+      border-radius: 10px;
+      padding: 13px;
+      background: #111827;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
 
-.plan-details {
-  margin: 8px 0 0;
-  color: #6b7280;
-  font-size: 14px;
-}
+    button:hover {
+      opacity: .9;
+    }
 
-.summary {
-  background: #f8fafc;
-  padding: 15px;
-  border-radius: 14px;
-  margin-top: 15px;
-}
+    .empty {
+      background: white;
+      padding: 30px;
+      text-align: center;
+      border-radius: 15px;
+      color: #6b7280;
+    }
 
-.summary-row {
-  display: flex;
-  justify-content: space-between;
-  padding: 7px 0;
-}
-
-.summary-row.total {
-  border-top: 1px solid #ddd;
-  margin-top: 7px;
-  padding-top: 13px;
-  font-weight: bold;
-  font-size: 17px;
-}
-
-button {
-  width: 100%;
-  padding: 15px;
-  border: none;
-  border-radius: 13px;
-  background: #2563eb;
-  color: white;
-  font-size: 16px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-}
-
-.secondary-button {
-  margin-top: 10px;
-  background: #e5e7eb;
-  color: #111827;
-}
-
-#message {
-  text-align: center;
-  font-weight: bold;
-  line-height: 1.5;
-}
-
-.hidden {
-  display: none;
-}
-
-.success-box {
-  text-align: center;
-}
-
-.success-icon {
-  font-size: 55px;
-}
-
-.pending {
-  color: #b45309;
-}
-
-.info {
-  color: #6b7280;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.wallet {
-  background: #2563eb;
-  color: white;
-}
-
-.wallet-title {
-  margin: 0 0 7px;
-  font-size: 14px;
-  opacity: .9;
-}
-
-.wallet-balance {
-  font-size: 30px;
-  font-weight: bold;
-}
-
-</style>
-
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 24px;
+      }
+    }
+  </style>
 </head>
-
 
 <body>
 
-
-<div class="header">
-
-  <h1>🌍 Nexora eSIM</h1>
-
-  <p>Choose an international eSIM data plan</p>
-
-</div>
-
-
-<div class="container">
-
-
-  <!-- WALLET -->
-
-  <div class="card wallet">
-
-    <p class="wallet-title">
-      Available Wallet Balance
-    </p>
-
-    <div class="wallet-balance">
-      ₦<span id="wallet">0</span>
-    </div>
-
+<header>
+  <div class="header-inner">
+    <div class="logo">Nexora Mobile</div>
+    <a class="back" href="index.html">← Home</a>
   </div>
-
-
-  <!-- COUNTRY -->
-
-  <div class="card">
-
-    <label for="country">
-      Choose destination
-    </label>
-
-    <select id="country">
-
-      <option value="USA 🇺🇸">
-        USA 🇺🇸
-      </option>
-
-      <option value="UK 🇬🇧">
-        UK 🇬🇧
-      </option>
-
-      <option value="Canada 🇨🇦">
-        Canada 🇨🇦
-      </option>
-
-      <option value="UAE 🇦🇪">
-        UAE 🇦🇪
-      </option>
-
-      <option value="France 🇫🇷">
-        France 🇫🇷
-      </option>
-
-      <option value="Germany 🇩🇪">
-        Germany 🇩🇪
-      </option>
-
-      <option value="Japan 🇯🇵">
-        Japan 🇯🇵
-      </option>
-
-      <option value="South Africa 🇿🇦">
-        South Africa 🇿🇦
-      </option>
-
-    </select>
-
-  </div>
-
-
-  <!-- PLANS -->
-
-  <div class="card">
-
-    <h2>
-      Choose your plan
-    </h2>
-
-    <div class="plans">
-
-
-      <div
-        class="plan"
-        data-name="1GB Data"
-        data-duration="7 Days"
-        data-price="5000"
-      >
-
-        <div class="plan-top">
-
-          <span class="plan-name">
-            1GB Data
-          </span>
-
-          <span class="plan-price">
-            ₦5,000
-          </span>
-
-        </div>
-
-        <p class="plan-details">
-          Valid for 7 days
-        </p>
-
-      </div>
-
-
-      <div
-        class="plan"
-        data-name="5GB Data"
-        data-duration="30 Days"
-        data-price="15000"
-      >
-
-        <div class="plan-top">
-
-          <span class="plan-name">
-            5GB Data
-          </span>
-
-          <span class="plan-price">
-            ₦15,000
-          </span>
-
-        </div>
-
-        <p class="plan-details">
-          Valid for 30 days
-        </p>
-
-      </div>
-
-
-      <div
-        class="plan"
-        data-name="10GB Data"
-        data-duration="30 Days"
-        data-price="25000"
-      >
-
-        <div class="plan-top">
-
-          <span class="plan-name">
-            10GB Data
-          </span>
-
-          <span class="plan-price">
-            ₦25,000
-          </span>
-
-        </div>
-
-        <p class="plan-details">
-          Valid for 30 days
-        </p>
-
-      </div>
-
-
-    </div>
-
-  </div>
-
-
-  <!-- REVIEW -->
-
-  <div
-    class="card hidden"
-    id="review-card"
-  >
-
-    <h2>
-      Review your order
-    </h2>
-
-    <div class="summary">
-
-      <div class="summary-row">
-
-        <span>
-          Destination
-        </span>
-
-        <b id="review-country">
-          -
-        </b>
-
-      </div>
-
-
-      <div class="summary-row">
-
-        <span>
-          Plan
-        </span>
-
-        <b id="review-plan">
-          -
-        </b>
-
-      </div>
-
-
-      <div class="summary-row">
-
-        <span>
-          Validity
-        </span>
-
-        <b id="review-duration">
-          -
-        </b>
-
-      </div>
-
-
-      <div class="summary-row total">
-
-        <span>
-          Total
-        </span>
-
-        <span>
-          ₦<span id="review-price">
-            0
-          </span>
-        </span>
-
-      </div>
-
-    </div>
-
-
-    <br>
-
-
-    <button id="confirm-buy">
-      Confirm eSIM Order
-    </button>
-
-
-    <button
-      class="secondary-button"
-      id="cancel-review"
+</header>
+
+<main>
+
+  <h1>🌍 eSIM Plans</h1>
+  <p class="subtitle">
+    Search for a country and choose an eSIM plan.
+  </p>
+
+  <div class="search-box">
+    <input
+      id="searchInput"
+      type="search"
+      placeholder="Search country, e.g. USA, UK, Germany..."
+      autocomplete="off"
     >
-      Change Plan
-    </button>
-
   </div>
 
-
-  <!-- SELECT BUTTON -->
-
-  <div
-    class="card"
-    id="select-card"
-  >
-
-    <button id="continue-button">
-      Continue
-    </button>
-
+  <div id="status" class="status">
+    Loading real eSIM plans...
   </div>
 
-
-  <!-- MESSAGE -->
-
-  <div
-    class="card hidden"
-    id="message-card"
-  >
-
-    <p id="message"></p>
-
-  </div>
-
-
-  <!-- SUCCESS -->
-
-  <div
-    class="card hidden"
-    id="success-card"
-  >
-
-    <div class="success-box">
-
-      <div class="success-icon">
-        ⏳
-      </div>
-
-      <h2>
-        Order Received
-      </h2>
-
-      <p>
-        Your eSIM order has been recorded successfully.
-      </p>
-
-      <p class="pending">
-        Status: Pending
-      </p>
-
-      <p class="info">
-        Your eSIM will be provided after the Nexora Mobile
-        eSIM provider is connected to the system.
-      </p>
-
-    </div>
-
-  </div>
-
-
-</div>
-
-
-<script type="module">
-
-
-/* =========================
-   FIREBASE
-========================= */
-
-import {
-  initializeApp
-}
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
-
-import {
-  getAuth,
-  onAuthStateChanged
-}
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-
-import {
-  getFirestore,
-  doc,
-  getDoc,
-  updateDoc,
-  collection,
-  addDoc,
-  serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-
-const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-
-  authDomain:
-    "nexora-mobile-af02f.firebaseapp.com",
-
-  projectId:
-    "nexora-mobile-af02f",
-
-  storageBucket:
-    "nexora-mobile-af02f.firebasestorage.app",
-
-  messagingSenderId:
-    "498265618137",
-
-  appId:
-    "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-
-  measurementId:
-    "G-8494CNWZKL"
-
-};
-
-
-const app =
-  initializeApp(firebaseConfig);
-
-
-const auth =
-  getAuth(app);
-
-
-const db =
-  getFirestore(app);
-
-
-/* =========================
-   VARIABLES
-========================= */
-
-let user = null;
-
-let selectedPlan = null;
-
-
-/* =========================
-   ELEMENTS
-========================= */
-
-const walletElement =
-  document.getElementById(
-    "wallet"
-  );
-
-const countryElement =
-  document.getElementById(
-    "country"
-  );
-
-const reviewCard =
-  document.getElementById(
-    "review-card"
-  );
-
-const selectCard =
-  document.getElementById(
-    "select-card"
-  );
-
-const messageCard =
-  document.getElementById(
-    "message-card"
-  );
-
-const successCard =
-  document.getElementById(
-    "success-card"
-  );
-
-
-/* =========================
-   LOGIN
-========================= */
-
-onAuthStateChanged(
-  auth,
-  async (currentUser) => {
-
-    user = currentUser;
-
-
-    if (!user) {
-
-      window.location.href =
-        "login.html";
-
-      return;
-
-    }
-
-
-    await loadWallet();
-
-  }
-);
-
-
-/* =========================
-   LOAD WALLET
-========================= */
-
-async function loadWallet() {
-
-  try {
-
-    const userRef =
-      doc(
-        db,
-        "users",
-        user.uid
-      );
-
-
-    const userSnap =
-      await getDoc(userRef);
-
-
-    if (!userSnap.exists()) {
-
-      walletElement.textContent =
-        "0";
-
-      return;
-
-    }
-
-
-    const data =
-      userSnap.data();
-
-
-    const wallet =
-      Number(
-        data.wallet ??
-        data.balance ??
-        0
-      );
-
-
-    walletElement.textContent =
-      wallet.toLocaleString();
-
-
-  } catch (error) {
-
-    console.error(
-      "Wallet error:",
-      error
-    );
-
-    walletElement.textContent =
-      "0";
-
+  <div id="plans" class="plans"></div>
+
+</main>
+
+<script>
+  /*
+    IMPORTANT:
+    The customer page talks to YOUR backend.
+    It does NOT contain the eSIM Go API key.
+  */
+
+  const API_BASE = "https://YOUR-NEXORA-AI-BACKEND.vercel.app";
+
+  const plansContainer = document.getElementById("plans");
+  const statusBox = document.getElementById("status");
+  const searchInput = document.getElementById("searchInput");
+
+  let allPlans = [];
+
+  function escapeHTML(value) {
+    return String(value ?? "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-}
+  function getCountry(plan) {
+    return plan?.countries?.[0]?.name || "International";
+  }
 
-
-/* =========================
-   SELECT PLAN
-========================= */
-
-document
-  .querySelectorAll(".plan")
-  .forEach(
-    (plan) => {
-
-      plan.onclick = () => {
-
-        document
-          .querySelectorAll(".plan")
-          .forEach(
-            (item) => {
-
-              item.classList.remove(
-                "active"
-              );
-
-            }
-          );
-
-
-        plan.classList.add(
-          "active"
-        );
-
-
-        selectedPlan = {
-
-          name:
-            plan.dataset.name,
-
-          duration:
-            plan.dataset.duration,
-
-          price:
-            Number(
-              plan.dataset.price
-            )
-
-        };
-
-      };
-
+  function getData(plan) {
+    if (plan.dataAmountMB === -1) {
+      return "Unlimited data";
     }
-  );
 
+    const gb = plan.dataAmountMB / 1000;
 
-/* =========================
-   CONTINUE
-========================= */
+    if (gb >= 1) {
+      return `${gb} GB`;
+    }
 
-document
-  .getElementById(
-    "continue-button"
-  )
-  .onclick = () => {
+    return `${plan.dataAmountMB} MB`;
+  }
 
+  function getSpeed(plan) {
+    if (!Array.isArray(plan.speed) || plan.speed.length === 0) {
+      return "Network speed varies";
+    }
 
-    hideMessage();
+    return plan.speed.join(" / ");
+  }
 
+  function renderPlans(plans) {
 
-    if (!selectedPlan) {
-
-      showMessage(
-        "Please select an eSIM plan first."
-      );
+    if (!plans.length) {
+      plansContainer.innerHTML = `
+        <div class="empty">
+          No eSIM plans found for that search.
+        </div>
+      `;
 
       return;
-
     }
 
+    plansContainer.innerHTML = plans.map(plan => {
 
-    document
-      .getElementById(
-        "review-country"
-      )
-      .textContent =
-      countryElement.value;
+      const country = getCountry(plan);
+      const data = getData(plan);
+      const speed = getSpeed(plan);
 
+      /*
+        TEMPORARY SELLING PRICE
 
-    document
-      .getElementById(
-        "review-plan"
-      )
-      .textContent =
-      selectedPlan.name;
+        We are NOT using the provider price directly.
+        The real Nexora selling-price system will be added
+        after we decide your markup and payment system.
 
+        For now, this is only a display calculation.
+      */
 
-    document
-      .getElementById(
-        "review-duration"
-      )
-      .textContent =
-      selectedPlan.duration;
+      const providerPrice = Number(plan.providerPrice || 0);
 
+      const nexoraPrice = providerPrice > 0
+        ? (providerPrice * 2).toFixed(2)
+        : "0.00";
 
-    document
-      .getElementById(
-        "review-price"
-      )
-      .textContent =
-      selectedPlan.price.toLocaleString();
+      return `
+        <div class="plan">
 
+          <div class="country">
+            ${escapeHTML(country)}
+          </div>
 
-    selectCard.classList.add(
-      "hidden"
+          <div class="plan-name">
+            ${escapeHTML(plan.name)}
+          </div>
+
+          <div class="details">
+            <div>📶 Data: ${escapeHTML(data)}</div>
+            <div>📅 Validity: ${escapeHTML(plan.duration)} days</div>
+            <div>📡 Speed: ${escapeHTML(speed)}</div>
+          </div>
+
+          <div class="price">
+            $${nexoraPrice}
+          </div>
+
+          <button
+            onclick='selectPlan(${JSON.stringify(plan).replaceAll("'", "&#039;")})'
+          >
+            View Plan
+          </button>
+
+        </div>
+      `;
+
+    }).join("");
+  }
+
+  function selectPlan(plan) {
+
+    /*
+      We are NOT purchasing anything yet.
+
+      This button only lets us test that the real plan
+      information is reaching the customer page.
+    */
+
+    alert(
+      "Selected eSIM\\n\\n" +
+      "Country: " + getCountry(plan) + "\\n" +
+      "Plan: " + plan.name + "\\n" +
+      "Data: " + getData(plan) + "\\n" +
+      "Validity: " + plan.duration + " days"
     );
+  }
 
-
-    reviewCard.classList.remove(
-      "hidden"
-    );
-
-
-    reviewCard.scrollIntoView({
-      behavior: "smooth"
-    });
-
-  };
-
-
-/* =========================
-   CANCEL REVIEW
-========================= */
-
-document
-  .getElementById(
-    "cancel-review"
-  )
-  .onclick = () => {
-
-    reviewCard.classList.add(
-      "hidden"
-    );
-
-    selectCard.classList.remove(
-      "hidden"
-    );
-
-  };
-
-
-/* =========================
-   CONFIRM PURCHASE
-========================= */
-
-document
-  .getElementById(
-    "confirm-buy"
-  )
-  .onclick = async () => {
-
-
-    if (!user) {
-
-      showMessage(
-        "Please login first."
-      );
-
-      return;
-
-    }
-
-
-    if (!selectedPlan) {
-
-      showMessage(
-        "Please select a plan."
-      );
-
-      return;
-
-    }
-
-
-    const confirmButton =
-      document.getElementById(
-        "confirm-buy"
-      );
-
-
-    confirmButton.disabled =
-      true;
-
-
-    confirmButton.textContent =
-      "Processing...";
-
+  async function loadPlans() {
 
     try {
 
-
-      const userRef =
-        doc(
-          db,
-          "users",
-          user.uid
-        );
-
-
-      const userSnap =
-        await getDoc(userRef);
-
-
-      if (!userSnap.exists()) {
-
-        throw new Error(
-          "Customer account not found."
-        );
-
-      }
-
-
-      const data =
-        userSnap.data();
-
-
-      const wallet =
-        Number(
-          data.wallet ??
-          data.balance ??
-          0
-        );
-
-
-      if (
-        wallet <
-        selectedPlan.price
-      ) {
-
-        showMessage(
-          "Insufficient wallet balance. Please fund your wallet before purchasing this eSIM."
-        );
-
-        confirmButton.disabled =
-          false;
-
-        confirmButton.textContent =
-          "Confirm eSIM Order";
-
-        return;
-
-      }
-
+      statusBox.textContent = "Connecting to Nexora backend...";
 
       /*
-       * IMPORTANT:
-       * The provider is not connected yet.
-       * Therefore the order is recorded as
-       * Pending rather than pretending an eSIM
-       * has already been delivered.
-       */
+        IMPORTANT:
+        Change this endpoint ONLY if your backend uses
+        a different route.
 
+        We will use:
+        /api/esim/plans
+      */
 
-      const newWallet =
-        wallet -
-        selectedPlan.price;
-
-
-      await updateDoc(
-        userRef,
-        {
-          wallet:
-            newWallet
-        }
+      const response = await fetch(
+        `${API_BASE}/api/esim/plans`
       );
 
+      const data = await response.json();
 
-      const order =
-        await addDoc(
-          collection(
-            db,
-            "transactions"
-          ),
-          {
-
-            userId:
-              user.uid,
-
-            type:
-              "eSIM Purchase",
-
-            country:
-              countryElement.value,
-
-            plan:
-              selectedPlan.name,
-
-            duration:
-              selectedPlan.duration,
-
-            amount:
-              selectedPlan.price,
-
-            status:
-              "Pending",
-
-            providerStatus:
-              "Waiting for eSIM provider",
-
-            createdAt:
-              serverTimestamp()
-
-          }
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.message || "Unable to load eSIM plans."
         );
+      }
 
+      allPlans = Array.isArray(data.plans)
+        ? data.plans
+        : [];
 
-      console.log(
-        "eSIM order:",
-        order.id
-      );
+      statusBox.textContent =
+        `${allPlans.length} real eSIM plans available`;
 
-
-      walletElement.textContent =
-        newWallet.toLocaleString();
-
-
-      reviewCard.classList.add(
-        "hidden"
-      );
-
-
-      successCard.classList.remove(
-        "hidden"
-      );
-
-
-      successCard.scrollIntoView({
-        behavior: "smooth"
-      });
-
+      renderPlans(allPlans);
 
     } catch (error) {
 
-      console.error(
-        "eSIM purchase error:",
-        error
-      );
+      console.error("Nexora eSIM error:", error);
 
+      statusBox.textContent =
+        "Unable to load eSIM plans right now.";
 
-      showMessage(
-        "We couldn't complete your order. Please try again."
-      );
+      plansContainer.innerHTML = `
+        <div class="empty">
+          <strong>eSIM plans are temporarily unavailable.</strong>
+          <br><br>
+          Please try again later.
+        </div>
+      `;
+    }
+  }
 
+  searchInput.addEventListener("input", () => {
 
-      confirmButton.disabled =
-        false;
+    const query = searchInput.value
+      .trim()
+      .toLowerCase();
 
-
-      confirmButton.textContent =
-        "Confirm eSIM Order";
-
+    if (!query) {
+      renderPlans(allPlans);
+      return;
     }
 
-  };
+    const filtered = allPlans.filter(plan => {
 
+      const country = getCountry(plan).toLowerCase();
 
-/* =========================
-   MESSAGE
-========================= */
+      const name = String(plan.name || "")
+        .toLowerCase();
 
-function showMessage(text) {
+      const description = String(plan.description || "")
+        .toLowerCase();
 
-  messageCard.classList.remove(
-    "hidden"
-  );
+      return (
+        country.includes(query) ||
+        name.includes(query) ||
+        description.includes(query)
+      );
+    });
 
+    renderPlans(filtered);
+  });
 
-  document
-    .getElementById(
-      "message"
-    )
-    .textContent =
-    text;
-
-}
-
-
-function hideMessage() {
-
-  messageCard.classList.add(
-    "hidden"
-  );
-
-}
-
-
+  loadPlans();
 </script>
 
 </body>
-
 </html>
