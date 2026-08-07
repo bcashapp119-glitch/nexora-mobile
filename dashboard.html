@@ -7,388 +7,186 @@
 <title>Nexora Mobile 2.0</title>
 
 <style>
-* {
-  box-sizing: border-box;
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+  padding-bottom:90px;
+}
+button{font-family:inherit;cursor:pointer}
+.app{width:100%;max-width:650px;margin:auto}
+
+.header{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:22px 18px 32px;
+  border-radius:0 0 28px 28px;
+}
+.header-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{font-size:22px;font-weight:800}
+.profile-circle{
+  width:42px;height:42px;border:0;border-radius:50%;
+  background:white;color:#2563eb;
+  display:flex;align-items:center;justify-content:center;font-size:20px;
+}
+.greeting{margin-top:23px;font-size:14px;opacity:.9}
+.username{font-size:25px;font-weight:800;margin-top:5px}
+
+.wallet{
+  margin:-15px 18px 0;background:white;border-radius:20px;
+  padding:20px;box-shadow:0 7px 25px rgba(0,0,0,.08);
+  position:relative;z-index:2;
+}
+.wallet-title{color:#6b7280;font-size:13px}
+.balance{font-size:30px;font-weight:800;margin:8px 0 15px}
+.wallet-buttons{display:flex;gap:10px}
+.wallet-buttons button{
+  flex:1;border:0;border-radius:11px;padding:12px;
+  background:#eff6ff;color:#2563eb;font-weight:700;
 }
 
-html {
-  scroll-behavior: smooth;
+.content{padding:0 18px}
+.section-title{font-size:19px;font-weight:800;margin:25px 0 13px}
+
+.quick-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+.quick{
+  background:white;border:0;border-radius:16px;padding:15px 5px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.quick:active,.market-card:active,.destination:active,.tool:active,.ai-card:active{
+  transform:scale(.98);
+}
+.quick-icon{font-size:25px}
+.quick-name{display:block;font-size:12px;margin-top:8px;font-weight:700}
+
+.ai-card{
+  margin-top:10px;background:linear-gradient(135deg,#111827,#374151);
+  color:white;border-radius:22px;padding:21px;border:0;
+  width:100%;text-align:left;
+}
+.ai-card .ai-icon{font-size:30px}
+.ai-card h3{margin:10px 0 7px}
+.ai-card p{margin:0;color:#d1d5db;line-height:1.5;font-size:14px}
+
+.esim-card{
+  background:linear-gradient(135deg,#111827,#2563eb);
+  color:white;border-radius:22px;padding:22px;margin-top:10px;
+}
+.esim-card h3{margin:0 0 8px;font-size:21px}
+.esim-card p{color:#dbeafe;line-height:1.5;font-size:14px}
+.esim-button{
+  border:0;background:white;color:#2563eb;border-radius:10px;
+  padding:12px 18px;font-weight:800;
 }
 
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #f5f7fb;
-  color: #111827;
-  padding-bottom: 90px;
+/* MARKETPLACE */
+.market-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.market-card{
+  border:0;background:white;border-radius:18px;padding:18px;
+  text-align:left;box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+.market-icon{font-size:30px}
+.market-card h3{margin:10px 0 6px}
+.market-card p{
+  margin:0 0 14px;color:#6b7280;font-size:13px;line-height:1.4;
+}
+.market-button{
+  display:block;
+  width:100%;
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:11px;
+  border-radius:10px;
+  font-weight:800;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
+.destination-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+}
+.destination{
+  border:0;background:white;border-radius:16px;padding:16px;
+  text-align:left;box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.flag{font-size:28px}
+.destination strong{display:block;margin-top:8px}
+.destination small{color:#6b7280}
+
+.tools{display:grid;gap:10px}
+.tool{
+  background:white;border:0;border-radius:15px;padding:16px;
+  text-align:left;display:flex;align-items:center;gap:13px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.tool-icon{font-size:24px}
+
+.support-card{
+  background:white;border-radius:18px;padding:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+.whatsapp-button{
+  width:100%;border:0;border-radius:12px;padding:14px;
+  background:#22c55e;color:white;font-weight:800;font-size:15px;
 }
 
-.app {
-  width: 100%;
-  max-width: 650px;
-  margin: auto;
+.transaction{
+  background:white;border-radius:15px;padding:15px;
+  display:flex;justify-content:space-between;align-items:center;
+  box-shadow:0 3px 12px rgba(0,0,0,.04);
 }
+.transaction-name{font-weight:800}
+.transaction-date{color:#6b7280;font-size:12px;margin-top:4px}
 
-/* HEADER */
-.header {
-  background: linear-gradient(135deg, #2563eb, #1d4ed8);
-  color: white;
-  padding: 22px 18px 32px;
-  border-radius: 0 0 28px 28px;
+.bottom-nav{
+  position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+  width:100%;max-width:650px;background:rgba(255,255,255,.97);
+  border-top:1px solid #e5e7eb;display:grid;
+  grid-template-columns:repeat(5,1fr);
+  padding:9px 5px calc(9px + env(safe-area-inset-bottom));
+  z-index:100;
 }
-
-.header-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.nav-button{
+  border:0;background:none;color:#6b7280;font-size:10px;padding:5px;
 }
+.nav-icon{display:block;font-size:21px;margin-bottom:4px}
+.nav-button.active{color:#2563eb;font-weight:800}
 
-.brand {
-  font-size: 22px;
-  font-weight: 800;
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.5);
+  display:none;align-items:flex-end;justify-content:center;z-index:500;
 }
-
-.profile-circle {
-  width: 42px;
-  height: 42px;
-  border: 0;
-  border-radius: 50%;
-  background: white;
-  color: #2563eb;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
+.modal.show{display:flex}
+.modal-box{
+  width:100%;max-width:650px;background:white;
+  border-radius:25px 25px 0 0;padding:24px;
+  max-height:80vh;overflow-y:auto;
 }
-
-.greeting {
-  margin-top: 23px;
-  font-size: 14px;
-  opacity: .9;
+.modal-close{
+  float:right;border:0;background:#f3f4f6;
+  border-radius:50%;width:35px;height:35px;font-size:18px;
 }
+.modal-box h2{margin-top:5px}
 
-.username {
-  font-size: 25px;
-  font-weight: 800;
-  margin-top: 5px;
-}
-
-/* WALLET */
-.wallet {
-  margin: -15px 18px 0;
-  background: white;
-  border-radius: 20px;
-  padding: 20px;
-  box-shadow: 0 7px 25px rgba(0,0,0,.08);
-  position: relative;
-  z-index: 2;
-}
-
-.wallet-title {
-  color: #6b7280;
-  font-size: 13px;
-}
-
-.balance {
-  font-size: 30px;
-  font-weight: 800;
-  margin: 8px 0 15px;
-}
-
-.wallet-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.wallet-buttons button {
-  flex: 1;
-  border: 0;
-  border-radius: 11px;
-  padding: 12px;
-  background: #eff6ff;
-  color: #2563eb;
-  font-weight: 700;
-}
-
-/* CONTENT */
-.content {
-  padding: 0 18px;
-}
-
-.section-title {
-  font-size: 19px;
-  font-weight: 800;
-  margin: 25px 0 13px;
-}
-
-/* QUICK SERVICES */
-.quick-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-}
-
-.quick {
-  background: white;
-  border: 0;
-  border-radius: 16px;
-  padding: 15px 5px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.05);
-}
-
-.quick:active,
-.destination:active,
-.tool:active,
-.ai-card:active {
-  transform: scale(.98);
-}
-
-.quick-icon {
-  font-size: 25px;
-}
-
-.quick-name {
-  display: block;
-  font-size: 12px;
-  margin-top: 8px;
-  font-weight: 700;
-}
-
-/* AI */
-.ai-card {
-  margin-top: 10px;
-  background: linear-gradient(135deg, #111827, #374151);
-  color: white;
-  border-radius: 22px;
-  padding: 21px;
-  border: 0;
-  width: 100%;
-  text-align: left;
-}
-
-.ai-card .ai-icon {
-  font-size: 30px;
-}
-
-.ai-card h3 {
-  margin: 10px 0 7px;
-}
-
-.ai-card p {
-  margin: 0;
-  color: #d1d5db;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-/* ESIM */
-.esim-card {
-  background: linear-gradient(135deg, #111827, #2563eb);
-  color: white;
-  border-radius: 22px;
-  padding: 22px;
-  margin-top: 10px;
-}
-
-.esim-card h3 {
-  margin: 0 0 8px;
-  font-size: 21px;
-}
-
-.esim-card p {
-  color: #dbeafe;
-  line-height: 1.5;
-  font-size: 14px;
-}
-
-.esim-button {
-  border: 0;
-  background: white;
-  color: #2563eb;
-  border-radius: 10px;
-  padding: 12px 18px;
-  font-weight: 800;
-}
-
-/* DESTINATIONS */
-.destination-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-}
-
-.destination {
-  border: 0;
-  background: white;
-  border-radius: 16px;
-  padding: 16px;
-  text-align: left;
-  box-shadow: 0 3px 12px rgba(0,0,0,.05);
-}
-
-.flag {
-  font-size: 28px;
-}
-
-.destination strong {
-  display: block;
-  margin-top: 8px;
-}
-
-.destination small {
-  color: #6b7280;
-}
-
-/* TOOLS */
-.tools {
-  display: grid;
-  gap: 10px;
-}
-
-.tool {
-  background: white;
-  border: 0;
-  border-radius: 15px;
-  padding: 16px;
-  text-align: left;
-  display: flex;
-  align-items: center;
-  gap: 13px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.05);
-}
-
-.tool-icon {
-  font-size: 24px;
-}
-
-/* SUPPORT */
-.support-card {
-  background: white;
-  border-radius: 18px;
-  padding: 18px;
-  box-shadow: 0 3px 12px rgba(0,0,0,.05);
-}
-
-.whatsapp-button {
-  width: 100%;
-  border: 0;
-  border-radius: 12px;
-  padding: 14px;
-  background: #22c55e;
-  color: white;
-  font-weight: 800;
-  font-size: 15px;
-}
-
-/* TRANSACTIONS */
-.transaction {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 3px 12px rgba(0,0,0,.04);
-}
-
-.transaction-name {
-  font-weight: 800;
-}
-
-.transaction-date {
-  color: #6b7280;
-  font-size: 12px;
-  margin-top: 4px;
-}
-
-/* BOTTOM NAV */
-.bottom-nav {
-  position: fixed;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 100%;
-  max-width: 650px;
-  background: rgba(255,255,255,.97);
-  border-top: 1px solid #e5e7eb;
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  padding: 9px 5px calc(9px + env(safe-area-inset-bottom));
-  z-index: 100;
-}
-
-.nav-button {
-  border: 0;
-  background: none;
-  color: #6b7280;
-  font-size: 10px;
-  padding: 5px;
-}
-
-.nav-icon {
-  display: block;
-  font-size: 21px;
-  margin-bottom: 4px;
-}
-
-.nav-button.active {
-  color: #2563eb;
-  font-weight: 800;
-}
-
-/* MODAL */
-.modal {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.5);
-  display: none;
-  align-items: flex-end;
-  justify-content: center;
-  z-index: 500;
-}
-
-.modal.show {
-  display: flex;
-}
-
-.modal-box {
-  width: 100%;
-  max-width: 650px;
-  background: white;
-  border-radius: 25px 25px 0 0;
-  padding: 24px;
-  max-height: 80vh;
-  overflow-y: auto;
-}
-
-.modal-close {
-  float: right;
-  border: 0;
-  background: #f3f4f6;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  font-size: 18px;
-}
-
-.modal-box h2 {
-  margin-top: 5px;
-}
-
-/* MOBILE */
-@media(max-width: 390px) {
-  .quick-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .username {
-    font-size: 22px;
-  }
+@media(max-width:390px){
+  .quick-grid{grid-template-columns:repeat(2,1fr)}
+  .username{font-size:22px}
 }
 </style>
 </head>
@@ -400,25 +198,16 @@ button {
 <header class="header">
   <div class="header-top">
     <div class="brand">Nexora Mobile</div>
-
-    <button class="profile-circle" id="profileBtn">
-      👤
-    </button>
+    <button class="profile-circle" id="profileBtn">👤</button>
   </div>
 
   <div class="greeting">Welcome back</div>
-
-  <div class="username" id="username">
-    Nexora Customer
-  </div>
+  <div class="username" id="username">Nexora Customer</div>
 </header>
 
 <section class="wallet">
   <div class="wallet-title">Available Balance</div>
-
-  <div class="balance">
-    ₦0.00
-  </div>
+  <div class="balance">₦0.00</div>
 
   <div class="wallet-buttons">
     <button id="fundBtn">+ Fund Wallet</button>
@@ -428,193 +217,219 @@ button {
 
 <main class="content">
 
-  <!-- QUICK SERVICES -->
-  <div class="section-title">
-    Quick Services
-  </div>
+<div class="section-title">Quick Services</div>
 
-  <div class="quick-grid">
+<div class="quick-grid">
 
-    <button class="quick" id="airtimeBtn">
-      <span class="quick-icon">📞</span>
-      <span class="quick-name">Airtime</span>
-    </button>
-
-    <button class="quick" id="dataBtn">
-      <span class="quick-icon">📶</span>
-      <span class="quick-name">Data</span>
-    </button>
-
-    <button class="quick" id="esimBtn">
-      <span class="quick-icon">🌍</span>
-      <span class="quick-name">eSIM</span>
-    </button>
-
-    <button class="quick" id="epinBtn">
-      <span class="quick-icon">🎫</span>
-      <span class="quick-name">ePIN</span>
-    </button>
-
-  </div>
-
-  <!-- NEXORA AI -->
-  <div class="section-title">
-    Nexora AI
-  </div>
-
-  <button class="ai-card" id="aiBtn">
-    <div class="ai-icon">🤖</div>
-
-    <h3>Ask Nexora AI</h3>
-
-    <p>
-      Get help choosing an eSIM, understanding your plan,
-      troubleshooting connection problems and navigating Nexora Mobile.
-    </p>
+  <button class="quick" id="airtimeBtn">
+    <span class="quick-icon">📞</span>
+    <span class="quick-name">Airtime</span>
   </button>
 
-  <!-- ESIM -->
-  <div class="section-title">
-    Travel eSIM
-  </div>
+  <button class="quick" id="dataBtn">
+    <span class="quick-icon">📶</span>
+    <span class="quick-name">Data</span>
+  </button>
 
-  <div class="esim-card">
+  <button class="quick" id="esimBtn">
+    <span class="quick-icon">🌍</span>
+    <span class="quick-name">eSIM</span>
+  </button>
 
-    <h3>Stay connected worldwide 🌎</h3>
+  <button class="quick" id="epinBtn">
+    <span class="quick-icon">🎫</span>
+    <span class="quick-name">ePIN</span>
+  </button>
 
-    <p>
-      Explore eSIM plans by country, region or global destination.
-      Buy and manage your travel eSIM directly from Nexora Mobile.
-    </p>
+</div>
 
-    <button class="esim-button" id="exploreEsimBtn">
-      Explore eSIM
-    </button>
 
-  </div>
+<div class="section-title">Nexora AI</div>
 
-  <!-- DESTINATIONS -->
-  <div class="section-title">
-    Popular Destinations
-  </div>
+<button class="ai-card" id="aiBtn">
+  <div class="ai-icon">🤖</div>
+  <h3>Ask Nexora AI</h3>
+  <p>
+    Get help choosing an eSIM, understanding your plan,
+    troubleshooting connection problems and navigating Nexora Mobile.
+  </p>
+</button>
 
-  <div class="destination-grid">
 
-    <button class="destination" data-country="United States">
-      <span class="flag">🇺🇸</span>
-      <strong>United States</strong>
-      <small>View plans</small>
-    </button>
+<div class="section-title">Travel eSIM</div>
 
-    <button class="destination" data-country="United Kingdom">
-      <span class="flag">🇬🇧</span>
-      <strong>United Kingdom</strong>
-      <small>View plans</small>
-    </button>
+<div class="esim-card">
 
-    <button class="destination" data-country="France">
-      <span class="flag">🇫🇷</span>
-      <strong>France</strong>
-      <small>View plans</small>
-    </button>
+  <h3>Stay connected worldwide 🌎</h3>
 
-    <button class="destination" data-country="Spain">
-      <span class="flag">🇪🇸</span>
-      <strong>Spain</strong>
-      <small>View plans</small>
-    </button>
+  <p>
+    Explore eSIM plans by country, region or global destination.
+    Buy and manage your travel eSIM directly from Nexora Mobile.
+  </p>
 
-    <button class="destination" data-country="Europe">
-      <span class="flag">🇪🇺</span>
-      <strong>Europe</strong>
-      <small>Regional plans</small>
-    </button>
+  <button class="esim-button" id="exploreEsimBtn">
+    Explore eSIM
+  </button>
 
-    <button class="destination" data-country="Asia">
-      <span class="flag">🌏</span>
-      <strong>Asia</strong>
-      <small>Regional plans</small>
-    </button>
+</div>
 
-  </div>
 
-  <!-- ESIM TOOLS -->
-  <div class="section-title">
-    eSIM Tools
-  </div>
+<!-- NEW MARKETPLACE -->
 
-  <div class="tools">
+<div class="section-title">Digital Marketplace</div>
 
-    <button class="tool" id="compatibilityBtn">
-      <span class="tool-icon">📱</span>
-      <span>
-        <strong>Check Compatibility</strong><br>
-        <small>Check if your device supports eSIM</small>
-      </span>
-    </button>
+<div class="market-grid">
 
-    <button class="tool" id="installationBtn">
-      <span class="tool-icon">⚙️</span>
-      <span>
-        <strong>Installation Guide</strong><br>
-        <small>Learn how to install your eSIM</small>
-      </span>
-    </button>
+  <button class="market-card" onclick="location.href='vpn.html'">
+    <div class="market-icon">🔐</div>
+    <h3>VPN</h3>
+    <p>Browse legitimate VPN subscriptions and privacy services.</p>
+    <span class="market-button">View VPN</span>
+  </button>
 
-    <button class="tool" id="diagnosticsBtn">
-      <span class="tool-icon">🩺</span>
-      <span>
-        <strong>eSIM Diagnostics</strong><br>
-        <small>Get help with connection problems</small>
-      </span>
-    </button>
+  <button class="market-card" onclick="location.href='numbers.html'">
+    <div class="market-icon">📞</div>
+    <h3>Numbers</h3>
+    <p>Browse supported virtual numbers for legitimate communication.</p>
+    <span class="market-button">View Numbers</span>
+  </button>
 
-  </div>
+  <button class="market-card" onclick="location.href='sms.html'">
+    <div class="market-icon">💬</div>
+    <h3>SMS</h3>
+    <p>Business messaging and supported virtual SMS services.</p>
+    <span class="market-button">View SMS</span>
+  </button>
 
-  <!-- SUPPORT -->
-  <div class="section-title">
-    Support
-  </div>
+  <button class="market-card" onclick="location.href='facebook.html'">
+    <div class="market-icon">📘</div>
+    <h3>Facebook</h3>
+    <p>Advertising, marketing and legitimate page-management services.</p>
+    <span class="market-button">View Services</span>
+  </button>
 
-  <div class="support-card">
+  <button class="market-card" onclick="location.href='instagram.html'">
+    <div class="market-icon">📸</div>
+    <h3>Instagram</h3>
+    <p>Advertising, marketing and legitimate profile-management services.</p>
+    <span class="market-button">View Services</span>
+  </button>
 
-    <p>
-      Need help with an order, eSIM, airtime or data?
-    </p>
+  <button class="market-card" onclick="location.href='tiktok.html'">
+    <div class="market-icon">🎵</div>
+    <h3>TikTok</h3>
+    <p>Advertising, content promotion and legitimate creator services.</p>
+    <span class="market-button">View Services</span>
+  </button>
 
-    <!-- REPLACE THIS NUMBER WITH YOUR REAL WHATSAPP NUMBER -->
-    <button class="whatsapp-button" id="whatsappBtn">
-      💬 Contact Nexora on WhatsApp
-    </button>
+</div>
 
-  </div>
 
-  <!-- TRANSACTIONS -->
-  <div class="section-title">
-    Recent Transactions
-  </div>
+<div class="section-title">Popular Destinations</div>
 
-  <div class="transaction">
+<div class="destination-grid">
 
-    <div>
-      <div class="transaction-name">
-        No transactions yet
-      </div>
+  <button class="destination" data-country="United States">
+    <span class="flag">🇺🇸</span>
+    <strong>United States</strong>
+    <small>View plans</small>
+  </button>
 
-      <div class="transaction-date">
-        Your purchases will appear here
-      </div>
+  <button class="destination" data-country="United Kingdom">
+    <span class="flag">🇬🇧</span>
+    <strong>United Kingdom</strong>
+    <small>View plans</small>
+  </button>
+
+  <button class="destination" data-country="France">
+    <span class="flag">🇫🇷</span>
+    <strong>France</strong>
+    <small>View plans</small>
+  </button>
+
+  <button class="destination" data-country="Spain">
+    <span class="flag">🇪🇸</span>
+    <strong>Spain</strong>
+    <small>View plans</small>
+  </button>
+
+  <button class="destination" data-country="Europe">
+    <span class="flag">🇪🇺</span>
+    <strong>Europe</strong>
+    <small>Regional plans</small>
+  </button>
+
+  <button class="destination" data-country="Asia">
+    <span class="flag">🌏</span>
+    <strong>Asia</strong>
+    <small>Regional plans</small>
+  </button>
+
+</div>
+
+
+<div class="section-title">eSIM Tools</div>
+
+<div class="tools">
+
+  <button class="tool" id="compatibilityBtn">
+    <span class="tool-icon">📱</span>
+    <span>
+      <strong>Check Compatibility</strong><br>
+      <small>Check if your device supports eSIM</small>
+    </span>
+  </button>
+
+  <button class="tool" id="installationBtn">
+    <span class="tool-icon">⚙️</span>
+    <span>
+      <strong>Installation Guide</strong><br>
+      <small>Learn how to install your eSIM</small>
+    </span>
+  </button>
+
+  <button class="tool" id="diagnosticsBtn">
+    <span class="tool-icon">🩺</span>
+    <span>
+      <strong>eSIM Diagnostics</strong><br>
+      <small>Get help with connection problems</small>
+    </span>
+  </button>
+
+</div>
+
+
+<div class="section-title">Support</div>
+
+<div class="support-card">
+
+  <p>Need help with an order, eSIM, airtime or data?</p>
+
+  <button class="whatsapp-button" id="whatsappBtn">
+    💬 Contact Nexora on WhatsApp
+  </button>
+
+</div>
+
+
+<div class="section-title">Recent Transactions</div>
+
+<div class="transaction">
+
+  <div>
+    <div class="transaction-name">No transactions yet</div>
+    <div class="transaction-date">
+      Your purchases will appear here
     </div>
-
-    <div>
-      —
-    </div>
-
   </div>
+
+  <div>—</div>
+
+</div>
 
 </main>
 
-<!-- BOTTOM NAV -->
+
 <nav class="bottom-nav">
 
   <button class="nav-button active" id="homeNav">
@@ -646,20 +461,19 @@ button {
 
 </div>
 
-<!-- MODAL -->
+
 <div class="modal" id="modal">
 
   <div class="modal-box">
 
-    <button class="modal-close" id="modalClose">
-      ×
-    </button>
+    <button class="modal-close" id="modalClose">×</button>
 
     <div id="modalContent"></div>
 
   </div>
 
 </div>
+
 
 <script type="module">
 
@@ -672,8 +486,6 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
-
-/* FIREBASE */
 
 const firebaseConfig = {
 
@@ -701,18 +513,16 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
 
 
 /* LOGIN PROTECTION */
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth,(user)=>{
 
-  if (!user) {
+  if(!user){
 
-    window.location.href = "login.html";
-
+    window.location.href="login.html";
     return;
 
   }
@@ -722,26 +532,21 @@ onAuthStateChanged(auth, (user) => {
     user.email?.split("@")[0] ||
     "Nexora Customer";
 
-  document.getElementById("username").textContent = name;
+  document.getElementById("username").textContent=name;
 
 });
 
 
 /* MODAL */
 
-const modal =
-  document.getElementById("modal");
-
-const modalContent =
-  document.getElementById("modalContent");
-
-const modalClose =
-  document.getElementById("modalClose");
+const modal=document.getElementById("modal");
+const modalContent=document.getElementById("modalContent");
+const modalClose=document.getElementById("modalClose");
 
 
-function openModal(title, content) {
+function openModal(title,content){
 
-  modalContent.innerHTML = `
+  modalContent.innerHTML=`
     <h2>${title}</h2>
     ${content}
   `;
@@ -751,329 +556,6 @@ function openModal(title, content) {
 }
 
 
-function closeModal() {
+function closeModal(){
 
   modal.classList.remove("show");
-
-}
-
-
-modalClose.onclick = closeModal;
-
-modal.onclick = (event) => {
-
-  if (event.target === modal) {
-    closeModal();
-  }
-
-};
-
-
-/* QUICK SERVICES */
-
-document.getElementById("airtimeBtn").onclick = () => {
-
-  window.location.href = "airtime.html";
-
-};
-
-
-document.getElementById("dataBtn").onclick = () => {
-
-  window.location.href = "data.html";
-
-};
-
-
-document.getElementById("esimBtn").onclick = () => {
-
-  window.location.href = "esim.html";
-
-};
-
-
-document.getElementById("exploreEsimBtn").onclick = () => {
-
-  window.location.href = "esim.html";
-
-};
-
-
-/* EPIN */
-
-document.getElementById("epinBtn").onclick = () => {
-
-  openModal(
-    "ePIN",
-    `
-      <p>
-        ePIN purchases will be available here.
-      </p>
-
-      <p>
-        We will connect the real ePIN supplier after the
-        Nexora payment system is ready.
-      </p>
-    `
-  );
-
-};
-
-
-/* WALLET */
-
-document.getElementById("fundBtn").onclick = () => {
-
-  window.location.href = "fund-wallet.html";
-
-};
-
-
-document.getElementById("historyBtn").onclick = () => {
-
-  openModal(
-    "Transactions",
-    `
-      <p>
-        Your airtime, data, eSIM and wallet transactions
-        will appear here.
-      </p>
-    `
-  );
-
-};
-
-
-/* NEXORA AI */
-
-function openNexoraAI() {
-
-  openModal(
-    "🤖 Nexora AI",
-    `
-      <p>
-        Hi! I'm Nexora AI.
-      </p>
-
-      <p>
-        I can help you choose an eSIM destination,
-        understand plans, troubleshoot eSIM problems,
-        and navigate Nexora Mobile.
-      </p>
-
-      <button
-        onclick="alert('Nexora AI connection will be connected next.')"
-        style="
-          width:100%;
-          border:0;
-          border-radius:12px;
-          padding:14px;
-          background:#2563eb;
-          color:white;
-          font-weight:bold;
-        "
-      >
-        Start Chat
-      </button>
-    `
-  );
-
-}
-
-
-document.getElementById("aiBtn").onclick =
-  openNexoraAI;
-
-document.getElementById("aiNav").onclick =
-  openNexoraAI;
-
-
-/* DESTINATIONS */
-
-document.querySelectorAll(".destination")
-.forEach((button) => {
-
-  button.onclick = () => {
-
-    const country =
-      button.dataset.country;
-
-    window.location.href =
-      "esim.html?destination=" +
-      encodeURIComponent(country);
-
-  };
-
-});
-
-
-/* ESIM TOOLS */
-
-document.getElementById("compatibilityBtn").onclick = () => {
-
-  openModal(
-    "📱 eSIM Compatibility",
-    `
-      <p>
-        We'll add a device compatibility checker here.
-      </p>
-
-      <p>
-        It will allow customers to check whether their
-        phone supports eSIM before purchasing.
-      </p>
-    `
-  );
-
-};
-
-
-document.getElementById("installationBtn").onclick = () => {
-
-  openModal(
-    "⚙️ eSIM Installation",
-    `
-      <h3>Basic installation</h3>
-
-      <p>
-        After purchasing an eSIM, customers will receive
-        installation information and a QR code.
-      </p>
-
-      <p>
-        We'll connect the real eSIM installation flow
-        when the eSIM provider integration is completed.
-      </p>
-    `
-  );
-
-};
-
-
-document.getElementById("diagnosticsBtn").onclick = () => {
-
-  openModal(
-    "🩺 eSIM Diagnostics",
-    `
-      <p>
-        Nexora will help customers troubleshoot
-        activation and connection problems here.
-      </p>
-    `
-  );
-
-};
-
-
-/* WHATSAPP */
-
-document.getElementById("whatsappBtn").onclick = () => {
-
-  /*
-    REPLACE 234XXXXXXXXXX WITH YOUR REAL WHATSAPP NUMBER.
-
-    Example format:
-    2348012345678
-
-    Do NOT include +, spaces or brackets.
-  */
-
-  const whatsappNumber =
-    "234XXXXXXXXXX";
-
-  if (whatsappNumber.includes("X")) {
-
-    openModal(
-      "WhatsApp Support",
-      `
-        <p>
-          Your WhatsApp support number hasn't been added yet.
-        </p>
-
-        <p>
-          We'll add your real WhatsApp number here.
-        </p>
-      `
-    );
-
-    return;
-
-  }
-
-  window.open(
-    "https://wa.me/" + whatsappNumber,
-    "_blank"
-  );
-
-};
-
-
-/* PROFILE */
-
-function openProfile() {
-
-  openModal(
-    "👤 Profile",
-    `
-      <p>
-        Account management will appear here.
-      </p>
-
-      <p>
-        Your profile, security, password and
-        notification settings will be connected here.
-      </p>
-    `
-  );
-
-}
-
-
-document.getElementById("profileBtn").onclick =
-  openProfile;
-
-document.getElementById("profileNav").onclick =
-  openProfile;
-
-
-/* NAVIGATION */
-
-document.getElementById("homeNav").onclick = () => {
-
-  window.scrollTo({
-    top: 0,
-    behavior: "smooth"
-  });
-
-};
-
-
-document.getElementById("exploreNav").onclick = () => {
-
-  window.location.href = "esim.html";
-
-};
-
-
-document.getElementById("manageNav").onclick = () => {
-
-  openModal(
-    "📦 Manage",
-    `
-      <p>
-        Manage your active eSIMs, orders and transactions here.
-      </p>
-
-      <p>
-        This section will become your complete customer
-        management center.
-      </p>
-    `
-  );
-
-};
-
-</script>
-
-</body>
-</html>
