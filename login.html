@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nexora Mobile - Login</title>
-
 <style>
-*{box-sizing:border-box}
-
+*{
+  box-sizing:border-box;
+}
 body{
   margin:0;
   font-family:Arial,sans-serif;
@@ -18,7 +18,6 @@ body{
   justify-content:center;
   padding:20px;
 }
-
 .container{
   background:white;
   width:100%;
@@ -27,7 +26,6 @@ body{
   border-radius:18px;
   box-shadow:0 5px 25px rgba(0,0,0,.1);
 }
-
 .logo{
   text-align:center;
   font-size:27px;
@@ -35,13 +33,11 @@ body{
   color:#2563eb;
   margin-bottom:8px;
 }
-
 .subtitle{
   text-align:center;
   color:#6b7280;
   margin-bottom:25px;
 }
-
 input{
   width:100%;
   padding:14px;
@@ -49,8 +45,11 @@ input{
   border:1px solid #d1d5db;
   border-radius:9px;
   font-size:16px;
+  outline:none;
 }
-
+input:focus{
+  border-color:#2563eb;
+}
 button{
   width:100%;
   padding:14px;
@@ -62,11 +61,10 @@ button{
   font-weight:bold;
   cursor:pointer;
 }
-
-button:hover{
-  background:#1d4ed8;
+button:disabled{
+  opacity:.7;
+  cursor:not-allowed;
 }
-
 .forgot{
   display:block;
   text-align:right;
@@ -75,158 +73,206 @@ button:hover{
   text-decoration:none;
   font-size:14px;
 }
-
 .links{
   text-align:center;
   margin-top:20px;
   color:#6b7280;
 }
-
 .links a{
   color:#2563eb;
   text-decoration:none;
   font-weight:bold;
 }
-
 #message{
   text-align:center;
   margin-top:15px;
   font-size:14px;
+  line-height:1.5;
+  min-height:20px;
 }
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-  <div class="logo">Nexora Mobile</div>
-
-  <div class="subtitle">Login to your account</div>
-
+  <div class="logo">
+    Nexora Mobile
+  </div>
+  <div class="subtitle">
+    Login to your account
+  </div>
   <input
     id="email"
     type="email"
     placeholder="Email Address"
     autocomplete="email"
   >
-
   <input
     id="password"
     type="password"
     placeholder="Password"
     autocomplete="current-password"
   >
-
-  <a class="forgot" href="forgot-password.html">
+  <a
+    class="forgot"
+    href="forgot-password.html"
+  >
     Forgot Password?
   </a>
-
   <button id="loginBtn">
     Login
   </button>
-
   <p id="message"></p>
-
   <div class="links">
     Don't have an account?
-    <a href="signup.html">Create Account</a>
+    <a href="signup.html">
+      Create Account
+    </a>
   </div>
-
 </div>
-
 <script type="module">
-
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
-
 import {
   getAuth,
   signInWithEmailAndPassword
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
-
-
+/* FIREBASE */
 const firebaseConfig = {
-  apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-  authDomain: "nexora-mobile-af02f.firebaseapp.com",
-  projectId: "nexora-mobile-af02f",
-  storageBucket: "nexora-mobile-af02f.firebasestorage.app",
-  messagingSenderId: "498265618137",
-  appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-  measurementId: "G-8494CNWZKL"
+  apiKey:
+    "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+  authDomain:
+    "nexora-mobile-af02f.firebaseapp.com",
+  projectId:
+    "nexora-mobile-af02f",
+  storageBucket:
+    "nexora-mobile-af02f.firebasestorage.app",
+  messagingSenderId:
+    "498265618137",
+  appId:
+    "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+  measurementId:
+    "G-8494CNWZKL"
 };
-
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-
-document
-  .getElementById("loginBtn")
-  .addEventListener("click", async () => {
-
-    const email =
-      document.getElementById("email").value.trim();
-
-    const password =
-      document.getElementById("password").value;
-
-    const message =
-      document.getElementById("message");
-
-
-    if (!email || !password) {
-      message.textContent =
-        "Please enter your email and password.";
-      return;
+const app =
+  initializeApp(firebaseConfig);
+const auth =
+  getAuth(app);
+/* ELEMENTS */
+const emailInput =
+  document.getElementById("email");
+const passwordInput =
+  document.getElementById("password");
+const loginBtn =
+  document.getElementById("loginBtn");
+const message =
+  document.getElementById("message");
+/* LOGIN */
+loginBtn.addEventListener("click", async () => {
+  const email =
+    emailInput.value.trim();
+  const password =
+    passwordInput.value;
+  /* VALIDATION */
+  if(!email){
+    message.textContent =
+      "Please enter your email address.";
+    emailInput.focus();
+    return;
+  }
+  if(!password){
+    message.textContent =
+      "Please enter your password.";
+    passwordInput.focus();
+    return;
+  }
+  loginBtn.disabled = true;
+  loginBtn.textContent =
+    "Logging in...";
+  message.textContent = "";
+  try{
+    /* REAL FIREBASE LOGIN */
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    message.textContent =
+      "Login successful. Opening Nexora Mobile...";
+    /*
+      Every normal customer goes to the
+      real dashboard.
+      No demo account is created here.
+    */
+    setTimeout(() => {
+      window.location.href =
+        "dashboard.html";
+    },700);
+  }catch(error){
+    console.error(error);
+    let errorMessage =
+      "Unable to log in. Please try again.";
+    if(
+      error.code ===
+      "auth/invalid-credential"
+    ){
+      errorMessage =
+        "Incorrect email or password.";
     }
-
-
-    message.textContent = "Logging in...";
-
-
-    try {
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-
-      message.textContent =
-        "Login successful!";
-
-
-      setTimeout(() => {
-
-        if (
-          email.toLowerCase() ===
-          "sufiyanolawale36@gmail.com"
-        ) {
-
-          window.location.href = "admin.html";
-
-        } else {
-
-          window.location.href = "dashboard.html";
-
-        }
-
-      }, 800);
-
-
-    } catch (error) {
-
-      message.textContent =
-        error.message;
-
+    else if(
+      error.code ===
+      "auth/user-not-found"
+    ){
+      errorMessage =
+        "No account was found with this email.";
     }
-
-  });
-
+    else if(
+      error.code ===
+      "auth/wrong-password"
+    ){
+      errorMessage =
+        "Incorrect password.";
+    }
+    else if(
+      error.code ===
+      "auth/invalid-email"
+    ){
+      errorMessage =
+        "Please enter a valid email address.";
+    }
+    else if(
+      error.code ===
+      "auth/too-many-requests"
+    ){
+      errorMessage =
+        "Too many login attempts. Please wait and try again.";
+    }
+    else if(
+      error.code ===
+      "auth/network-request-failed"
+    ){
+      errorMessage =
+        "Network error. Check your internet connection.";
+    }
+    message.textContent =
+      errorMessage;
+    loginBtn.disabled = false;
+    loginBtn.textContent =
+      "Login";
+  }
+});
+/* ENTER KEY LOGIN */
+[emailInput,passwordInput]
+.forEach((input)=>{
+  input.addEventListener(
+    "keydown",
+    (event)=>{
+      if(event.key === "Enter"){
+        loginBtn.click();
+      }
+    }
+  );
+});
 </script>
-
 </body>
 </html>
