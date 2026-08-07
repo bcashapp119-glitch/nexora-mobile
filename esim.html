@@ -1,12 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Nexora Mobile — eSIM Plans</title>
+<style>
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+}
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+.app{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  min-height:100vh;
+}
+.header{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:20px 18px;
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.logo{
+  font-size:20px;
+  font-weight:800;
+}
+main{
+  padding:25px 18px 50px;
+}
+h1{
+  margin:0;
+  font-size:27px;
+}
+.subtitle{
+  color:#6b7280;
+  line-height:1.5;
+  margin:9px 0 22px;
+}
+.status{
+  background:#ecfdf5;
+  color:#047857;
+  padding:13px;
+  border-radius:12px;
+  margin-bottom:15px;
+  font-size:14px;
+  font-weight:700;
+}
+.loading{
+  background:white;
+  border-radius:18px;
+  padding:25px;
+  text-align:center;
+  color:#6b7280;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+.error{
+  background:#fef2f2;
+  color:#b91c1c;
+  padding:15px;
+  border-radius:12px;
+  line-height:1.5;
+}
+.plans{
+  display:grid;
+  gap:15px;
+}
+.plan{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+}
+.plan h2{
+  margin:0 0 10px;
+  font-size:19px;
+}
+.info{
+  color:#4b5563;
+  line-height:1.7;
+  font-size:14px;
+}
+.price{
+  color:#2563eb;
+  font-size:22px;
+  font-weight:800;
+  margin:13px 0;
+}
+.buy{
+  width:100%;
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:14px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:800;
+}
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:9999;
+}
+.modal.show{
+  display:flex;
+}
+.modal-box{
+  width:100%;
+  max-width:700px;
+  background:white;
+  border-radius:22px 22px 0 0;
+  padding:22px;
+  max-height:90vh;
+  overflow:auto;
+}
+.modal-title{
+  font-size:22px;
+  font-weight:800;
+  margin-bottom:15px;
+}
+.modal-details{
+  background:#f5f7fb;
+  border-radius:14px;
+  padding:15px;
+  line-height:1.8;
+  margin:15px 0;
+}
+.primary-button{
+  width:100%;
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:15px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:800;
+}
+.secondary-button{
+  width:100%;
+  border:1px solid #d1d5db;
+  background:white;
+  color:#111827;
+  padding:14px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:700;
+  margin-top:10px;
+}
+.hidden{
+  display:none;
+}
+@media(max-width:430px){
+  h1{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <div class="header-row">
+    <div class="logo">Nexora Mobile</div>
+  </div>
+</header>
+<main>
+<h1>eSIM Plans</h1>
+<p class="subtitle">
+  Choose an international eSIM plan and continue securely to checkout.
+</p>
+<div id="status" class="status">
+  Connecting to eSIM Go...
+</div>
+<div id="loading" class="loading">
+  Loading real eSIM plans...
+</div>
+<div id="errorBox" class="hidden">
+  <div class="error">
+    <strong>Unable to load eSIM plans.</strong>
+    <br><br>
+    Please try again in a moment.
+  </div>
+  <br>
+  <button class="primary-button" onclick="loadPlans()">
+    Try Again
+  </button>
+</div>
+<div id="plans" class="plans"></div>
+</main>
+</div>
+<!-- CHECKOUT MODAL -->
+<div id="purchaseModal" class="modal">
+  <div class="modal-box">
+    <div id="modalTitle" class="modal-title">
+      Secure Checkout
+    </div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+<script>
+/*
+====================================================
+NEXORA MOBILE eSIM PAGE
+====================================================
+IMPORTANT:
+The eSIM Go API key stays on your backend.
+This page only communicates with your backend.
+Your backend has already confirmed:
+{
+  "success": true,
+  "provider": "eSIM Go"
+}
+So the connection is working.
+====================================================
+*/
+/* -----------------------------------------------
+   BACKEND URL
+------------------------------------------------ */
+const API_BASE =
+  "https://nexora-mobile-backend.onrender.com";
+/*
+If your backend uses a different URL,
+change ONLY the line above.
+*/
+/* -----------------------------------------------
+   PAGE ELEMENTS
+------------------------------------------------ */
+const loading =
+  document.getElementById("loading");
+const plansContainer =
+  document.getElementById("plans");
+const errorBox =
+  document.getElementById("errorBox");
+const statusBox =
+  document.getElementById("status");
+const purchaseModal =
+  document.getElementById("purchaseModal");
+const modalTitle =
+  document.getElementById("modalTitle");
+const modalBody =
+  document.getElementById("modalBody");
+/* -----------------------------------------------
+   CURRENT SELECTED PLAN
+------------------------------------------------ */
+let selectedPlan = null;
+/* -----------------------------------------------
+   HTML ESCAPE
+------------------------------------------------ */
+function escapeHTML(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+/* -----------------------------------------------
+   COUNTRY
+------------------------------------------------ */
+function getCountry(plan){
+  if(
+    Array.isArray(plan?.countries) &&
+    plan.countries.length
+  ){
+    return (
+      plan.countries[0]?.name ||
+      "International"
+    );
+  }
+  return (
+    plan?.country ||
+    "International"
+  );
+}
+/* -----------------------------------------------
+   DATA
+------------------------------------------------ */
+function getData(plan){
+  const amount =
+    Number(plan?.dataAmountMB ?? 0);
+  if(amount === -1){
+    return "Unlimited";
+  }
+  if(amount >= 1000){
+    const gb =
+      amount / 1000;
+    return `${gb} GB`;
+  }
+  if(amount > 0){
+    return `${amount} MB`;
+  }
+  return "Data varies";
+}
+/* -----------------------------------------------
+   VALIDITY
+------------------------------------------------ */
+function getValidity(plan){
+  const days =
+    Number(plan?.duration ?? 0);
+  if(days > 0){
+    return `${days} days`;
+  }
+  return "Validity varies";
+}
+/* -----------------------------------------------
+   NETWORK
+------------------------------------------------ */
+function getSpeed(plan){
+  if(
+    Array.isArray(plan?.speed) &&
+    plan.speed.length
+  ){
+    return plan.speed.join(" / ");
+  }
+  return "4G / 5G where available";
+}
+/* -----------------------------------------------
+   PRICE
+------------------------------------------------ */
+function getPriceNumber(plan){
+  const providerPrice =
+    Number(
+      plan?.providerPrice ??
+      plan?.price ??
+      0
+    );
+  if(
+    !Number.isFinite(providerPrice) ||
+    providerPrice <= 0
+  ){
+    return 0;
+  }
+  /*
+  Temporary selling-price rule:
+  provider price × 2
+  We can change your markup later.
+  */
+  return providerPrice * 2;
+}
+function getPrice(plan){
+  const price =
+    getPriceNumber(plan);
+  if(price <= 0){
+    return "Price unavailable";
+  }
+  return `$${price.toFixed(2)}`;
+}
+/* -----------------------------------------------
+   LOAD PLANS FROM BACKEND
+------------------------------------------------ */
+async function loadPlans(){
+  loading.classList.remove("hidden");
+  errorBox.classList.add("hidden");
+  plansContainer.innerHTML = "";
+  statusBox.textContent =
+    "Connecting to eSIM Go...";
+  try{
+    /*
+    IMPORTANT:
+    The browser talks to YOUR backend.
+    The backend talks to eSIM Go.
+    */
+    const response =
+      await fetch(
+        `${API_BASE}/api/esim/plans`
+      );
+    if(!response.ok){
+      throw new Error(
+        `Server returned ${response.status}`
+      );
+    }
+    const result =
+      await response.json();
+    console.log(
+      "Nexora eSIM response:",
+      result
+    );
+    if(
+      !result ||
+      result.success !== true ||
+      !Array.isArray(result.plans)
+    ){
+      throw new Error(
+        "Invalid eSIM plan response"
+      );
+    }
+    if(result.plans.length === 0){
+      throw new Error(
+        "No eSIM plans available"
+      );
+    }
+    statusBox.textContent =
+      `eSIM Go connected • ${result.plans.length} plans available`;
+    renderPlans(result.plans);
+  }catch(error){
+    console.error(
+      "Nexora eSIM loading error:",
+      error
+    );
+    statusBox.textContent =
+      "Could not connect to eSIM plans.";
+    errorBox.classList.remove("hidden");
+  }finally{
+    loading.classList.add("hidden");
+  }
+}
+/* -----------------------------------------------
+   DISPLAY PLANS
+------------------------------------------------ */
+function renderPlans(plans){
+  plansContainer.innerHTML = "";
+  plans.forEach(function(plan){
+    const country =
+      getCountry(plan);
+    const data =
+      getData(plan);
+    const validity =
+      getValidity(plan);
+    const speed =
+      getSpeed(plan);
+    const price =
+      getPrice(plan);
+    const card =
+      document.createElement("div");
+    card.className = "plan";
+    card.innerHTML = `
+      <h2>
+        🌍 ${escapeHTML(country)}
+      </h2>
+      <div class="info">
+        📶 Data:
+        <strong>
+          ${escapeHTML(data)}
+        </strong>
+        <br>
+        📅 Validity:
+        <strong>
+          ${escapeHTML(validity)}
+        </strong>
+        <br>
+        📡 Network:
+        <strong>
+          ${escapeHTML(speed)}
+        </strong>
+      </div>
+      <div class="price">
+        ${escapeHTML(price)}
+      </div>
+      <button class="buy">
+        Buy eSIM
+      </button>
+    `;
+    const buyButton =
+      card.querySelector(".buy");
+    buyButton.onclick = function(){
+      openPlan(plan);
+    };
+    plansContainer.appendChild(card);
+  });
+}
+/* -----------------------------------------------
+   OPEN PLAN
+------------------------------------------------ */
+function openPlan(plan){
+  selectedPlan = plan;
+  continuePurchase();
+}
+/* -----------------------------------------------
+   CONTINUE PURCHASE
+------------------------------------------------ */
 function continuePurchase(){
   if(!selectedPlan){
     return;
   }
-  const country = getCountry(selectedPlan);
-  const data = getData(selectedPlan);
-  const validity = getValidity(selectedPlan);
-  const price = getPrice(selectedPlan);
-  modalTitle.textContent = "Secure Checkout";
+  const country =
+    getCountry(selectedPlan);
+  const data =
+    getData(selectedPlan);
+  const validity =
+    getValidity(selectedPlan);
+  const speed =
+    getSpeed(selectedPlan);
+  const price =
+    getPrice(selectedPlan);
+  modalTitle.textContent =
+    "Secure Checkout";
   modalBody.innerHTML = `
     <p>
       Confirm your eSIM before proceeding to payment.
@@ -23,6 +519,10 @@ function continuePurchase(){
       <div>
         📅 <strong>Validity:</strong>
         ${escapeHTML(validity)}
+      </div>
+      <div>
+        📡 <strong>Network:</strong>
+        ${escapeHTML(speed)}
       </div>
       <div>
         💰 <strong>Total:</strong>
@@ -42,30 +542,76 @@ function continuePurchase(){
       Go Back
     </button>
   `;
+  /*
+  GO BACK
+  */
   document
     .getElementById("checkoutBackButton")
-    .onclick = () => {
-      openPlan(selectedPlan);
+    .onclick = function(){
+      closePurchase();
     };
+  /*
+  CONTINUE TO CHECKOUT
+  */
   document
     .getElementById("payNowButton")
-    .onclick = () => {
-      /*
-       * Save the selected plan temporarily in the browser.
-       * Checkout will use this exact plan instead of
-       * trying to find it again by ID.
-       */
+    .onclick = function(){
       try{
+        /*
+        Save the EXACT real eSIM Go plan
+        that the customer selected.
+        */
         sessionStorage.setItem(
           "nexoraSelectedPlan",
           JSON.stringify(selectedPlan)
         );
+        /*
+        Also save the plan ID separately.
+        */
+        if(selectedPlan.id){
+          sessionStorage.setItem(
+            "nexoraSelectedPlanId",
+            String(selectedPlan.id)
+          );
+        }
+        /*
+        Go to checkout.html
+        */
+        window.location.href =
+          "checkout.html";
       }catch(error){
         console.error(
           "Could not save selected plan:",
           error
         );
+        alert(
+          "Unable to continue to checkout. Please try again."
+        );
       }
-      window.location.href = "checkout.html";
     };
+  purchaseModal.classList.add("show");
 }
+/* -----------------------------------------------
+   CLOSE PURCHASE MODAL
+------------------------------------------------ */
+function closePurchase(){
+  purchaseModal.classList.remove("show");
+}
+/* -----------------------------------------------
+   CLOSE WHEN CLICKING OUTSIDE
+------------------------------------------------ */
+purchaseModal.addEventListener(
+  "click",
+  function(event){
+    if(event.target === purchaseModal){
+      closePurchase();
+    }
+  }
+);
+/* -----------------------------------------------
+   START
+------------------------------------------------ */
+loadPlans();
+</script>
+</body>
+</html>
