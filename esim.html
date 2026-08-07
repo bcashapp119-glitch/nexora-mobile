@@ -16,31 +16,25 @@ function continuePurchase(){
     </p>
 
     <div class="modal-details">
-
       <div>
-        🌍
-        <strong>Destination:</strong>
+        🌍 <strong>Destination:</strong>
         ${escapeHTML(country)}
       </div>
 
       <div>
-        📶
-        <strong>Data:</strong>
+        📶 <strong>Data:</strong>
         ${escapeHTML(data)}
       </div>
 
       <div>
-        📅
-        <strong>Validity:</strong>
+        📅 <strong>Validity:</strong>
         ${escapeHTML(validity)}
       </div>
 
       <div>
-        💰
-        <strong>Total:</strong>
+        💰 <strong>Total:</strong>
         ${escapeHTML(price)}
       </div>
-
     </div>
 
     <button
@@ -67,15 +61,12 @@ function continuePurchase(){
   document
     .getElementById("payNowButton")
     .onclick = () => {
-
-      const planId =
-        selectedPlan?.id || "";
+      const planId = selectedPlan?.id || "";
 
       const checkoutUrl =
         "checkout.html?plan=" +
         encodeURIComponent(planId);
 
-      window.location.href =
-        checkoutUrl;
+      window.location.href = checkoutUrl;
     };
 }
