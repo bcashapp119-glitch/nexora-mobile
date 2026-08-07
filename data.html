@@ -9,23 +9,32 @@
   box-sizing: border-box;
 }
 body {
-  margin: 0;
-  padding: 20px;
   font-family: Arial, sans-serif;
   background: #f3f6fb;
+  margin: 0;
+  padding: 20px;
 }
 .container {
   max-width: 450px;
   margin: 30px auto;
-  background: #ffffff;
+  background: white;
   padding: 25px;
   border-radius: 20px;
-  box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+  box-shadow: 0 5px 20px rgba(0,0,0,.1);
 }
 h1 {
   text-align: center;
   color: #2563eb;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+}
+.wallet {
+  background: #eff6ff;
+  border-radius: 12px;
+  padding: 15px;
+  text-align: center;
+  font-weight: bold;
+  color: #1d4ed8;
+  margin-bottom: 20px;
 }
 label {
   display: block;
@@ -37,73 +46,61 @@ input,
 select {
   width: 100%;
   padding: 14px;
-  border: 1px solid #d1d5db;
   border-radius: 10px;
+  border: 1px solid #ccc;
   font-size: 15px;
-  background: #ffffff;
+  background: white;
 }
 button {
   width: 100%;
   padding: 15px;
-  margin-top: 18px;
-  border: none;
-  border-radius: 10px;
   background: #2563eb;
   color: white;
+  border: none;
+  border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  margin-top: 18px;
 }
 button:disabled {
   background: #9ca3af;
   cursor: not-allowed;
 }
-.loading {
-  text-align: center;
-  margin-top: 15px;
-  color: #2563eb;
-  font-size: 14px;
-}
 #message {
   text-align: center;
   margin-top: 15px;
   font-weight: bold;
-  line-height: 1.5;
+}
+.loading {
+  text-align: center;
+  color: #2563eb;
+  margin: 15px 0;
 }
 .plan-info {
-  display: none;
-  margin-top: 12px;
+  background: #f3f6fb;
   padding: 14px;
   border-radius: 10px;
-  background: #eff6ff;
-  color: #1e3a8a;
+  margin-top: 12px;
   font-size: 14px;
-  line-height: 1.6;
+  display: none;
 }
-.balance-box {
-  margin-bottom: 15px;
-  padding: 12px;
-  border-radius: 10px;
-  background: #f3f6fb;
-  text-align: center;
-  font-weight: bold;
+.small {
+  color: #666;
+  font-size: 12px;
+  margin-top: 5px;
 }
-.success {
-  color: #16a34a;
-}
-.error {
-  color: #dc2626;
-}
-.warning {
-  color: #d97706;
+.hidden {
+  display: none;
 }
 </style>
 </head>
 <body>
 <div class="container">
   <h1>Buy Data</h1>
-  <div id="balanceBox" class="balance-box">
-    Wallet Balance: Loading...
+  <div class="wallet">
+    Wallet Balance:
+    <span id="walletBalance">Loading...</span>
   </div>
 
 Network
@@ -135,10 +132,10 @@ maxlength=“11”
   <button id="buy" disabled>
     Buy Data
   </button>
-  <p id="message"></p>
   <div id="loading" class="loading">
     Loading live data plans...
   </div>
+  <p id="message"></p>
 </div>
 <script type="module">
 import { initializeApp }
@@ -152,51 +149,34 @@ import {
   getFirestore,
   doc,
   getDoc,
-  updateDoc,
   collection,
   addDoc,
   serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-/*
-====================================================
-FIREBASE
-====================================================
-*/
+/* ================================
+   FIREBASE
+================================ */
 const firebaseConfig = {
-  apiKey:
-    "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-  authDomain:
-    "nexora-mobile-af02f.firebaseapp.com",
-  projectId:
-    "nexora-mobile-af02f",
-  storageBucket:
-    "nexora-mobile-af02f.firebasestorage.app",
-  messagingSenderId:
-    "498265618137",
-  appId:
-    "1:498265618137:web:a1ffebae8eda0b88abf0c8",
-  measurementId:
-    "G-8494CNWZKL"
+  apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+  authDomain: "nexora-mobile-af02f.firebaseapp.com",
+  projectId: "nexora-mobile-af02f",
+  storageBucket: "nexora-mobile-af02f.firebasestorage.app",
+  messagingSenderId: "498265618137",
+  appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+  measurementId: "G-8494CNWZKL"
 };
-const app =
-  initializeApp(firebaseConfig);
-const auth =
-  getAuth(app);
-const db =
-  getFirestore(app);
-/*
-====================================================
-NEXORA BACKEND
-====================================================
-*/
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+/* ================================
+   NEXORA BACKEND
+================================ */
 const BACKEND_URL =
   "https://nexora-ai-backend-hvg7.onrender.com";
-/*
-====================================================
-ELEMENTS
-====================================================
-*/
+/* ================================
+   ELEMENTS
+================================ */
 const networkSelect =
   document.getElementById("network");
 const planSelect =
@@ -211,53 +191,41 @@ const loading =
   document.getElementById("loading");
 const planInfo =
   document.getElementById("planInfo");
-const balanceBox =
-  document.getElementById("balanceBox");
-/*
-====================================================
-STATE
-====================================================
-*/
+const walletBalance =
+  document.getElementById("walletBalance");
+/* ================================
+   VARIABLES
+================================ */
 let user = null;
 let allPlans = [];
 let selectedPlan = null;
-let currentWalletBalance = 0;
-/*
-====================================================
-AUTH
-====================================================
-*/
+let currentWallet = 0;
+/* ================================
+   MESSAGE
+================================ */
+function showMessage(text, type = "error") {
+  message.textContent = text;
+  if (type === "success") {
+    message.style.color = "green";
+  } else {
+    message.style.color = "#dc2626";
+  }
+}
+/* ================================
+   AUTH
+================================ */
 onAuthStateChanged(auth, async (currentUser) => {
   user = currentUser;
   if (!user) {
-    balanceBox.textContent =
-      "Please login to use your wallet.";
-    buyButton.disabled = true;
+    walletBalance.textContent = "Login required";
+    showMessage("Please login first.");
     return;
   }
   await loadWallet();
 });
-/*
-====================================================
-MESSAGE
-====================================================
-*/
-function showMessage(text, type = "error") {
-  message.textContent = text;
-  message.className = "";
-  if (type === "success") {
-    message.classList.add("success");
-  } else if (type === "warning") {
-    message.classList.add("warning");
-  } else {
-    message.classList.add("error");
-  }
-}
-/*
-====================================================
-LOAD WALLET
-====================================================
-*/
+/* ================================
+   LOAD WALLET
+================================ */
 async function loadWallet() {
   try {
     const userRef =
@@ -265,44 +233,38 @@ async function loadWallet() {
     const userSnap =
       await getDoc(userRef);
     if (!userSnap.exists()) {
-      balanceBox.textContent =
-        "Wallet account not found.";
+      walletBalance.textContent =
+        "Account not found";
       return;
     }
-    const userData =
+    const data =
       userSnap.data();
-    currentWalletBalance =
-      Number(userData.wallet || 0);
-    updateBalanceDisplay();
+    currentWallet =
+      Number(data.wallet || 0);
+    walletBalance.textContent =
+      "₦" + currentWallet.toLocaleString(
+        "en-NG",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
   } catch (error) {
     console.error(
       "Wallet error:",
       error
     );
-    balanceBox.textContent =
-      "Wallet Balance: Unable to load";
+    walletBalance.textContent =
+      "Unable to load";
   }
 }
-function updateBalanceDisplay() {
-  balanceBox.textContent =
-    "Wallet Balance: ₦" +
-    currentWalletBalance.toLocaleString(
-      "en-NG",
-      {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }
-    );
-}
-/*
-====================================================
-LOAD LIVE DATA PLANS
-====================================================
-*/
+/* ================================
+   LOAD LIVE PLANS
+================================ */
 async function loadPlans() {
   try {
     loading.textContent =
-      "Loading live VTUGate data plans...";
+      "Connecting to VTUGate...";
     const response =
       await fetch(
         BACKEND_URL +
@@ -310,11 +272,16 @@ async function loadPlans() {
       );
     if (!response.ok) {
       throw new Error(
-        "Unable to load data plans."
+        "Backend returned HTTP " +
+        response.status
       );
     }
     const data =
       await response.json();
+    console.log(
+      "Nexora live plans:",
+      data
+    );
     if (
       !data.success ||
       !Array.isArray(data.plans)
@@ -327,56 +294,58 @@ async function loadPlans() {
       data.plans;
     loading.textContent =
       allPlans.length +
-      " live data plans available.";
+      " live data plans available";
+    networkSelect.disabled = false;
   } catch (error) {
     console.error(
-      "Data plans error:",
+      "Plan loading error:",
       error
     );
     loading.textContent =
-      "Unable to load data plans.";
+      "Unable to load live data plans.";
     showMessage(
-      "Could not load live data plans. Please refresh the page."
+      "Could not load live data plans. Please try again."
     );
   }
 }
-/*
-====================================================
-LOAD NETWORK PLANS
-====================================================
-*/
+/* ================================
+   NETWORK CHANGE
+================================ */
 function loadNetworkPlans() {
   const network =
     networkSelect.value;
-  selectedPlan = null;
+  planSelect.innerHTML = "";
   planInfo.style.display =
     "none";
-  buyButton.disabled =
-    true;
-  planSelect.innerHTML = "";
+  selectedPlan = null;
+  buyButton.disabled = true;
   if (!network) {
-    planSelect.disabled =
-      true;
+    planSelect.disabled = true;
     planSelect.innerHTML =
       '<option value="">Select a network first</option>';
     return;
   }
   const plans =
-    allPlans.filter(
-      plan =>
-        String(plan.network)
-          .toLowerCase() ===
-        network.toLowerCase()
+    allPlans.filter(plan =>
+      String(plan.network)
+        .trim()
+        .toLowerCase() ===
+      network
+        .trim()
+        .toLowerCase()
     );
+  console.log(
+    "Plans for",
+    network,
+    plans
+  );
   if (plans.length === 0) {
-    planSelect.disabled =
-      true;
+    planSelect.disabled = true;
     planSelect.innerHTML =
       '<option value="">No plans available</option>';
     return;
   }
-  planSelect.disabled =
-    false;
+  planSelect.disabled = false;
   const firstOption =
     document.createElement("option");
   firstOption.value = "";
@@ -407,21 +376,17 @@ function loadNetworkPlans() {
   planSelect._networkPlans =
     plans;
 }
-/*
-====================================================
-SHOW SELECTED PLAN
-====================================================
-*/
+/* ================================
+   SELECT PLAN
+================================ */
 function showSelectedPlan() {
   const index =
     planSelect.value;
-  selectedPlan =
-    null;
-  buyButton.disabled =
-    true;
-  planInfo.style.display =
-    "none";
   if (index === "") {
+    selectedPlan = null;
+    planInfo.style.display =
+      "none";
+    buyButton.disabled = true;
     return;
   }
   const plans =
@@ -429,6 +394,7 @@ function showSelectedPlan() {
   selectedPlan =
     plans[Number(index)];
   if (!selectedPlan) {
+    buyButton.disabled = true;
     return;
   }
   const price =
@@ -438,12 +404,7 @@ function showSelectedPlan() {
   planInfo.innerHTML =
     "<strong>" +
     selectedPlan.name +
-    "</strong><br>" +
-    "Network: " +
-    String(
-      selectedPlan.network
-    ).toUpperCase() +
-    "<br>" +
+    "</strong><br><br>" +
     "Price: ₦" +
     price.toLocaleString(
       "en-NG",
@@ -452,77 +413,20 @@ function showSelectedPlan() {
         maximumFractionDigits: 2
       }
     ) +
-    "<br>" +
-    "Validity: Live provider plan";
-  checkBuyButton();
+    "<div class='small'>" +
+    "Provider: " +
+    selectedPlan.provider +
+    "</div>";
+  buyButton.disabled =
+    false;
 }
-/*
-====================================================
-CHECK BUY BUTTON
-====================================================
-*/
-function checkBuyButton() {
-  const phone =
-    phoneInput.value.trim();
-  if (
-    selectedPlan &&
-    /^[0-9]{11}$/.test(phone) &&
-    user
-  ) {
-    buyButton.disabled =
-      false;
-  } else {
-    buyButton.disabled =
-      true;
-  }
-}
-/*
-====================================================
-PHONE INPUT
-====================================================
-*/
-phoneInput.addEventListener(
-  "input",
-  () => {
-    phoneInput.value =
-      phoneInput.value
-        .replace(/\D/g, "")
-        .slice(0, 11);
-    checkBuyButton();
-  }
-);
-/*
-====================================================
-NETWORK CHANGE
-====================================================
-*/
-networkSelect.addEventListener(
-  "change",
-  () => {
-    showMessage("");
-    loadNetworkPlans();
-  }
-);
-/*
-====================================================
-PLAN CHANGE
-====================================================
-*/
-planSelect.addEventListener(
-  "change",
-  () => {
-    showMessage("");
-    showSelectedPlan();
-  }
-);
-/*
-====================================================
-BUY DATA
-====================================================
-*/
+/* ================================
+   BUY DATA
+================================ */
 buyButton.addEventListener(
   "click",
   async () => {
+    showMessage("");
     if (!user) {
       showMessage(
         "Please login first."
@@ -537,9 +441,7 @@ buyButton.addEventListener(
     }
     const phone =
       phoneInput.value.trim();
-    if (
-      !/^[0-9]{11}$/.test(phone)
-    ) {
+    if (!/^[0-9]{11}$/.test(phone)) {
       showMessage(
         "Enter a valid 11-digit Nigerian phone number."
       );
@@ -548,7 +450,7 @@ buyButton.addEventListener(
     const amount =
       Number(selectedPlan.price);
     if (
-      !amount ||
+      !Number.isFinite(amount) ||
       amount <= 0
     ) {
       showMessage(
@@ -556,10 +458,7 @@ buyButton.addEventListener(
       );
       return;
     }
-    if (
-      currentWalletBalance <
-      amount
-    ) {
+    if (currentWallet < amount) {
       showMessage(
         "Insufficient wallet balance."
       );
@@ -569,181 +468,55 @@ buyButton.addEventListener(
       true;
     buyButton.textContent =
       "Processing...";
-    showMessage(
-      "Processing your data purchase...",
-      "warning"
-    );
     try {
       /*
-      ==================================================
-      STEP 1 — RECHECK WALLET
-      ==================================================
+      IMPORTANT:
+      We are NOT calling the VTUGate
+      purchase endpoint from the browser yet.
+      We first create a pending transaction.
+      This prevents accidental wallet loss
+      while we finish the secure purchase flow.
       */
-      const userRef =
-        doc(
-          db,
-          "users",
-          user.uid
-        );
-      const userSnap =
-        await getDoc(userRef);
-      if (!userSnap.exists()) {
-        throw new Error(
-          "User account not found."
-        );
-      }
-      const userData =
-        userSnap.data();
-      const wallet =
-        Number(
-          userData.wallet || 0
-        );
-      currentWalletBalance =
-        wallet;
-      updateBalanceDisplay();
-      if (wallet < amount) {
-        showMessage(
-          "Insufficient wallet balance."
-        );
-        return;
-      }
-      /*
-      ==================================================
-      STEP 2 — CALL NEXORA BACKEND
-      ==================================================
-      */
-      const response =
-        await fetch(
-          BACKEND_URL +
-          "/api/vtu/buy-data",
+      const transactionRef =
+        await addDoc(
+          collection(
+            db,
+            "transactions"
+          ),
           {
-            method: "POST",
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-            body: JSON.stringify({
-              service_id:
-                selectedPlan.serviceId,
-              phone_number:
-                phone,
-              amount:
-                amount,
-              plan_code:
-                selectedPlan.code
-            })
+            userId:
+              user.uid,
+            type:
+              "Data Purchase",
+            network:
+              selectedPlan.network,
+            phone:
+              phone,
+            amount:
+              amount,
+            planName:
+              selectedPlan.name,
+            serviceId:
+              selectedPlan.serviceId,
+            planCode:
+              selectedPlan.code,
+            provider:
+              selectedPlan.provider,
+            status:
+              "Pending",
+            createdAt:
+              serverTimestamp()
           }
         );
-      const result =
-        await response.json();
       console.log(
-        "Nexora purchase response:",
-        result
+        "Pending transaction:",
+        transactionRef.id
       );
-      /*
-      ==================================================
-      STEP 3 — PROVIDER FAILED
-      ==================================================
-      */
-      if (!response.ok ||
-          !result.success) {
-        throw new Error(
-          result.message ||
-          "Data purchase failed."
-        );
-      }
-      /*
-      ==================================================
-      STEP 4 — VERIFY PROVIDER TRANSACTION
-      ==================================================
-      */
-      const providerTransaction =
-        result.transaction || {};
-      /*
-      ==================================================
-      STEP 5 — DEDUCT WALLET
-      ==================================================
-      */
-      const newBalance =
-        wallet - amount;
-      await updateDoc(
-        userRef,
-        {
-          wallet:
-            newBalance
-        }
-      );
-      currentWalletBalance =
-        newBalance;
-      updateBalanceDisplay();
-      /*
-      ==================================================
-      STEP 6 — SAVE TRANSACTION
-      ==================================================
-      */
-      await addDoc(
-        collection(
-          db,
-          "transactions"
-        ),
-        {
-          userId:
-            user.uid,
-          type:
-            "Data Purchase",
-          category:
-            "data",
-          network:
-            selectedPlan.network,
-          phone:
-            phone,
-          amount:
-            amount,
-          planName:
-            selectedPlan.name,
-          serviceId:
-            selectedPlan.serviceId,
-          planCode:
-            selectedPlan.code,
-          provider:
-            "VTUGate",
-          providerTransactionId:
-            providerTransaction.transaction_id ||
-            null,
-          externalReference:
-            providerTransaction.external_reference ||
-            null,
-          providerMessage:
-            providerTransaction.provider_message ||
-            result.message ||
-            null,
-          status:
-            "Successful",
-          createdAt:
-            serverTimestamp()
-        }
-      );
-      /*
-      ==================================================
-      SUCCESS
-      ==================================================
-      */
       showMessage(
-        "Data purchase successful! " +
-        selectedPlan.name +
-        " has been sent to " +
-        phone +
-        ".",
+        "Your data order has been created and is pending processing.",
         "success"
       );
-      phoneInput.value =
-        "";
-      planSelect.value =
-        "";
-      selectedPlan =
-        null;
-      planInfo.style.display =
-        "none";
+      await loadWallet();
     } catch (error) {
       console.error(
         "Purchase error:",
@@ -751,22 +524,29 @@ buyButton.addEventListener(
       );
       showMessage(
         error.message ||
-        "Data purchase failed. Your wallet was not deducted.",
-        "error"
+        "Something went wrong."
       );
     }
     buyButton.disabled =
-      true;
+      false;
     buyButton.textContent =
       "Buy Data";
-    checkBuyButton();
   }
 );
-/*
-====================================================
-START
-====================================================
-*/
+/* ================================
+   EVENTS
+================================ */
+networkSelect.addEventListener(
+  "change",
+  loadNetworkPlans
+);
+planSelect.addEventListener(
+  "change",
+  showSelectedPlan
+);
+/* ================================
+   START
+================================ */
 networkSelect.disabled =
   false;
 loadPlans();
