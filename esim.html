@@ -6,157 +6,157 @@
 <meta name="theme-color" content="#2563eb">
 <title>Nexora Mobile — eSIM Plans</title>
 <style>
-*{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:Arial,sans-serif;
-  background:#f5f7fb;
-  color:#111827;
+* {
+  box-sizing: border-box;
 }
-button{
-  font-family:inherit;
-  cursor:pointer;
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f5f7fb;
+  color: #111827;
 }
-.app{
-  width:100%;
-  max-width:700px;
-  margin:auto;
-  min-height:100vh;
+button {
+  font-family: inherit;
+  cursor: pointer;
 }
-.header{
-  background:linear-gradient(135deg,#2563eb,#1d4ed8);
-  color:white;
-  padding:20px 18px;
-  box-shadow:0 4px 18px rgba(0,0,0,.12);
+.app {
+  width: 100%;
+  max-width: 700px;
+  margin: auto;
+  min-height: 100vh;
 }
-.header-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+.header {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  color: white;
+  padding: 20px 18px;
 }
-.logo{
-  font-size:20px;
-  font-weight:800;
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.back{
-  color:white;
-  text-decoration:none;
-  font-size:14px;
-  font-weight:bold;
+.logo {
+  font-size: 20px;
+  font-weight: 800;
 }
-main{
-  padding:25px 18px 50px;
+.back {
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: bold;
 }
-h1{
-  margin:0;
-  font-size:27px;
+main {
+  padding: 25px 18px 50px;
 }
-.subtitle{
-  color:#6b7280;
-  line-height:1.5;
-  margin:9px 0 22px;
+h1 {
+  margin: 0;
+  font-size: 27px;
 }
-.status{
-  padding:14px;
-  border-radius:12px;
-  margin-bottom:15px;
-  line-height:1.5;
-  font-size:14px;
+.subtitle {
+  color: #6b7280;
+  line-height: 1.5;
+  margin: 9px 0 22px;
 }
-.loading{
-  background:#eff6ff;
-  color:#1e40af;
+.status {
+  padding: 14px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  font-size: 14px;
 }
-.error{
-  background:#fef2f2;
-  color:#b91c1c;
+.loading {
+  background: #eff6ff;
+  color: #1e40af;
 }
-.success{
-  background:#ecfdf5;
-  color:#047857;
+.error {
+  background: #fef2f2;
+  color: #b91c1c;
 }
-.hidden{
-  display:none;
+.success {
+  background: #ecfdf5;
+  color: #047857;
 }
-.plan{
-  background:white;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:14px;
-  box-shadow:0 4px 16px rgba(0,0,0,.06);
+.hidden {
+  display: none;
 }
-.plan-top{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
+.plan {
+  background: white;
+  border-radius: 18px;
+  padding: 18px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,.06);
 }
-.country{
-  font-size:19px;
-  font-weight:800;
-  margin-bottom:6px;
+.plan-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
 }
-.plan-name{
-  color:#6b7280;
-  font-size:13px;
-  word-break:break-word;
+.country {
+  font-size: 19px;
+  font-weight: 800;
+  margin-bottom: 6px;
 }
-.price{
-  color:#2563eb;
-  font-size:20px;
-  font-weight:800;
-  white-space:nowrap;
+.plan-name {
+  color: #6b7280;
+  font-size: 13px;
+  word-break: break-word;
 }
-.details{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:9px;
-  margin-top:15px;
+.price {
+  color: #2563eb;
+  font-size: 20px;
+  font-weight: 800;
+  white-space: nowrap;
 }
-.detail{
-  background:#f5f7fb;
-  border-radius:10px;
-  padding:11px;
-  font-size:13px;
-  line-height:1.4;
+.details {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+  margin-top: 15px;
 }
-.detail strong{
-  display:block;
-  margin-top:3px;
-  color:#111827;
+.detail {
+  background: #f5f7fb;
+  border-radius: 10px;
+  padding: 11px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.detail strong {
+  display: block;
+  margin-top: 3px;
+  color: #111827;
 }
 .primary-button,
-.retry-button{
-  width:100%;
-  border:0;
-  background:#2563eb;
-  color:white;
-  padding:14px;
-  border-radius:11px;
-  font-size:15px;
-  font-weight:800;
-  margin-top:15px;
+.retry-button {
+  width: 100%;
+  border: 0;
+  background: #2563eb;
+  color: white;
+  padding: 14px;
+  border-radius: 11px;
+  font-size: 15px;
+  font-weight: 800;
+  margin-top: 15px;
 }
-.retry-button{
-  margin-top:10px;
+.empty {
+  background: white;
+  border-radius: 18px;
+  padding: 25px;
+  text-align: center;
+  color: #6b7280;
 }
-.empty{
-  background:white;
-  border-radius:18px;
-  padding:25px;
-  text-align:center;
-  color:#6b7280;
-}
-@media(max-width:430px){
-  h1{font-size:24px}
-  .details{
-    grid-template-columns:1fr;
+@media(max-width:430px) {
+  h1 {
+    font-size: 24px;
   }
-  .plan-top{
-    flex-direction:column;
+  .details {
+    grid-template-columns: 1fr;
   }
-  .price{
-    font-size:19px;
+  .plan-top {
+    flex-direction: column;
+  }
+  .price {
+    font-size: 19px;
   }
 }
 </style>
@@ -179,7 +179,7 @@ h1{
   Choose an international eSIM plan and continue securely to checkout.
 </p>
 <div id="loadingBox" class="status loading">
-  Loading real eSIM plans...
+  Connecting to Nexora Mobile eSIM service...
 </div>
 <div id="errorBox" class="status error hidden">
   <strong>Unable to load eSIM plans.</strong>
@@ -195,7 +195,7 @@ h1{
   </button>
 </div>
 <div id="successBox" class="status success hidden">
-  Real eSIM plans loaded successfully.
+  eSIM plans loaded successfully.
 </div>
 <div id="plansContainer"></div>
 <div id="emptyBox" class="empty hidden">
@@ -205,9 +205,11 @@ h1{
 </div>
 <script>
 /*
-====================================================
+=================================================
 NEXORA MOBILE BACKEND
-====================================================
+=================================================
+This is the Render backend you confirmed is online.
+=================================================
 */
 const API_URL =
   "https://nexora-ai-backend-hvg7.onrender.com/api/esim/plans";
@@ -225,19 +227,19 @@ const emptyBox =
   document.getElementById("emptyBox");
 const retryButton =
   document.getElementById("retryButton");
-function escapeHTML(value){
+function escapeHTML(value) {
   return String(value ?? "")
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;")
-    .replace(/'/g,"&#039;");
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 }
-function getCountry(plan){
-  if(
+function getCountry(plan) {
+  if (
     Array.isArray(plan?.countries) &&
     plan.countries.length
-  ){
+  ) {
     return (
       plan.countries[0]?.name ||
       "International"
@@ -245,66 +247,62 @@ function getCountry(plan){
   }
   return plan?.country || "International";
 }
-function getData(plan){
+function getData(plan) {
   const amount =
     Number(plan?.dataAmountMB ?? 0);
-  if(amount === -1){
+  if (amount === -1) {
     return "Unlimited";
   }
-  if(amount >= 1000){
+  if (amount >= 1000) {
     const gb = amount / 1000;
     return `${gb} GB`;
   }
-  if(amount > 0){
+  if (amount > 0) {
     return `${amount} MB`;
   }
   return "Data varies";
 }
-function getValidity(plan){
+function getValidity(plan) {
   const days =
     Number(plan?.duration ?? 0);
-  if(days > 0){
+  if (days > 0) {
     return `${days} days`;
   }
   return "Validity varies";
 }
-function getSpeed(plan){
-  if(
+function getSpeed(plan) {
+  if (
     Array.isArray(plan?.speed) &&
     plan.speed.length
-  ){
+  ) {
     return plan.speed.join(" / ");
   }
   return "4G / 5G where available";
 }
-function getPrice(plan){
+function getPrice(plan) {
   const providerPrice =
-    Number(
-      plan?.providerPrice ??
-      plan?.price ??
-      0
-    );
-  if(
+    Number(plan?.providerPrice ?? 0);
+  if (
     !Number.isFinite(providerPrice) ||
     providerPrice <= 0
-  ){
+  ) {
     return "Price unavailable";
   }
   /*
-  Temporary display markup.
-  This does NOT charge the customer.
+    Temporary selling price:
+    provider price × 2
   */
   const sellingPrice =
     providerPrice * 2;
   return `$${sellingPrice.toFixed(2)}`;
 }
-function showLoading(){
+function showLoading() {
   loadingBox.classList.remove("hidden");
   errorBox.classList.add("hidden");
   successBox.classList.add("hidden");
   emptyBox.classList.add("hidden");
 }
-function showError(message){
+function showError(message) {
   loadingBox.classList.add("hidden");
   successBox.classList.add("hidden");
   emptyBox.classList.add("hidden");
@@ -313,22 +311,19 @@ function showError(message){
     message ||
     "Unable to load eSIM plans.";
 }
-function showSuccess(){
+function showSuccess() {
   loadingBox.classList.add("hidden");
   errorBox.classList.add("hidden");
   successBox.classList.remove("hidden");
 }
-function openCheckout(plan){
-  try{
+function openCheckout(plan) {
+  try {
     sessionStorage.setItem(
       "nexoraSelectedPlan",
       JSON.stringify(plan)
     );
-  }catch(error){
-    console.error(
-      "Could not save selected plan:",
-      error
-    );
+  } catch (error) {
+    console.error(error);
     alert(
       "Unable to prepare checkout. Please try again."
     );
@@ -337,15 +332,20 @@ function openCheckout(plan){
   window.location.href =
     "checkout.html";
 }
-function createPlanCard(plan){
+function createPlanCard(plan) {
   const card =
     document.createElement("div");
   card.className = "plan";
-  const country = getCountry(plan);
-  const data = getData(plan);
-  const validity = getValidity(plan);
-  const speed = getSpeed(plan);
-  const price = getPrice(plan);
+  const country =
+    getCountry(plan);
+  const data =
+    getData(plan);
+  const validity =
+    getValidity(plan);
+  const speed =
+    getSpeed(plan);
+  const price =
+    getPrice(plan);
   card.innerHTML = `
     <div class="plan-top">
       <div>
@@ -393,32 +393,31 @@ function createPlanCard(plan){
   const button =
     document.createElement("button");
   button.type = "button";
-  button.className = "primary-button";
-  button.textContent = "Continue to Checkout";
-  button.onclick = function(){
+  button.className =
+    "primary-button";
+  button.textContent =
+    "Continue to Checkout";
+  button.onclick = function() {
     openCheckout(plan);
   };
   card.appendChild(button);
   return card;
 }
-async function loadPlans(){
+async function loadPlans() {
   showLoading();
   plansContainer.innerHTML = "";
-  try{
+  try {
     const response =
-      await fetch(
-        API_URL,
-        {
-          method:"GET",
-          headers:{
-            "Accept":"application/json"
-          },
-          cache:"no-store"
-        }
-      );
-    if(!response.ok){
+      await fetch(API_URL, {
+        method: "GET",
+        headers: {
+          "Accept": "application/json"
+        },
+        cache: "no-store"
+      });
+    if (!response.ok) {
       throw new Error(
-        `Server returned ${response.status}`
+        `Backend returned HTTP ${response.status}`
       );
     }
     const result =
@@ -427,43 +426,44 @@ async function loadPlans(){
       "Nexora Mobile eSIM API:",
       result
     );
-    if(
+    if (
       !result ||
       result.success !== true
-    ){
+    ) {
       throw new Error(
-        "The eSIM service did not return a successful response."
+        "The eSIM service returned an unsuccessful response."
       );
     }
     const plans =
       Array.isArray(result.plans)
         ? result.plans
         : [];
-    if(plans.length === 0){
+    if (plans.length === 0) {
       loadingBox.classList.add("hidden");
       successBox.classList.add("hidden");
       emptyBox.classList.remove("hidden");
       return;
     }
-    plans.forEach(function(plan){
+    plans.forEach(function(plan) {
       const card =
         createPlanCard(plan);
       plansContainer.appendChild(card);
     });
     showSuccess();
-  }catch(error){
+  } catch (error) {
     console.error(
       "Nexora Mobile eSIM error:",
       error
     );
     showError(
-      "Unable to connect to the eSIM service. Please try again."
+      "Unable to connect to the Nexora Mobile eSIM service. Please try again."
     );
   }
 }
-retryButton.onclick = function(){
-  loadPlans();
-};
+retryButton.onclick =
+  function() {
+    loadPlans();
+  };
 loadPlans();
 </script>
 </body>
