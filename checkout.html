@@ -106,6 +106,10 @@ h1{
   font-size:16px;
   font-weight:800;
 }
+.primary-button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
 .secondary-button{
   width:100%;
   border:1px solid #d1d5db;
@@ -125,21 +129,22 @@ h1{
   line-height:1.5;
   font-size:14px;
 }
-.warning{
-  background:#fff7ed;
-  color:#9a3412;
-  padding:14px;
-  border-radius:12px;
-  line-height:1.5;
-  font-size:14px;
-  margin-top:12px;
-}
 .error{
   background:#fef2f2;
   color:#b91c1c;
   padding:14px;
   border-radius:12px;
   line-height:1.5;
+  font-size:14px;
+}
+.success{
+  background:#ecfdf5;
+  color:#047857;
+  padding:14px;
+  border-radius:12px;
+  line-height:1.5;
+  font-size:14px;
+  margin-bottom:15px;
 }
 .hidden{
   display:none;
@@ -149,12 +154,11 @@ h1{
   padding:30px 10px;
   color:#6b7280;
 }
-.success{
-  background:#ecfdf5;
-  color:#047857;
+.status{
   padding:14px;
   border-radius:12px;
   line-height:1.5;
+  font-size:14px;
   margin-bottom:15px;
 }
 @media(max-width:430px){
@@ -168,12 +172,12 @@ h1{
 <div class="app">
 <header class="header">
   <div class="header-row">
-    <a class="back" href="esim.html">
-      ← Back to eSIM
-    </a>
-    <div class="logo">
-      Nexora Mobile
-    </div>
+<a class="back" href="esim.html">
+  ← Back to eSIM
+</a>
+<div class="logo">
+  Nexora Mobile
+</div>
   </div>
 </header>
 <main>
@@ -186,85 +190,95 @@ h1{
 </div>
 <div id="checkoutContent" class="hidden">
   <div class="card">
-    <h2>Order Summary</h2>
-    <div class="detail">
-      🌍 Destination
-      <strong id="country">—</strong>
-    </div>
-    <div class="detail">
-      📦 Plan
-      <strong id="planName">eSIM Plan</strong>
-    </div>
-    <div class="detail">
-      📶 Data
-      <strong id="data">—</strong>
-    </div>
-    <div class="detail">
-      📅 Validity
-      <strong id="validity">—</strong>
-    </div>
-    <div class="detail">
-      📡 Network
-      <strong id="speed">—</strong>
-    </div>
-    <div class="total">
-      <span class="total-label">
-        Total
-      </span>
-      <span
-        class="total-price"
-        id="price"
-      >
-        —
-      </span>
-    </div>
+<h2>Order Summary</h2>
+<div class="detail">
+  🌍 Destination
+  <strong id="country">—</strong>
+</div>
+<div class="detail">
+  📦 Plan
+  <strong id="planName">—</strong>
+</div>
+<div class="detail">
+  📶 Data
+  <strong id="data">—</strong>
+</div>
+<div class="detail">
+  📅 Validity
+  <strong id="validity">—</strong>
+</div>
+<div class="detail">
+  📡 Network
+  <strong id="speed">—</strong>
+</div>
+<div class="detail">
+  🆔 Plan ID
+  <strong id="planId">—</strong>
+</div>
+<div class="total">
+  <span class="total-label">
+    Total
+  </span>
+  <span
+    class="total-price"
+    id="price">
+    —
+  </span>
+</div>
   </div>
   <div class="card">
-    <h2>Payment</h2>
-    <div class="notice">
-      🔒 Your selected eSIM has been received.
-      Review the order above before continuing.
-    </div>
-    <div class="warning">
-      Payment gateway is not activated yet.
-      The checkout page is ready for the real
-      Nexora Mobile payment connection.
-    </div>
-    <br>
-    <button
-      class="primary-button"
-      id="payButton"
-    >
-      Continue to Payment
-    </button>
-    <button
-      class="secondary-button"
-      id="backButton"
-    >
-      Go Back
-    </button>
+<h2>Payment</h2>
+<div class="notice">
+  🔒 Your eSIM order is ready.
+  Click the button below to continue to secure payment.
+</div>
+<div
+  id="paymentStatus"
+  class="status hidden">
+</div>
+<br>
+<button
+  type="button"
+  class="primary-button"
+  id="payButton">
+  Continue to Payment
+</button>
+<button
+  type="button"
+  class="secondary-button"
+  id="backButton">
+  Go Back
+</button>
   </div>
 </div>
 <div id="errorBox" class="card hidden">
   <div class="error">
-    <strong>
-      Unable to load your selected eSIM plan.
-    </strong>
-    <br><br>
-    Please return to the eSIM page and select
-    a plan again.
+<strong>
+  Unable to load your selected eSIM plan.
+</strong>
+<br><br>
+Please return to the eSIM page and select
+a plan again.
   </div>
   <br>
-  <button
-    class="primary-button"
-    id="errorBackButton"
-  >
-    Back to eSIM
-  </button>
+
+Back to eSIM
 </div>
 </main>
 </div>
 <script>
+/*
+=================================================
+NEXORA MOBILE CHECKOUT
+=================================================
+The payment secret key must NEVER be placed
+inside this HTML file.
+The browser will communicate with the
+Nexora Mobile Render backend.
+=================================================
+*/
+const BACKEND_URL =
+  "https://nexora-ai-backend-hvg7.onrender.com";
 const loading =
   document.getElementById("loading");
 const checkoutContent =
@@ -281,6 +295,8 @@ const validityElement =
   document.getElementById("validity");
 const speedElement =
   document.getElementById("speed");
+const planIdElement =
+  document.getElementById("planId");
 const priceElement =
   document.getElementById("price");
 const payButton =
@@ -289,6 +305,8 @@ const backButton =
   document.getElementById("backButton");
 const errorBackButton =
   document.getElementById("errorBackButton");
+const paymentStatus =
+  document.getElementById("paymentStatus");
 function getCountry(plan){
   if(
     Array.isArray(plan?.countries) &&
@@ -337,21 +355,36 @@ function getSpeed(plan){
   }
   return "4G / 5G where available";
 }
-function getPrice(plan){
+function getProviderPrice(plan){
   const price =
     Number(
       plan?.providerPrice ??
       plan?.price ??
       0
     );
+  return price;
+}
+function getSellingPrice(plan){
+  const providerPrice =
+    getProviderPrice(plan);
   if(
-    !Number.isFinite(price) ||
-    price <= 0
+    !Number.isFinite(providerPrice) ||
+    providerPrice <= 0
   ){
+    return 0;
+  }
+  /*
+  Temporary Nexora Mobile markup.
+  We can change this later.
+  */
+  return providerPrice * 2;
+}
+function getPrice(plan){
+  const sellingPrice =
+    getSellingPrice(plan);
+  if(sellingPrice <= 0){
     return "Price unavailable";
   }
-  const sellingPrice =
-    price * 2;
   return `$${sellingPrice.toFixed(2)}`;
 }
 function showError(){
@@ -371,11 +404,161 @@ function displayPlan(plan){
     getValidity(plan);
   speedElement.textContent =
     getSpeed(plan);
+  planIdElement.textContent =
+    plan?.id || "—";
   priceElement.textContent =
     getPrice(plan);
   loading.classList.add("hidden");
   errorBox.classList.add("hidden");
   checkoutContent.classList.remove("hidden");
+}
+function showPaymentStatus(message,type){
+  paymentStatus.textContent =
+    message;
+  paymentStatus.className =
+    "status";
+  if(type === "success"){
+    paymentStatus.classList.add("success");
+  }
+  if(type === "error"){
+    paymentStatus.classList.add("error");
+  }
+  paymentStatus.classList.remove("hidden");
+}
+async function startPayment(){
+  let savedPlan;
+  try{
+    savedPlan =
+      sessionStorage.getItem(
+        "nexoraSelectedPlan"
+      );
+    if(!savedPlan){
+      showPaymentStatus(
+        "Your eSIM selection has expired. Please go back and select the plan again.",
+        "error"
+      );
+      return;
+    }
+    const plan =
+      JSON.parse(savedPlan);
+    if(
+      !plan ||
+      typeof plan !== "object"
+    ){
+      showPaymentStatus(
+        "Invalid eSIM order. Please select the plan again.",
+        "error"
+      );
+      return;
+    }
+    const sellingPrice =
+      getSellingPrice(plan);
+    if(
+      !sellingPrice ||
+      sellingPrice <= 0
+    ){
+      showPaymentStatus(
+        "This eSIM plan does not have a valid price.",
+        "error"
+      );
+      return;
+    }
+    payButton.disabled = true;
+    payButton.textContent =
+      "Connecting to Payment...";
+    showPaymentStatus(
+      "Creating your secure payment session...",
+      "success"
+    );
+    /*
+    ===============================================
+    PAYMENT BACKEND CONNECTION
+    The Render backend will handle the secret
+    payment credentials.
+    ===============================================
+    */
+    const response =
+      await fetch(
+        `${BACKEND_URL}/api/payment/initialize`,
+        {
+          method:"POST",
+          headers:{
+            "Content-Type":
+              "application/json",
+            "Accept":
+              "application/json"
+          },
+          body:JSON.stringify({
+            planId:
+              plan?.id || null,
+            planName:
+              plan?.name ||
+              "Nexora eSIM Plan",
+            country:
+              getCountry(plan),
+            data:
+              getData(plan),
+            validity:
+              getValidity(plan),
+            amount:
+              sellingPrice,
+            currency:
+              "USD"
+          })
+        }
+      );
+    const result =
+      await response.json()
+        .catch(() => null);
+    if(!response.ok){
+      throw new Error(
+        result?.message ||
+        `Payment server returned HTTP ${response.status}`
+      );
+    }
+    /*
+    The backend should return a checkout URL
+    after the real payment gateway is connected.
+    */
+    if(
+      result?.checkoutUrl
+    ){
+      window.location.href =
+        result.checkoutUrl;
+      return;
+    }
+    if(
+      result?.authorization_url
+    ){
+      window.location.href =
+        result.authorization_url;
+      return;
+    }
+    if(
+      result?.paymentUrl
+    ){
+      window.location.href =
+        result.paymentUrl;
+      return;
+    }
+    throw new Error(
+      result?.message ||
+      "Payment gateway is not connected to the backend yet."
+    );
+  }catch(error){
+    console.error(
+      "Nexora payment error:",
+      error
+    );
+    showPaymentStatus(
+      error.message ||
+      "Unable to start payment. Please try again.",
+      "error"
+    );
+    payButton.disabled = false;
+    payButton.textContent =
+      "Continue to Payment";
+  }
 }
 function loadSelectedPlan(){
   try{
@@ -405,19 +588,20 @@ function loadSelectedPlan(){
     showError();
   }
 }
-backButton.onclick = function(){
-  window.location.href =
-    "esim.html";
-};
-errorBackButton.onclick = function(){
-  window.location.href =
-    "esim.html";
-};
-payButton.onclick = function(){
-  alert(
-    "Nexora Mobile payment gateway will be connected here next."
-  );
-};
+backButton.onclick =
+  function(){
+    window.location.href =
+      "esim.html";
+  };
+errorBackButton.onclick =
+  function(){
+    window.location.href =
+      "esim.html";
+  };
+payButton.onclick =
+  function(){
+    startPayment();
+  };
 loadSelectedPlan();
 </script>
 </body>
