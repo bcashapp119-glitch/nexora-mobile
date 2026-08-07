@@ -3,398 +3,772 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Nexora Data</title>
+<title>Nexora Mobile - Buy Data</title>
 <style>
-*{
-box-sizing:border-box;
+* {
+  box-sizing: border-box;
 }
-body{
-font-family:Arial,sans-serif;
-background:#f3f6fb;
-padding:20px;
-margin:0;
+body {
+  margin: 0;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  background: #f3f6fb;
 }
-.container{
-max-width:450px;
-margin:30px auto;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 5px 20px rgba(0,0,0,.1);
+.container {
+  max-width: 450px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 20px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.10);
 }
-h1{
-text-align:center;
-color:#2563eb;
-margin-bottom:25px;
+h1 {
+  text-align: center;
+  color: #2563eb;
+  margin-bottom: 25px;
 }
-label{
-display:block;
-font-weight:bold;
-margin-top:15px;
-margin-bottom:5px;
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 6px;
 }
-input,select{
-width:100%;
-padding:14px;
-margin:5px 0;
-border-radius:10px;
-border:1px solid #ccc;
-font-size:15px;
-background:white;
+input,
+select {
+  width: 100%;
+  padding: 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  background: #ffffff;
 }
-button{
-width:100%;
-padding:15px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:10px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-margin-top:15px;
+button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 18px;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
 }
-button:disabled{
-background:#9ca3af;
-cursor:not-allowed;
+button:disabled {
+  background: #9ca3af;
+  cursor: not-allowed;
 }
-#message{
-text-align:center;
-margin-top:15px;
-font-weight:bold;
+.loading {
+  text-align: center;
+  margin-top: 15px;
+  color: #2563eb;
+  font-size: 14px;
 }
-.loading{
-text-align:center;
-color:#2563eb;
-margin:15px 0;
+#message {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+  line-height: 1.5;
 }
-.plan-info{
-background:#f3f6fb;
-padding:12px;
-border-radius:10px;
-margin-top:10px;
-font-size:14px;
-display:none;
+.plan-info {
+  display: none;
+  margin-top: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #1e3a8a;
+  font-size: 14px;
+  line-height: 1.6;
+}
+.balance-box {
+  margin-bottom: 15px;
+  padding: 12px;
+  border-radius: 10px;
+  background: #f3f6fb;
+  text-align: center;
+  font-weight: bold;
+}
+.success {
+  color: #16a34a;
+}
+.error {
+  color: #dc2626;
+}
+.warning {
+  color: #d97706;
 }
 </style>
 </head>
 <body>
 <div class="container">
-<h1>Buy Data</h1>
-<label for="network">
+  <h1>Buy Data</h1>
+  <div id="balanceBox" class="balance-box">
+    Wallet Balance: Loading...
+  </div>
+
 Network
-</label>
-<select id="network">
-<option value="">Select Network</option>
-<option value="mtn">MTN</option>
-<option value="airtel">Airtel</option>
-<option value="glo">Glo</option>
-<option value="9mobile">9mobile</option>
-</select>
-<label for="plan">
+
+  <select id="network">
+    <option value="">Select Network</option>
+    <option value="mtn">MTN</option>
+    <option value="airtel">Airtel</option>
+    <option value="glo">Glo</option>
+    <option value="9mobile">9mobile</option>
+  </select>
+
 Data Plan
-</label>
-<select id="plan" disabled>
-<option value="">
-Select a network first
-</option>
-</select>
-<div id="planInfo" class="plan-info"></div>
-<label for="phone">
+
+  <select id="plan" disabled>
+    <option value="">Select a network first</option>
+  </select>
+  <div id="planInfo" class="plan-info"></div>
+
 Phone Number
-</label>
 
 <input
 id=“phone”
 type=“tel”
-placeholder=“Enter phone number”
+inputmode=“numeric”
+placeholder=“Enter 11-digit phone number”
 maxlength=“11”
 
-<button id="buy" disabled>
-Buy Data
-</button>
-<p id="message"></p>
-<div id="loading" class="loading">
-Loading data plans...
-</div>
+  <button id="buy" disabled>
+    Buy Data
+  </button>
+  <p id="message"></p>
+  <div id="loading" class="loading">
+    Loading live data plans...
+  </div>
 </div>
 <script type="module">
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 import {
-getAuth,
-onAuthStateChanged
+  getAuth,
+  onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 import {
-getFirestore,
-doc,
-getDoc,
-updateDoc,
-collection,
-addDoc,
-serverTimestamp
+  getFirestore,
+  doc,
+  getDoc,
+  updateDoc,
+  collection,
+  addDoc,
+  serverTimestamp
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+/*
+====================================================
+FIREBASE
+====================================================
+*/
 const firebaseConfig = {
-apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
-authDomain:"nexora-mobile-af02f.firebaseapp.com",
-projectId:"nexora-mobile-af02f",
-storageBucket:"nexora-mobile-af02f.firebasestorage.app",
-messagingSenderId:"498265618137",
-appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
-measurementId:"G-8494CNWZKL"
+  apiKey:
+    "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+  authDomain:
+    "nexora-mobile-af02f.firebaseapp.com",
+  projectId:
+    "nexora-mobile-af02f",
+  storageBucket:
+    "nexora-mobile-af02f.firebasestorage.app",
+  messagingSenderId:
+    "498265618137",
+  appId:
+    "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+  measurementId:
+    "G-8494CNWZKL"
 };
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const app =
+  initializeApp(firebaseConfig);
+const auth =
+  getAuth(app);
+const db =
+  getFirestore(app);
+/*
+====================================================
+NEXORA BACKEND
+====================================================
+*/
 const BACKEND_URL =
-"https://nexora-ai-backend-hvg7.onrender.com";
+  "https://nexora-ai-backend-hvg7.onrender.com";
+/*
+====================================================
+ELEMENTS
+====================================================
+*/
 const networkSelect =
-document.getElementById("network");
+  document.getElementById("network");
 const planSelect =
-document.getElementById("plan");
+  document.getElementById("plan");
 const phoneInput =
-document.getElementById("phone");
+  document.getElementById("phone");
 const buyButton =
-document.getElementById("buy");
+  document.getElementById("buy");
 const message =
-document.getElementById("message");
+  document.getElementById("message");
 const loading =
-document.getElementById("loading");
+  document.getElementById("loading");
 const planInfo =
-document.getElementById("planInfo");
+  document.getElementById("planInfo");
+const balanceBox =
+  document.getElementById("balanceBox");
+/*
+====================================================
+STATE
+====================================================
+*/
 let user = null;
 let allPlans = [];
 let selectedPlan = null;
-onAuthStateChanged(auth,(currentUser)=>{
-user = currentUser;
+let currentWalletBalance = 0;
+/*
+====================================================
+AUTH
+====================================================
+*/
+onAuthStateChanged(auth, async (currentUser) => {
+  user = currentUser;
+  if (!user) {
+    balanceBox.textContent =
+      "Please login to use your wallet.";
+    buyButton.disabled = true;
+    return;
+  }
+  await loadWallet();
 });
-function showMessage(text,type="error"){
-message.textContent = text;
-if(type === "success"){
-message.style.color = "green";
-}else{
-message.style.color = "#dc2626";
-}
-}
-async function loadPlans(){
-try{
-loading.textContent =
-"Loading real data plans...";
-const response = await fetch(
-BACKEND_URL + "/api/vtu/data-plans"
-);
-if(!response.ok){
-throw new Error(
-"Unable to load data plans"
-);
-}
-const data = await response.json();
-if(!data.success || !Array.isArray(data.plans)){
-throw new Error(
-"Invalid plans response"
-);
-}
-allPlans = data.plans;
-loading.textContent =
-allPlans.length + " data plans available";
-networkSelect.disabled = false;
-}catch(error){
-console.error(error);
-loading.textContent =
-"Unable to load data plans.";
-showMessage(
-"Could not load data plans. Please try again."
-);
-}
-}
-function loadNetworkPlans(){
-const network =
-networkSelect.value;
-planSelect.innerHTML = "";
-planInfo.style.display = "none";
-selectedPlan = null;
-if(!network){
-planSelect.disabled = true;
-buyButton.disabled = true;
-planSelect.innerHTML =
-'<option value="">Select a network first</option>';
-return;
-}
-const plans = allPlans.filter(
-plan =>
-String(plan.network).toLowerCase() ===
-network.toLowerCase()
-);
-if(plans.length === 0){
-planSelect.disabled = true;
-buyButton.disabled = true;
-planSelect.innerHTML =
-'<option value="">No plans available</option>';
-return;
-}
-planSelect.disabled = false;
-const firstOption =
-document.createElement("option");
-firstOption.value = "";
-firstOption.textContent =
-"Select a data plan";
-planSelect.appendChild(firstOption);
-plans.forEach((plan,index)=>{
-const option =
-document.createElement("option");
-option.value = String(index);
-option.textContent =
-plan.name +
-" — ₦" +
-Number(plan.price).toFixed(2);
-planSelect.appendChild(option);
-});
-planSelect._networkPlans = plans;
-buyButton.disabled = true;
-}
-function showSelectedPlan(){
-const index =
-planSelect.value;
-if(index === ""){
-selectedPlan = null;
-planInfo.style.display = "none";
-buyButton.disabled = true;
-return;
-}
-const plans =
-planSelect._networkPlans || [];
-selectedPlan =
-plans[Number(index)];
-if(!selectedPlan){
-return;
-}
-planInfo.style.display = "block";
-planInfo.innerHTML =
-"<strong>" +
-selectedPlan.name +
-"</strong><br>" +
-"Price: ₦" +
-Number(selectedPlan.price).toFixed(2);
-buyButton.disabled = false;
-}
-networkSelect.addEventListener(
-"change",
-loadNetworkPlans
-);
-planSelect.addEventListener(
-"change",
-showSelectedPlan
-);
-buyButton.addEventListener(
-"click",
-async()=>{
-showMessage("");
-if(!user){
-showMessage(
-"Please login first."
-);
-return;
-}
-if(!selectedPlan){
-showMessage(
-"Please select a data plan."
-);
-return;
-}
-const phone =
-phoneInput.value.trim();
-if(!phone){
-showMessage(
-"Enter the phone number."
-);
-return;
-}
-if(!/^[0-9]{11}$/.test(phone)){
-showMessage(
-"Enter a valid 11-digit Nigerian phone number."
-);
-return;
-}
-const amount =
-Number(selectedPlan.price);
-if(!amount || amount <= 0){
-showMessage(
-"Invalid plan price."
-);
-return;
-}
-buyButton.disabled = true;
-buyButton.textContent =
-"Processing...";
-try{
-const userRef =
-doc(
-db,
-"users",
-user.uid
-);
-const userSnap =
-await getDoc(userRef);
-if(!userSnap.exists()){
-throw new Error(
-"User account not found."
-);
-}
-const userData =
-userSnap.data();
-const wallet =
-Number(userData.wallet || 0);
-if(wallet < amount){
-showMessage(
-"Insufficient wallet balance."
-);
-buyButton.disabled = false;
-buyButton.textContent =
-"Buy Data";
-return;
+/*
+====================================================
+MESSAGE
+====================================================
+*/
+function showMessage(text, type = "error") {
+  message.textContent = text;
+  message.className = "";
+  if (type === "success") {
+    message.classList.add("success");
+  } else if (type === "warning") {
+    message.classList.add("warning");
+  } else {
+    message.classList.add("error");
+  }
 }
 /*
-IMPORTANT:
-The wallet is NOT deducted here yet.
-The real VTUGate purchase endpoint
-must be connected before money is removed.
-This prevents customers from losing
-wallet money without the data being delivered.
+====================================================
+LOAD WALLET
+====================================================
 */
-showMessage(
-"Plan selected successfully. Purchase connection is ready.",
-"success"
-);
-await addDoc(
-collection(db,"transactions"),
-{
-userId:user.uid,
-type:"Data Purchase",
-network:selectedPlan.network,
-phone:phone,
-amount:amount,
-planName:selectedPlan.name,
-serviceId:selectedPlan.serviceId,
-planCode:selectedPlan.code,
-provider:selectedPlan.provider,
-status:"Pending",
-createdAt:serverTimestamp()
+async function loadWallet() {
+  try {
+    const userRef =
+      doc(db, "users", user.uid);
+    const userSnap =
+      await getDoc(userRef);
+    if (!userSnap.exists()) {
+      balanceBox.textContent =
+        "Wallet account not found.";
+      return;
+    }
+    const userData =
+      userSnap.data();
+    currentWalletBalance =
+      Number(userData.wallet || 0);
+    updateBalanceDisplay();
+  } catch (error) {
+    console.error(
+      "Wallet error:",
+      error
+    );
+    balanceBox.textContent =
+      "Wallet Balance: Unable to load";
+  }
 }
-);
-}catch(error){
-console.error(error);
-showMessage(
-error.message ||
-"Something went wrong."
-);
+function updateBalanceDisplay() {
+  balanceBox.textContent =
+    "Wallet Balance: ₦" +
+    currentWalletBalance.toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    );
 }
-buyButton.disabled = false;
-buyButton.textContent =
-"Buy Data";
-});
-networkSelect.disabled = false;
+/*
+====================================================
+LOAD LIVE DATA PLANS
+====================================================
+*/
+async function loadPlans() {
+  try {
+    loading.textContent =
+      "Loading live VTUGate data plans...";
+    const response =
+      await fetch(
+        BACKEND_URL +
+        "/api/vtu/data-plans"
+      );
+    if (!response.ok) {
+      throw new Error(
+        "Unable to load data plans."
+      );
+    }
+    const data =
+      await response.json();
+    if (
+      !data.success ||
+      !Array.isArray(data.plans)
+    ) {
+      throw new Error(
+        "Invalid plans response."
+      );
+    }
+    allPlans =
+      data.plans;
+    loading.textContent =
+      allPlans.length +
+      " live data plans available.";
+  } catch (error) {
+    console.error(
+      "Data plans error:",
+      error
+    );
+    loading.textContent =
+      "Unable to load data plans.";
+    showMessage(
+      "Could not load live data plans. Please refresh the page."
+    );
+  }
+}
+/*
+====================================================
+LOAD NETWORK PLANS
+====================================================
+*/
+function loadNetworkPlans() {
+  const network =
+    networkSelect.value;
+  selectedPlan = null;
+  planInfo.style.display =
+    "none";
+  buyButton.disabled =
+    true;
+  planSelect.innerHTML = "";
+  if (!network) {
+    planSelect.disabled =
+      true;
+    planSelect.innerHTML =
+      '<option value="">Select a network first</option>';
+    return;
+  }
+  const plans =
+    allPlans.filter(
+      plan =>
+        String(plan.network)
+          .toLowerCase() ===
+        network.toLowerCase()
+    );
+  if (plans.length === 0) {
+    planSelect.disabled =
+      true;
+    planSelect.innerHTML =
+      '<option value="">No plans available</option>';
+    return;
+  }
+  planSelect.disabled =
+    false;
+  const firstOption =
+    document.createElement("option");
+  firstOption.value = "";
+  firstOption.textContent =
+    "Select a data plan";
+  planSelect.appendChild(
+    firstOption
+  );
+  plans.forEach((plan, index) => {
+    const option =
+      document.createElement("option");
+    option.value =
+      String(index);
+    option.textContent =
+      plan.name +
+      " — ₦" +
+      Number(plan.price).toLocaleString(
+        "en-NG",
+        {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2
+        }
+      );
+    planSelect.appendChild(
+      option
+    );
+  });
+  planSelect._networkPlans =
+    plans;
+}
+/*
+====================================================
+SHOW SELECTED PLAN
+====================================================
+*/
+function showSelectedPlan() {
+  const index =
+    planSelect.value;
+  selectedPlan =
+    null;
+  buyButton.disabled =
+    true;
+  planInfo.style.display =
+    "none";
+  if (index === "") {
+    return;
+  }
+  const plans =
+    planSelect._networkPlans || [];
+  selectedPlan =
+    plans[Number(index)];
+  if (!selectedPlan) {
+    return;
+  }
+  const price =
+    Number(selectedPlan.price);
+  planInfo.style.display =
+    "block";
+  planInfo.innerHTML =
+    "<strong>" +
+    selectedPlan.name +
+    "</strong><br>" +
+    "Network: " +
+    String(
+      selectedPlan.network
+    ).toUpperCase() +
+    "<br>" +
+    "Price: ₦" +
+    price.toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      }
+    ) +
+    "<br>" +
+    "Validity: Live provider plan";
+  checkBuyButton();
+}
+/*
+====================================================
+CHECK BUY BUTTON
+====================================================
+*/
+function checkBuyButton() {
+  const phone =
+    phoneInput.value.trim();
+  if (
+    selectedPlan &&
+    /^[0-9]{11}$/.test(phone) &&
+    user
+  ) {
+    buyButton.disabled =
+      false;
+  } else {
+    buyButton.disabled =
+      true;
+  }
+}
+/*
+====================================================
+PHONE INPUT
+====================================================
+*/
+phoneInput.addEventListener(
+  "input",
+  () => {
+    phoneInput.value =
+      phoneInput.value
+        .replace(/\D/g, "")
+        .slice(0, 11);
+    checkBuyButton();
+  }
+);
+/*
+====================================================
+NETWORK CHANGE
+====================================================
+*/
+networkSelect.addEventListener(
+  "change",
+  () => {
+    showMessage("");
+    loadNetworkPlans();
+  }
+);
+/*
+====================================================
+PLAN CHANGE
+====================================================
+*/
+planSelect.addEventListener(
+  "change",
+  () => {
+    showMessage("");
+    showSelectedPlan();
+  }
+);
+/*
+====================================================
+BUY DATA
+====================================================
+*/
+buyButton.addEventListener(
+  "click",
+  async () => {
+    if (!user) {
+      showMessage(
+        "Please login first."
+      );
+      return;
+    }
+    if (!selectedPlan) {
+      showMessage(
+        "Please select a data plan."
+      );
+      return;
+    }
+    const phone =
+      phoneInput.value.trim();
+    if (
+      !/^[0-9]{11}$/.test(phone)
+    ) {
+      showMessage(
+        "Enter a valid 11-digit Nigerian phone number."
+      );
+      return;
+    }
+    const amount =
+      Number(selectedPlan.price);
+    if (
+      !amount ||
+      amount <= 0
+    ) {
+      showMessage(
+        "Invalid plan price."
+      );
+      return;
+    }
+    if (
+      currentWalletBalance <
+      amount
+    ) {
+      showMessage(
+        "Insufficient wallet balance."
+      );
+      return;
+    }
+    buyButton.disabled =
+      true;
+    buyButton.textContent =
+      "Processing...";
+    showMessage(
+      "Processing your data purchase...",
+      "warning"
+    );
+    try {
+      /*
+      ==================================================
+      STEP 1 — RECHECK WALLET
+      ==================================================
+      */
+      const userRef =
+        doc(
+          db,
+          "users",
+          user.uid
+        );
+      const userSnap =
+        await getDoc(userRef);
+      if (!userSnap.exists()) {
+        throw new Error(
+          "User account not found."
+        );
+      }
+      const userData =
+        userSnap.data();
+      const wallet =
+        Number(
+          userData.wallet || 0
+        );
+      currentWalletBalance =
+        wallet;
+      updateBalanceDisplay();
+      if (wallet < amount) {
+        showMessage(
+          "Insufficient wallet balance."
+        );
+        return;
+      }
+      /*
+      ==================================================
+      STEP 2 — CALL NEXORA BACKEND
+      ==================================================
+      */
+      const response =
+        await fetch(
+          BACKEND_URL +
+          "/api/vtu/buy-data",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+            body: JSON.stringify({
+              service_id:
+                selectedPlan.serviceId,
+              phone_number:
+                phone,
+              amount:
+                amount,
+              plan_code:
+                selectedPlan.code
+            })
+          }
+        );
+      const result =
+        await response.json();
+      console.log(
+        "Nexora purchase response:",
+        result
+      );
+      /*
+      ==================================================
+      STEP 3 — PROVIDER FAILED
+      ==================================================
+      */
+      if (!response.ok ||
+          !result.success) {
+        throw new Error(
+          result.message ||
+          "Data purchase failed."
+        );
+      }
+      /*
+      ==================================================
+      STEP 4 — VERIFY PROVIDER TRANSACTION
+      ==================================================
+      */
+      const providerTransaction =
+        result.transaction || {};
+      /*
+      ==================================================
+      STEP 5 — DEDUCT WALLET
+      ==================================================
+      */
+      const newBalance =
+        wallet - amount;
+      await updateDoc(
+        userRef,
+        {
+          wallet:
+            newBalance
+        }
+      );
+      currentWalletBalance =
+        newBalance;
+      updateBalanceDisplay();
+      /*
+      ==================================================
+      STEP 6 — SAVE TRANSACTION
+      ==================================================
+      */
+      await addDoc(
+        collection(
+          db,
+          "transactions"
+        ),
+        {
+          userId:
+            user.uid,
+          type:
+            "Data Purchase",
+          category:
+            "data",
+          network:
+            selectedPlan.network,
+          phone:
+            phone,
+          amount:
+            amount,
+          planName:
+            selectedPlan.name,
+          serviceId:
+            selectedPlan.serviceId,
+          planCode:
+            selectedPlan.code,
+          provider:
+            "VTUGate",
+          providerTransactionId:
+            providerTransaction.transaction_id ||
+            null,
+          externalReference:
+            providerTransaction.external_reference ||
+            null,
+          providerMessage:
+            providerTransaction.provider_message ||
+            result.message ||
+            null,
+          status:
+            "Successful",
+          createdAt:
+            serverTimestamp()
+        }
+      );
+      /*
+      ==================================================
+      SUCCESS
+      ==================================================
+      */
+      showMessage(
+        "Data purchase successful! " +
+        selectedPlan.name +
+        " has been sent to " +
+        phone +
+        ".",
+        "success"
+      );
+      phoneInput.value =
+        "";
+      planSelect.value =
+        "";
+      selectedPlan =
+        null;
+      planInfo.style.display =
+        "none";
+    } catch (error) {
+      console.error(
+        "Purchase error:",
+        error
+      );
+      showMessage(
+        error.message ||
+        "Data purchase failed. Your wallet was not deducted.",
+        "error"
+      );
+    }
+    buyButton.disabled =
+      true;
+    buyButton.textContent =
+      "Buy Data";
+    checkBuyButton();
+  }
+);
+/*
+====================================================
+START
+====================================================
+*/
+networkSelect.disabled =
+  false;
 loadPlans();
 </script>
 </body>
