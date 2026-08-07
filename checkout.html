@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+<title>Nexora Mobile — Secure Checkout</title>
+<style>
+*{
+  box-sizing:border-box;
+}
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+}
+.app{
+  width:100%;
+  max-width:700px;
+  margin:auto;
+  min-height:100vh;
+}
+.header{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:20px 18px;
+  box-shadow:0 4px 18px rgba(0,0,0,.12);
+}
+.header-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.back{
+  color:white;
+  text-decoration:none;
+  font-weight:bold;
+  font-size:14px;
+}
+.logo{
+  font-size:20px;
+  font-weight:800;
+}
+main{
+  padding:25px 18px 50px;
+}
+h1{
+  margin:0;
+  font-size:27px;
+}
+.subtitle{
+  color:#6b7280;
+  line-height:1.5;
+  margin:9px 0 22px;
+}
+.card{
+  background:white;
+  border-radius:20px;
+  padding:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.06);
+  margin-bottom:15px;
+}
+.card h2{
+  margin:0 0 16px;
+  font-size:19px;
+}
+.detail{
+  background:#f5f7fb;
+  border-radius:12px;
+  padding:13px;
+  margin-bottom:9px;
+  line-height:1.4;
+}
+.detail strong{
+  display:block;
+  margin-top:3px;
+}
+.total{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:18px;
+  padding-top:17px;
+  border-top:1px solid #e5e7eb;
+}
+.total-label{
+  font-weight:700;
+}
+.total-price{
+  font-size:24px;
+  font-weight:800;
+  color:#2563eb;
+}
+.primary-button{
+  width:100%;
+  border:0;
+  background:#2563eb;
+  color:white;
+  padding:15px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:800;
+  cursor:pointer;
+}
+.secondary-button{
+  width:100%;
+  border:1px solid #d1d5db;
+  background:white;
+  color:#111827;
+  padding:14px;
+  border-radius:12px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+  margin-top:10px;
+}
+.notice{
+  background:#eff6ff;
+  color:#1e40af;
+  padding:14px;
+  border-radius:12px;
+  line-height:1.5;
+  font-size:14px;
+}
+.warning{
+  background:#fff7ed;
+  color:#9a3412;
+  padding:14px;
+  border-radius:12px;
+  line-height:1.5;
+  font-size:14px;
+  margin-top:12px;
+}
+.error{
+  background:#fef2f2;
+  color:#b91c1c;
+  padding:14px;
+  border-radius:12px;
+  line-height:1.5;
+}
+.hidden{
+  display:none;
+}
+.loading{
+  text-align:center;
+  padding:30px 10px;
+  color:#6b7280;
+}
+@media(max-width:430px){
+  h1{
+    font-size:24px;
+  }
+}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="header">
+  <div class="header-row">
+    <a class="back" href="esim.html">
+      ← Back to eSIM
+    </a>
+<div class="logo">
+  Nexora Mobile
+</div>
+  </div>
+</header>
+<main>
+  <h1>Secure Checkout</h1>
+  <p class="subtitle">
+    Review your eSIM order before continuing to payment.
+  </p>
+  <div id="loading" class="card loading">
+    Loading your eSIM order...
+  </div>
+  <div id="checkoutContent" class="hidden">
+<div class="card">
+  <h2>Order Summary</h2>
+  <div class="detail">
+    🌍 Destination
+    <strong id="country">—</strong>
+  </div>
+  <div class="detail">
+    📦 Plan
+    <strong id="planName">eSIM Plan</strong>
+  </div>
+  <div class="detail">
+    📶 Data
+    <strong id="data">—</strong>
+  </div>
+  <div class="detail">
+    📅 Validity
+    <strong id="validity">—</strong>
+  </div>
+  <div class="detail">
+    📡 Network
+    <strong id="speed">—</strong>
+  </div>
+  <div class="total">
+    <span class="total-label">
+      Total
+    </span>
+    <span class="total-price" id="price">
+      —
+    </span>
+  </div>
+</div>
+<div class="card">
+  <h2>Payment</h2>
+  <div class="notice">
+    🔒 Your payment will be processed through the
+    Nexora Mobile payment system.
+  </div>
+  <div class="warning">
+    Payment is not activated yet. This checkout page
+    is prepared for the real payment gateway connection.
+  </div>
+  <br>
+  <button
+    class="primary-button"
+    id="payButton"
+  >
+    Continue to Payment
+  </button>
+  <button
+    class="secondary-button"
+    id="backButton"
+  >
+    Go Back
+  </button>
+</div>
+  </div>
+  <div id="errorBox" class="card hidden">
+    <div class="error">
+      <strong>Unable to load this eSIM plan.</strong>
+      <br><br>
+      Please return to the eSIM page and select a plan again.
+    </div>
+<br>
+<button
+  class="primary-button"
+  id="errorBackButton"
+>
+  Back to eSIM
+</button>
+  </div>
+</main>
+</div>
+<script type="module">
+/*
+========================================================
+NEXORA MOBILE — SECURE CHECKOUT
+========================================================
+This page receives the selected plan ID from esim.html.
+Example:
+checkout.html?plan=PLAN_ID
+IMPORTANT:
+No eSIM Go API key is stored in this page.
+The real payment gateway will be connected later.
+========================================================
+*/
+const API_BASE =
+  "https://nexora-ai-backend-git-main-nexora-mobile.vercel.app";
+const PLANS_ENDPOINT =
+  `${API_BASE}/api/esim/plans`;
+/* ELEMENTS */
+const loading =
+  document.getElementById("loading");
+const checkoutContent =
+  document.getElementById("checkoutContent");
+const errorBox =
+  document.getElementById("errorBox");
+const countryElement =
+  document.getElementById("country");
+const planNameElement =
+  document.getElementById("planName");
+const dataElement =
+  document.getElementById("data");
+const validityElement =
+  document.getElementById("validity");
+const speedElement =
+  document.getElementById("speed");
+const priceElement =
+  document.getElementById("price");
+const payButton =
+  document.getElementById("payButton");
+const backButton =
+  document.getElementById("backButton");
+const errorBackButton =
+  document.getElementById("errorBackButton");
+/* URL */
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+const planId =
+  params.get("plan");
+/* HELPERS */
+function getCountry(plan){
+  if(
+    Array.isArray(plan?.countries) &&
+    plan.countries.length
+  ){
+    return (
+      plan.countries[0]?.name ||
+      "International"
+    );
+  }
+  return (
+    plan?.country ||
+    "International"
+  );
+}
+function getData(plan){
+  const amount =
+    Number(plan?.dataAmountMB ?? 0);
+  if(amount === -1){
+    return "Unlimited";
+  }
+  if(amount >= 1000){
+    return `${amount / 1000} GB`;
+  }
+  if(amount > 0){
+    return `${amount} MB`;
+  }
+  return "Data varies";
+}
+function getValidity(plan){
+  const days =
+    Number(plan?.duration ?? 0);
+  if(days > 0){
+    return `${days} days`;
+  }
+  return "Validity varies";
+}
+function getSpeed(plan){
+  if(
+    Array.isArray(plan?.speed) &&
+    plan.speed.length
+  ){
+    return plan.speed.join(" / ");
+  }
+  return "4G / 5G where available";
+}
+function getPrice(plan){
+  const price =
+    Number(
+      plan?.providerPrice ??
+      plan?.price ??
+      0
+    );
+  if(
+    !Number.isFinite(price) ||
+    price <= 0
+  ){
+    return "Price unavailable";
+  }
+  /*
+  Temporary display pricing.
+  Final Nexora pricing should eventually
+  be controlled by the backend.
+  */
+  const sellingPrice =
+    price * 2;
+  return `$${sellingPrice.toFixed(2)}`;
+}
+/* SHOW ERROR */
+function showError(){
+  loading.classList.add("hidden");
+  checkoutContent.classList.add("hidden");
+  errorBox.classList.remove("hidden");
+}
+/* DISPLAY PLAN */
+function displayPlan(plan){
+  countryElement.textContent =
+    getCountry(plan);
+  planNameElement.textContent =
+    plan?.name ||
+    "Nexora eSIM Plan";
+  dataElement.textContent =
+    getData(plan);
+  validityElement.textContent =
+    getValidity(plan);
+  speedElement.textContent =
+    getSpeed(plan);
+  priceElement.textContent =
+    getPrice(plan);
+  loading.classList.add("hidden");
+  errorBox.classList.add("hidden");
+  checkoutContent.classList.remove("hidden");
+}
+/* LOAD PLAN */
+async function loadPlan(){
+  if(!planId){
+    showError();
+    return;
+  }
+  try{
+    const response =
+      await fetch(
+        PLANS_ENDPOINT,
+        {
+          method:"GET",
+          headers:{
+            "Accept":"application/json"
+          },
+          cache:"no-store"
+        }
+      );
+    const data =
+      await response.json();
+    if(!response.ok){
+      throw new Error(
+        data?.message ||
+        `HTTP ${response.status}`
+      );
+    }
+    if(
+      !data ||
+      data.success !== true ||
+      !Array.isArray(data.plans)
+    ){
+      throw new Error(
+        "Invalid plans response."
+      );
+    }
+    const plan =
+      data.plans.find(
+        item =>
+          String(item?.id) ===
+          String(planId)
+      );
+    if(!plan){
+      throw new Error(
+        "Selected plan was not found."
+      );
+    }
+    displayPlan(plan);
+  }catch(error){
+    console.error(
+      "Nexora checkout error:",
+      error
+    );
+    showError();
+  }
+}
+/* BACK BUTTON */
+backButton.onclick = () => {
+  window.location.href =
+    "esim.html";
+};
+errorBackButton.onclick = () => {
+  window.location.href =
+    "esim.html";
+};
+/* PAYMENT */
+payButton.onclick = () => {
+  /*
+  REAL PAYMENT GATEWAY
+  WILL BE CONNECTED HERE.
+  For now we do NOT pretend that
+  payment has been completed.
+  */
+  alert(
+    "Nexora Mobile payment gateway will be connected here next."
+  );
+};
+/* START */
+loadPlan();
+</script>
+</body>
+</html>
