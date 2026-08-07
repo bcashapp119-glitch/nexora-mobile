@@ -1,279 +1,357 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Nexora Mobile</title>
-
+<title>Nexora Mobile Marketplace</title>
 <style>
-
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Arial,sans-serif;
 }
-
 body{
 background:#f5f7fb;
 color:#222;
 }
-
 header{
 background:#08152f;
 color:white;
-padding:20px;
+padding:18px 20px;
 }
-
 .nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
+max-width:1100px;
+margin:auto;
 }
-
 .logo{
-font-size:25px;
+font-size:24px;
 font-weight:bold;
 }
-
+.nav-buttons a{
+color:white;
+text-decoration:none;
+margin-left:12px;
+font-size:14px;
+}
 .hero{
 background:linear-gradient(135deg,#2563eb,#08152f);
 color:white;
 text-align:center;
-padding:70px 20px;
+padding:65px 20px;
 }
-
 .hero h1{
-font-size:40px;
+font-size:38px;
 margin-bottom:15px;
 }
-
 .hero p{
-font-size:18px;
-margin-bottom:30px;
+font-size:17px;
+line-height:1.6;
+max-width:650px;
+margin:0 auto 25px;
 }
-
 .btn{
 display:inline-block;
 background:white;
 color:#2563eb;
-padding:15px 25px;
+padding:14px 22px;
 border-radius:10px;
 text-decoration:none;
 font-weight:bold;
-margin:8px;
+margin:6px;
 }
-
 .container{
 padding:40px 20px;
 max-width:1100px;
 margin:auto;
 }
-
 .title{
 text-align:center;
-font-size:32px;
+font-size:30px;
+margin-bottom:10px;
+}
+.subtitle{
+text-align:center;
+color:#666;
 margin-bottom:30px;
 }
-
 .cards{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
 gap:20px;
 }
-
 .card{
 background:white;
 padding:25px;
-border-radius:15px;
-box-shadow:0 5px 15px rgba(0,0,0,.1);
+border-radius:16px;
+box-shadow:0 5px 18px rgba(0,0,0,.08);
 text-align:center;
+transition:.2s;
 }
-
+.card:hover{
+transform:translateY(-4px);
+}
+.icon{
+font-size:42px;
+margin-bottom:12px;
+}
 .card h2{
-margin-bottom:15px;
+margin-bottom:10px;
+font-size:21px;
 }
-
 .card p{
+color:#666;
+line-height:1.5;
 margin-bottom:20px;
 }
-
 .button{
 display:block;
 background:#2563eb;
 color:white;
-padding:14px;
+padding:13px;
 border-radius:10px;
 text-decoration:none;
 font-weight:bold;
 }
-
+.marketplace{
+background:#eef4ff;
+padding:45px 20px;
+margin-top:20px;
+}
+.market-grid{
+max-width:1100px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:18px;
+}
+.market-card{
+background:white;
+padding:22px;
+border-radius:14px;
+box-shadow:0 4px 12px rgba(0,0,0,.06);
+}
+.market-card h3{
+margin-bottom:8px;
+}
+.market-card p{
+color:#666;
+font-size:14px;
+line-height:1.5;
+margin-bottom:15px;
+}
+.buy{
+display:inline-block;
+background:#08152f;
+color:white;
+padding:10px 15px;
+border-radius:8px;
+text-decoration:none;
+font-weight:bold;
+}
 footer{
 background:#08152f;
 color:white;
 text-align:center;
-padding:30px;
+padding:30px 20px;
 margin-top:40px;
+line-height:1.8;
 }
-
 </style>
-
 </head>
-
-
 <body>
-
-
 <header>
-
 <div class="nav">
-
 <div class="logo">
 Nexora Mobile
 </div>
-
+<div class="nav-buttons">
+<a href="login.html">Login</a>
+<a href="signup.html">Sign Up</a>
 </div>
-
+</div>
 </header>
-
-
-
 <section class="hero">
-
 <h1>
-Welcome to Nexora Mobile
+Nexora Mobile Marketplace
 </h1>
-
 <p>
-Buy Airtime, Data, eSIM and manage your mobile services easily.
+Your digital marketplace for mobile services, eSIMs, virtual numbers,
+VPN subscriptions and legitimate social-media services.
 </p>
-
-
 <a href="signup.html" class="btn">
 Create Account
 </a>
-
-
 <a href="login.html" class="btn">
 Login
 </a>
-
-
 </section>
-
-
-
-<div class="container">
-
-
+<section class="container">
 <h1 class="title">
-Our Services
+Marketplace
 </h1>
-
-
-
+<p class="subtitle">
+Choose a service below
+</p>
 <div class="cards">
-
-
-
 <div class="card">
-
-<h2>
-📱 Airtime
-</h2>
-
+<div class="icon">📱</div>
+<h2>Airtime</h2>
 <p>
-Recharge all Nigerian networks instantly.
+Recharge Nigerian networks quickly and conveniently.
 </p>
-
 <a href="airtime.html" class="button">
-Buy Airtime
+Shop Airtime
 </a>
-
 </div>
-
-
-
-
 <div class="card">
-
-<h2>
-📶 Data
-</h2>
-
+<div class="icon">📶</div>
+<h2>Data</h2>
 <p>
-Affordable data bundles anytime.
+Purchase affordable mobile data bundles.
 </p>
-
 <a href="data.html" class="button">
-Buy Data
+Shop Data
 </a>
-
 </div>
-
-
-
-
 <div class="card">
-
-<h2>
-🌍 eSIM
-</h2>
-
+<div class="icon">🌍</div>
+<h2>eSIM</h2>
 <p>
-International travel eSIM plans.
+International eSIM plans for travel and connectivity.
 </p>
-
 <a href="esim.html" class="button">
-Buy eSIM
+Shop eSIM
 </a>
-
 </div>
-
-
-
-
 <div class="card">
-
-<h2>
-🎟️ ePIN
-</h2>
-
+<div class="icon">📞</div>
+<h2>US & International Numbers</h2>
 <p>
-Digital pins and mobile services.
+Legitimate virtual numbers from authorized providers.
 </p>
-
-<a href="epin.html" class="button">
-Buy ePIN
+<a href="numbers.html" class="button">
+View Numbers
 </a>
-
 </div>
-
-
-
+<div class="card">
+<div class="icon">💬</div>
+<h2>SMS Services</h2>
+<p>
+Legitimate SMS and messaging services from approved providers.
+</p>
+<a href="sms.html" class="button">
+View SMS
+</a>
 </div>
-
-
+<div class="card">
+<div class="icon">🔐</div>
+<h2>VPN</h2>
+<p>
+Purchase authorized VPN subscriptions for privacy and secure browsing.
+</p>
+<a href="vpn.html" class="button">
+View VPN
+</a>
 </div>
-
-
-
+<div class="card">
+<div class="icon">📣</div>
+<h2>Facebook Services</h2>
+<p>
+Legitimate Facebook marketing, advertising and management services.
+</p>
+<a href="facebook.html" class="button">
+View Services
+</a>
+</div>
+<div class="card">
+<div class="icon">📸</div>
+<h2>Instagram Services</h2>
+<p>
+Legitimate Instagram marketing and promotional services.
+</p>
+<a href="instagram.html" class="button">
+View Services
+</a>
+</div>
+<div class="card">
+<div class="icon">🎵</div>
+<h2>TikTok Services</h2>
+<p>
+Legitimate TikTok marketing and promotional services.
+</p>
+<a href="tiktok.html" class="button">
+View Services
+</a>
+</div>
+<div class="card">
+<div class="icon">🎟️</div>
+<h2>ePIN</h2>
+<p>
+Digital pins and authorized mobile services.
+</p>
+<a href="epin.html" class="button">
+Shop ePIN
+</a>
+</div>
+</div>
+</section>
+<section class="marketplace">
+<h1 class="title">
+Popular Services
+</h1>
+<p class="subtitle">
+More products can be connected automatically later through supplier APIs.
+</p>
+<div class="market-grid">
+<div class="market-card">
+<h3>🇺🇸 US Virtual Number</h3>
+<p>
+Legitimate virtual number supplied through an authorized provider.
+</p>
+<a href="numbers.html" class="buy">
+View
+</a>
+</div>
+<div class="market-card">
+<h3>🔐 VPN Subscription</h3>
+<p>
+Authorized VPN plans with different subscription periods.
+</p>
+<a href="vpn.html" class="buy">
+View
+</a>
+</div>
+<div class="market-card">
+<h3>🌍 Travel eSIM</h3>
+<p>
+International connectivity for travelers.
+</p>
+<a href="esim.html" class="buy">
+View
+</a>
+</div>
+<div class="market-card">
+<h3>📣 Social Media Marketing</h3>
+<p>
+Legitimate marketing and promotional services for social platforms.
+</p>
+<a href="social.html" class="buy">
+View
+</a>
+</div>
+</div>
+</section>
 <footer>
-
 <p>
 © 2026 Nexora Mobile
 </p>
-
 <p>
-Airtime • Data • eSIM • ePIN
+Airtime • Data • eSIM • Numbers • SMS • VPN • Social Services
 </p>
-
 </footer>
-
-
 </body>
-
 </html>
