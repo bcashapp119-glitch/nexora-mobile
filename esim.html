@@ -2,48 +2,39 @@ function continuePurchase(){
   if(!selectedPlan){
     return;
   }
-
   const country = getCountry(selectedPlan);
   const data = getData(selectedPlan);
   const validity = getValidity(selectedPlan);
   const price = getPrice(selectedPlan);
-
   modalTitle.textContent = "Secure Checkout";
-
   modalBody.innerHTML = `
     <p>
       Confirm your eSIM before proceeding to payment.
     </p>
-
     <div class="modal-details">
       <div>
         🌍 <strong>Destination:</strong>
         ${escapeHTML(country)}
       </div>
-
       <div>
         📶 <strong>Data:</strong>
         ${escapeHTML(data)}
       </div>
-
       <div>
         📅 <strong>Validity:</strong>
         ${escapeHTML(validity)}
       </div>
-
       <div>
         💰 <strong>Total:</strong>
         ${escapeHTML(price)}
       </div>
     </div>
-
     <button
       class="primary-button"
       id="payNowButton"
     >
       Continue to Payment
     </button>
-
     <button
       class="secondary-button"
       id="checkoutBackButton"
@@ -51,22 +42,30 @@ function continuePurchase(){
       Go Back
     </button>
   `;
-
   document
     .getElementById("checkoutBackButton")
     .onclick = () => {
       openPlan(selectedPlan);
     };
-
   document
     .getElementById("payNowButton")
     .onclick = () => {
-      const planId = selectedPlan?.id || "";
-
-      const checkoutUrl =
-        "checkout.html?plan=" +
-        encodeURIComponent(planId);
-
-      window.location.href = checkoutUrl;
+      /*
+       * Save the selected plan temporarily in the browser.
+       * Checkout will use this exact plan instead of
+       * trying to find it again by ID.
+       */
+      try{
+        sessionStorage.setItem(
+          "nexoraSelectedPlan",
+          JSON.stringify(selectedPlan)
+        );
+      }catch(error){
+        console.error(
+          "Could not save selected plan:",
+          error
+        );
+      }
+      window.location.href = "checkout.html";
     };
 }
