@@ -1,181 +1,287 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nexora Fund Wallet</title>
 
 <style>
-* {
-    box-sizing: border-box;
+
+*{
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-    background: #f3f6fb;
+body{
+    margin:0;
+    padding:20px;
+    font-family:Arial,sans-serif;
+    background:#f3f6fb;
 }
 
-.container {
-    max-width: 420px;
-    margin: 30px auto;
-    background: #ffffff;
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+.container{
+    max-width:420px;
+    margin:25px auto;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.08);
 }
 
-h1 {
-    text-align: center;
-    color: #2563eb;
-    margin-bottom: 25px;
+h1{
+    text-align:center;
+    color:#2563eb;
+    margin-bottom:25px;
 }
 
-label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 8px;
+label{
+    display:block;
+    font-weight:bold;
+    margin-bottom:8px;
 }
 
-input {
-    width: 100%;
-    padding: 14px;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    font-size: 16px;
-    margin-bottom: 15px;
+input{
+    width:100%;
+    padding:14px;
+    margin:8px 0 15px;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
 }
 
-button {
-    width: 100%;
-    padding: 15px;
-    border: none;
-    border-radius: 10px;
-    background: #2563eb;
-    color: white;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
+button{
+    width:100%;
+    padding:15px;
+    border:0;
+    border-radius:10px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
 }
 
-button:disabled {
-    opacity: 0.6;
+button:disabled{
+    opacity:.6;
+    cursor:not-allowed;
 }
 
-#message {
-    margin-top: 15px;
-    text-align: center;
+.secondary{
+    background:#64748b;
+    margin-top:10px;
 }
 
-.payment-box {
-    display: none;
-    margin-top: 25px;
-    padding: 20px;
-    background: #f8fafc;
-    border-radius: 15px;
-    border: 1px solid #e2e8f0;
+.payment-box{
+    display:none;
+    margin-top:25px;
+    padding:20px;
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:15px;
 }
 
-.payment-box h2 {
-    margin-top: 0;
-    font-size: 20px;
+.payment-box h2{
+    margin-top:0;
 }
 
-.payment-row {
-    margin: 12px 0;
+.detail{
+    margin:15px 0;
 }
 
-.payment-label {
-    font-size: 13px;
-    color: #64748b;
+.detail-title{
+    color:#64748b;
+    font-size:13px;
 }
 
-.payment-value {
-    font-size: 17px;
-    font-weight: bold;
-    margin-top: 4px;
+.detail-value{
+    margin-top:4px;
+    font-size:17px;
+    font-weight:bold;
+    word-break:break-word;
 }
 
-.warning {
-    margin-top: 15px;
-    padding: 12px;
-    background: #fff7ed;
-    border-radius: 10px;
-    font-size: 14px;
-    line-height: 1.5;
+.amount-display{
+    font-size:24px;
+    color:#2563eb;
 }
 
-.back-btn {
-    margin-top: 15px;
-    background: #64748b;
+.notice{
+    margin-top:15px;
+    padding:13px;
+    border-radius:10px;
+    background:#fff7ed;
+    line-height:1.5;
+    font-size:14px;
 }
+
+.success{
+    background:#ecfdf5;
+    color:#065f46;
+}
+
+.error{
+    color:#b91c1c;
+}
+
+#message{
+    text-align:center;
+    margin-top:15px;
+    line-height:1.5;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>Fund Wallet</h1>
+<h1>Fund Wallet</h1>
 
-    <label for="amount">Amount</label>
 
-    <input
-        id="amount"
-        type="number"
-        inputmode="numeric"
-        min="100"
-        step="1"
-        placeholder="Enter amount e.g. 1000"
-    >
+<div id="amountSection">
 
-    <button id="fundBtn">
-        Continue
-    </button>
+<label for="amount">
+Amount
+</label>
 
-    <p id="message"></p>
+<input
+    id="amount"
+    type="number"
+    inputmode="numeric"
+    min="100"
+    step="1"
+    placeholder="Enter amount e.g. 1000"
+>
 
-    <div class="payment-box" id="paymentBox">
+<button id="continueBtn">
+Continue
+</button>
 
-        <h2>Pay with OPay</h2>
+</div>
 
-        <div class="payment-row">
-            <div class="payment-label">Amount to pay</div>
-            <div class="payment-value" id="paymentAmount">
-                ₦0
-            </div>
-        </div>
 
-        <div class="payment-row">
-            <div class="payment-label">OPay Business Account</div>
-            <div class="payment-value">
-                YOUR OPAY BUSINESS NO.
-            </div>
-        </div>
+<div class="payment-box" id="paymentBox">
 
-        <div class="warning">
-            Send exactly the amount shown above to the
-            Nexora OPay Business account.
-            <br><br>
-            Your wallet will only be credited after the
-            payment has been properly verified.
-        </div>
+<h2>Pay with OPay</h2>
 
-        <button class="back-btn" id="backBtn">
-            Change Amount
-        </button>
 
-    </div>
+<div class="detail">
+
+<div class="detail-title">
+Amount to pay
+</div>
+
+<div
+    class="detail-value amount-display"
+    id="paymentAmount"
+>
+₦0
+</div>
+
+</div>
+
+
+<div class="detail">
+
+<div class="detail-title">
+Bank
+</div>
+
+<div class="detail-value">
+OPay
+</div>
+
+</div>
+
+
+<div class="detail">
+
+<div class="detail-title">
+Account Number
+</div>
+
+<div class="detail-value">
+651 605 7129
+</div>
+
+</div>
+
+
+<div class="detail">
+
+<div class="detail-title">
+Account Name
+</div>
+
+<div class="detail-value">
+SUFIYAN ABDULAFEEZ
+</div>
+
+</div>
+
+
+<div class="notice">
+
+Send exactly the amount shown above to the
+OPay account.
+
+<br><br>
+
+After making the transfer, enter your OPay
+transaction/reference number below.
+
+<br><br>
+
+<strong>
+Your wallet will NOT be credited until the
+payment is verified.
+</strong>
+
+</div>
+
+
+<label for="reference">
+OPay Transaction / Reference Number
+</label>
+
+<input
+    id="reference"
+    type="text"
+    autocomplete="off"
+    placeholder="Enter transaction reference"
+>
+
+
+<button id="paidBtn">
+I've Paid
+</button>
+
+
+<button
+    id="backBtn"
+    class="secondary"
+>
+Change Amount
+</button>
+
+</div>
+
+
+<p id="message"></p>
 
 </div>
 
 
 <script type="module">
 
-import { initializeApp }
+import {
+    initializeApp
+}
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
+
 
 import {
     getAuth,
@@ -184,134 +290,329 @@ import {
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
 
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+}
+from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
+
+
 const firebaseConfig = {
 
-    apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+    apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
 
-    authDomain: "nexora-mobile-af02f.firebaseapp.com",
+    authDomain:"nexora-mobile-af02f.firebaseapp.com",
 
-    projectId: "nexora-mobile-af02f",
+    projectId:"nexora-mobile-af02f",
 
-    storageBucket: "nexora-mobile-af02f.firebasestorage.app",
+    storageBucket:"nexora-mobile-af02f.firebasestorage.app",
 
-    messagingSenderId: "498265618137",
+    messagingSenderId:"498265618137",
 
-    appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
+    appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
 
-    measurementId: "G-8494CNWZKL"
+    measurementId:"G-8494CNWZKL"
+
 };
 
 
-const app = initializeApp(firebaseConfig);
+const app =
+    initializeApp(firebaseConfig);
 
-const auth = getAuth(app);
+
+const auth =
+    getAuth(app);
+
+
+const db =
+    getFirestore(app);
 
 
 let currentUser = null;
 
+let selectedAmount = 0;
 
-onAuthStateChanged(auth, (user) => {
+
+onAuthStateChanged(auth,(user)=>{
 
     currentUser = user;
 
 });
 
 
-const amountInput =
+const amount =
     document.getElementById("amount");
 
-const fundBtn =
-    document.getElementById("fundBtn");
 
-const message =
-    document.getElementById("message");
+const continueBtn =
+    document.getElementById("continueBtn");
+
 
 const paymentBox =
     document.getElementById("paymentBox");
 
+
+const amountSection =
+    document.getElementById("amountSection");
+
+
 const paymentAmount =
     document.getElementById("paymentAmount");
+
+
+const reference =
+    document.getElementById("reference");
+
+
+const paidBtn =
+    document.getElementById("paidBtn");
+
 
 const backBtn =
     document.getElementById("backBtn");
 
 
-fundBtn.addEventListener("click", () => {
+const message =
+    document.getElementById("message");
 
-    if (!currentUser) {
+
+continueBtn.addEventListener("click",()=>{
+
+    message.textContent = "";
+
+    message.className = "";
+
+
+    if(!currentUser){
 
         message.textContent =
             "Please login first.";
 
+        message.className = "error";
+
         return;
+
     }
 
 
-    const rawAmount =
-        amountInput.value.trim();
+    const value =
+        amount.value.trim();
 
 
-    if (rawAmount === "") {
+    if(value === ""){
 
         message.textContent =
             "Please enter an amount.";
 
-        amountInput.focus();
+        message.className = "error";
+
+        amount.focus();
 
         return;
+
     }
 
 
-    const amount =
-        Number(rawAmount);
+    const number =
+        Number(value);
 
 
-    if (!Number.isFinite(amount) || amount < 100) {
+    if(
+        !Number.isFinite(number) ||
+        number < 100
+    ){
 
         message.textContent =
             "Enter a valid amount of at least ₦100.";
 
-        amountInput.focus();
+        message.className = "error";
+
+        amount.focus();
 
         return;
+
     }
 
 
-    if (!Number.isInteger(amount)) {
+    if(!Number.isInteger(number)){
 
         message.textContent =
             "Please enter a whole naira amount.";
 
-        amountInput.focus();
+        message.className = "error";
+
+        amount.focus();
 
         return;
+
     }
 
 
-    paymentAmount.textContent =
-        "₦" + amount.toLocaleString("en-NG");
+    selectedAmount = number;
 
+
+    paymentAmount.textContent =
+        "₦" +
+        number.toLocaleString("en-NG");
+
+
+    amountSection.style.display =
+        "none";
+
+
+    paymentBox.style.display =
+        "block";
+
+
+    reference.focus();
+
+});
+
+
+paidBtn.addEventListener("click",async()=>{
 
     message.textContent = "";
 
+    message.className = "";
 
-    paymentBox.style.display = "block";
+
+    if(!currentUser){
+
+        message.textContent =
+            "Please login again.";
+
+        message.className = "error";
+
+        return;
+
+    }
 
 
-    fundBtn.style.display = "none";
+    const ref =
+        reference.value.trim();
+
+
+    if(ref === ""){
+
+        message.textContent =
+            "Enter your OPay transaction/reference number.";
+
+        message.className = "error";
+
+        reference.focus();
+
+        return;
+
+    }
+
+
+    if(selectedAmount < 100){
+
+        message.textContent =
+            "Invalid payment amount.";
+
+        message.className = "error";
+
+        return;
+
+    }
+
+
+    paidBtn.disabled = true;
+
+    paidBtn.textContent =
+        "Submitting...";
+
+
+    try{
+
+        await addDoc(
+            collection(db,"paymentRequests"),
+            {
+
+                userId:
+                    currentUser.uid,
+
+                amount:
+                    selectedAmount,
+
+                method:
+                    "OPay",
+
+                reference:
+                    ref,
+
+                status:
+                    "Pending",
+
+                createdAt:
+                    serverTimestamp()
+
+            }
+        );
+
+
+        paymentBox.style.display =
+            "none";
+
+
+        amountSection.style.display =
+            "block";
+
+
+        amount.value = "";
+
+        reference.value = "";
+
+
+        message.textContent =
+            "Payment submitted successfully. Your payment is pending verification.";
+
+        message.className =
+            "success";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        message.textContent =
+            "Unable to submit payment. Please try again.";
+
+        message.className =
+            "error";
+
+    }
+
+
+    paidBtn.disabled = false;
+
+    paidBtn.textContent =
+        "I've Paid";
 
 });
 
 
-backBtn.addEventListener("click", () => {
+backBtn.addEventListener("click",()=>{
 
-    paymentBox.style.display = "none";
+    paymentBox.style.display =
+        "none";
 
-    fundBtn.style.display = "block";
 
-    amountInput.focus();
+    amountSection.style.display =
+        "block";
+
+
+    reference.value = "";
+
+    message.textContent = "";
+
+    message.className = "";
 
 });
+
 
 </script>
 
