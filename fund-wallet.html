@@ -7,54 +7,109 @@
 <title>Nexora Fund Wallet</title>
 
 <style>
-body{
-    font-family:Arial,sans-serif;
-    background:#f3f6fb;
-    padding:20px;
+* {
+    box-sizing: border-box;
 }
 
-.container{
-    max-width:400px;
-    margin:auto;
-    background:white;
-    padding:25px;
-    border-radius:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,0.1);
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: #f3f6fb;
 }
 
-h1{
-    text-align:center;
-    color:#2563eb;
+.container {
+    max-width: 420px;
+    margin: 30px auto;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.08);
 }
 
-input{
-    width:100%;
-    box-sizing:border-box;
-    padding:14px;
-    margin:15px 0;
-    border-radius:10px;
-    border:1px solid #ccc;
-    font-size:16px;
+h1 {
+    text-align: center;
+    color: #2563eb;
+    margin-bottom: 25px;
 }
 
-button{
-    width:100%;
-    padding:15px;
-    background:#2563eb;
-    color:white;
-    border:none;
-    border-radius:10px;
-    font-size:16px;
-    cursor:pointer;
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
 }
 
-button:disabled{
-    opacity:0.6;
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    margin-bottom: 15px;
 }
 
-#message{
-    margin-top:15px;
-    text-align:center;
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:disabled {
+    opacity: 0.6;
+}
+
+#message {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.payment-box {
+    display: none;
+    margin-top: 25px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 15px;
+    border: 1px solid #e2e8f0;
+}
+
+.payment-box h2 {
+    margin-top: 0;
+    font-size: 20px;
+}
+
+.payment-row {
+    margin: 12px 0;
+}
+
+.payment-label {
+    font-size: 13px;
+    color: #64748b;
+}
+
+.payment-value {
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 4px;
+}
+
+.warning {
+    margin-top: 15px;
+    padding: 12px;
+    background: #fff7ed;
+    border-radius: 10px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.back-btn {
+    margin-top: 15px;
+    background: #64748b;
 }
 </style>
 </head>
@@ -63,24 +118,59 @@ button:disabled{
 
 <div class="container">
 
-<h1>Fund Wallet</h1>
+    <h1>Fund Wallet</h1>
 
-<input
-    id="amount"
-    type="number"
-    inputmode="numeric"
-    min="100"
-    step="1"
-    placeholder="Enter amount (₦100 minimum)"
->
+    <label for="amount">Amount</label>
 
-<button id="fundBtn">
-    Continue
-</button>
+    <input
+        id="amount"
+        type="number"
+        inputmode="numeric"
+        min="100"
+        step="1"
+        placeholder="Enter amount e.g. 1000"
+    >
 
-<p id="message"></p>
+    <button id="fundBtn">
+        Continue
+    </button>
+
+    <p id="message"></p>
+
+    <div class="payment-box" id="paymentBox">
+
+        <h2>Pay with OPay</h2>
+
+        <div class="payment-row">
+            <div class="payment-label">Amount to pay</div>
+            <div class="payment-value" id="paymentAmount">
+                ₦0
+            </div>
+        </div>
+
+        <div class="payment-row">
+            <div class="payment-label">OPay Business Account</div>
+            <div class="payment-value">
+                YOUR OPAY BUSINESS NO.
+            </div>
+        </div>
+
+        <div class="warning">
+            Send exactly the amount shown above to the
+            Nexora OPay Business account.
+            <br><br>
+            Your wallet will only be credited after the
+            payment has been properly verified.
+        </div>
+
+        <button class="back-btn" id="backBtn">
+            Change Amount
+        </button>
+
+    </div>
 
 </div>
+
 
 <script type="module">
 
@@ -93,80 +183,134 @@ import {
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
+
 const firebaseConfig = {
 
-    apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+    apiKey: "AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
 
-    authDomain:"nexora-mobile-af02f.firebaseapp.com",
+    authDomain: "nexora-mobile-af02f.firebaseapp.com",
 
-    projectId:"nexora-mobile-af02f",
+    projectId: "nexora-mobile-af02f",
 
-    storageBucket:"nexora-mobile-af02f.firebasestorage.app",
+    storageBucket: "nexora-mobile-af02f.firebasestorage.app",
 
-    messagingSenderId:"498265618137",
+    messagingSenderId: "498265618137",
 
-    appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+    appId: "1:498265618137:web:a1ffebae8eda0b88abf0c8",
 
-    measurementId:"G-8494CNWZKL"
+    measurementId: "G-8494CNWZKL"
 };
+
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
+
 let currentUser = null;
 
+
 onAuthStateChanged(auth, (user) => {
+
     currentUser = user;
+
 });
 
-const amountInput = document.getElementById("amount");
-const fundBtn = document.getElementById("fundBtn");
-const message = document.getElementById("message");
+
+const amountInput =
+    document.getElementById("amount");
+
+const fundBtn =
+    document.getElementById("fundBtn");
+
+const message =
+    document.getElementById("message");
+
+const paymentBox =
+    document.getElementById("paymentBox");
+
+const paymentAmount =
+    document.getElementById("paymentAmount");
+
+const backBtn =
+    document.getElementById("backBtn");
+
 
 fundBtn.addEventListener("click", () => {
 
     if (!currentUser) {
-        message.textContent = "Please login first.";
+
+        message.textContent =
+            "Please login first.";
+
         return;
     }
 
-    const rawAmount = amountInput.value.trim();
+
+    const rawAmount =
+        amountInput.value.trim();
+
 
     if (rawAmount === "") {
-        message.textContent = "Please enter an amount.";
+
+        message.textContent =
+            "Please enter an amount.";
+
         amountInput.focus();
+
         return;
     }
 
-    const amount = Number(rawAmount);
+
+    const amount =
+        Number(rawAmount);
+
 
     if (!Number.isFinite(amount) || amount < 100) {
-        message.textContent = "Enter a valid amount of at least ₦100.";
+
+        message.textContent =
+            "Enter a valid amount of at least ₦100.";
+
         amountInput.focus();
+
         return;
     }
+
 
     if (!Number.isInteger(amount)) {
-        message.textContent = "Please enter a whole naira amount.";
+
+        message.textContent =
+            "Please enter a whole naira amount.";
+
         amountInput.focus();
+
         return;
     }
 
-    /*
-       IMPORTANT:
-       We DO NOT credit the wallet here.
 
-       The customer must make an actual OPay payment first.
-       After payment confirmation, our secure backend will
-       credit the wallet.
-    */
+    paymentAmount.textContent =
+        "₦" + amount.toLocaleString("en-NG");
 
-    message.textContent =
-        `Payment setup for ₦${amount.toLocaleString()} is ready.`;
 
-    // Next step:
-    // Connect this amount to the Nexora → OPay payment flow.
+    message.textContent = "";
+
+
+    paymentBox.style.display = "block";
+
+
+    fundBtn.style.display = "none";
+
+});
+
+
+backBtn.addEventListener("click", () => {
+
+    paymentBox.style.display = "none";
+
+    fundBtn.style.display = "block";
+
+    amountInput.focus();
+
 });
 
 </script>
