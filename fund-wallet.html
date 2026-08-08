@@ -1,223 +1,175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Nexora Fund Wallet</title>
 
 <style>
-
 body{
-font-family:Arial,sans-serif;
-background:#f3f6fb;
-padding:20px;
+    font-family:Arial,sans-serif;
+    background:#f3f6fb;
+    padding:20px;
 }
 
 .container{
-max-width:400px;
-margin:auto;
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+    max-width:400px;
+    margin:auto;
+    background:white;
+    padding:25px;
+    border-radius:20px;
+    box-shadow:0 5px 15px rgba(0,0,0,0.1);
 }
 
 h1{
-text-align:center;
-color:#2563eb;
+    text-align:center;
+    color:#2563eb;
 }
 
 input{
-width:100%;
-padding:14px;
-margin:15px 0;
-border-radius:10px;
-border:1px solid #ccc;
-font-size:16px;
+    width:100%;
+    box-sizing:border-box;
+    padding:14px;
+    margin:15px 0;
+    border-radius:10px;
+    border:1px solid #ccc;
+    font-size:16px;
 }
 
 button{
-width:100%;
-padding:15px;
-background:#2563eb;
-color:white;
-border:none;
-border-radius:10px;
-font-size:16px;
+    width:100%;
+    padding:15px;
+    background:#2563eb;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
 }
 
-</style>
+button:disabled{
+    opacity:0.6;
+}
 
+#message{
+    margin-top:15px;
+    text-align:center;
+}
+</style>
 </head>
 
 <body>
-
 
 <div class="container">
 
 <h1>Fund Wallet</h1>
 
-<input id="amount" type="number" placeholder="Enter amount">
+<input
+    id="amount"
+    type="number"
+    inputmode="numeric"
+    min="100"
+    step="1"
+    placeholder="Enter amount (₦100 minimum)"
+>
 
 <button id="fundBtn">
-Add Money
+    Continue
 </button>
 
 <p id="message"></p>
 
 </div>
 
-
-
 <script type="module">
-
 
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
-
 import {
-getAuth,
-onAuthStateChanged
+    getAuth,
+    onAuthStateChanged
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
-
-import {
-getFirestore,
-doc,
-getDoc,
-updateDoc,
-collection,
-addDoc,
-serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/12.17.1/firebase-firestore.js";
-
-
-
 const firebaseConfig = {
 
-apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
+    apiKey:"AIzaSyDHwh66V6cT7nqEP9R7Iy827vbtBjQGeIA",
 
-authDomain:"nexora-mobile-af02f.firebaseapp.com",
+    authDomain:"nexora-mobile-af02f.firebaseapp.com",
 
-projectId:"nexora-mobile-af02f",
+    projectId:"nexora-mobile-af02f",
 
-storageBucket:"nexora-mobile-af02f.firebasestorage.app",
+    storageBucket:"nexora-mobile-af02f.firebasestorage.app",
 
-messagingSenderId:"498265618137",
+    messagingSenderId:"498265618137",
 
-appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
+    appId:"1:498265618137:web:a1ffebae8eda0b88abf0c8",
 
-measurementId:"G-8494CNWZKL"
-
+    measurementId:"G-8494CNWZKL"
 };
-
-
 
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-const db = getFirestore(app);
-
-
 let currentUser = null;
 
-
-onAuthStateChanged(auth,(user)=>{
-
-currentUser=user;
-
+onAuthStateChanged(auth, (user) => {
+    currentUser = user;
 });
 
+const amountInput = document.getElementById("amount");
+const fundBtn = document.getElementById("fundBtn");
+const message = document.getElementById("message");
 
+fundBtn.addEventListener("click", () => {
 
-document.getElementById("fundBtn").onclick = async()=>{
+    if (!currentUser) {
+        message.textContent = "Please login first.";
+        return;
+    }
 
+    const rawAmount = amountInput.value.trim();
 
-const amount = Number(
-document.getElementById("amount").value
-);
+    if (rawAmount === "") {
+        message.textContent = "Please enter an amount.";
+        amountInput.focus();
+        return;
+    }
 
+    const amount = Number(rawAmount);
 
+    if (!Number.isFinite(amount) || amount < 100) {
+        message.textContent = "Enter a valid amount of at least ₦100.";
+        amountInput.focus();
+        return;
+    }
 
-if(!currentUser){
+    if (!Number.isInteger(amount)) {
+        message.textContent = "Please enter a whole naira amount.";
+        amountInput.focus();
+        return;
+    }
 
-document.getElementById("message").innerHTML =
-"Please login first";
+    /*
+       IMPORTANT:
+       We DO NOT credit the wallet here.
 
-return;
+       The customer must make an actual OPay payment first.
+       After payment confirmation, our secure backend will
+       credit the wallet.
+    */
 
-}
+    message.textContent =
+        `Payment setup for ₦${amount.toLocaleString()} is ready.`;
 
-
-
-if(amount <= 0){
-
-document.getElementById("message").innerHTML =
-"Enter a valid amount";
-
-return;
-
-}
-
-
-
-const userRef = doc(
-db,
-"users",
-currentUser.uid
-);
-
-
-
-const userSnap = await getDoc(userRef);
-
-
-const oldWallet =
-userSnap.data().wallet || 0;
-
-
-
-await updateDoc(userRef,{
-
-wallet: oldWallet + amount
-
+    // Next step:
+    // Connect this amount to the Nexora → OPay payment flow.
 });
-
-
-
-await addDoc(
-collection(db,"transactions"),
-{
-
-userId: currentUser.uid,
-
-type:"Wallet Funding",
-
-amount:amount,
-
-status:"Successful",
-
-createdAt:serverTimestamp()
-
-});
-
-
-
-document.getElementById("message").innerHTML =
-"Wallet funded successfully";
-
-
-};
-
 
 </script>
-
 
 </body>
 </html>
