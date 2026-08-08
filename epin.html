@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#2563eb">
+
+<title>Nexora Mobile - ePIN</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f5f7fb;
+  color:#111827;
+  padding-bottom:40px;
+}
+
+.app{
+  width:100%;
+  max-width:650px;
+  margin:auto;
+}
+
+/* HEADER */
+
+.header{
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:white;
+  padding:22px 18px 28px;
+  border-radius:0 0 28px 28px;
+}
+
+.header-top{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.back-button{
+  border:0;
+  background:rgba(255,255,255,.18);
+  color:white;
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  font-size:20px;
+  cursor:pointer;
+}
+
+.brand{
+  font-size:22px;
+  font-weight:800;
+}
+
+.header-title{
+  margin-top:22px;
+  font-size:26px;
+  font-weight:800;
+}
+
+.header-subtitle{
+  margin-top:7px;
+  color:#dbeafe;
+  font-size:14px;
+  line-height:1.5;
+}
+
+/* CONTENT */
+
+.content{
+  padding:20px 18px;
+}
+
+.notice{
+  background:#eff6ff;
+  border:1px solid #bfdbfe;
+  color:#1e40af;
+  padding:15px;
+  border-radius:15px;
+  line-height:1.5;
+  font-size:14px;
+  margin-bottom:20px;
+}
+
+/* PRODUCTS */
+
+.products{
+  display:grid;
+  gap:12px;
+}
+
+.product{
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.06);
+}
+
+.product-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.product-icon{
+  font-size:30px;
+}
+
+.product-name{
+  font-size:17px;
+  font-weight:800;
+  flex:1;
+}
+
+.product-price{
+  font-size:17px;
+  font-weight:800;
+  color:#2563eb;
+}
+
+.product-description{
+  color:#6b7280;
+  font-size:13px;
+  line-height:1.5;
+  margin:12px 0;
+}
+
+.buy-button{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  background:#2563eb;
+  color:white;
+  font-weight:800;
+  font-size:15px;
+  cursor:pointer;
+}
+
+.buy-button:hover{
+  background:#1d4ed8;
+}
+
+/* INFO */
+
+.info{
+  margin-top:25px;
+  background:white;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 3px 12px rgba(0,0,0,.05);
+}
+
+.info h3{
+  margin-top:0;
+}
+
+.info p{
+  color:#6b7280;
+  font-size:14px;
+  line-height:1.6;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.5);
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  z-index:500;
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:100%;
+  max-width:650px;
+  background:white;
+  border-radius:25px 25px 0 0;
+  padding:24px;
+}
+
+.modal-close{
+  float:right;
+  border:0;
+  background:#f3f4f6;
+  border-radius:50%;
+  width:35px;
+  height:35px;
+  font-size:18px;
+  cursor:pointer;
+}
+
+.modal-box h2{
+  margin-top:5px;
+}
+
+.confirm-button{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#2563eb;
+  color:white;
+  font-weight:800;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+.cancel-button{
+  width:100%;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#f3f4f6;
+  color:#111827;
+  font-weight:700;
+  margin-top:10px;
+  cursor:pointer;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="app">
+
+<header class="header">
+
+  <div class="header-top">
+
+    <button
+      class="back-button"
+      id="backBtn"
+    >
+      ←
+    </button>
+
+    <div class="brand">
+      Nexora Mobile
+    </div>
+
+  </div>
+
+  <div class="header-title">
+    ePIN
+  </div>
+
+  <div class="header-subtitle">
+    Purchase digital PIN products securely through
+    Nexora Mobile.
+  </div>
+
+</header>
+
+
+<main class="content">
+
+  <div class="notice">
+
+    🎫 <strong>ePIN Store</strong><br>
+
+    Choose the ePIN product you need.
+    Payment and automatic delivery will be connected
+    when the real ePIN supplier and payment gateway
+    are integrated.
+
+  </div>
+
+
+  <div class="products">
+
+    <!-- AIRTIME PIN -->
+
+    <div class="product">
+
+      <div class="product-top">
+
+        <div class="product-icon">
+          📞
+        </div>
+
+        <div class="product-name">
+          Airtime ePIN
+        </div>
+
+        <div class="product-price">
+          Coming Soon
+        </div>
+
+      </div>
+
+      <div class="product-description">
+        Purchase airtime PINs for supported Nigerian
+        networks.
+      </div>
+
+      <button
+        class="buy-button"
+        data-product="Airtime ePIN"
+      >
+        View Product
+      </button>
+
+    </div>
+
+
+    <!-- DATA PIN -->
+
+    <div class="product">
+
+      <div class="product-top">
+
+        <div class="product-icon">
+          📶
+        </div>
+
+        <div class="product-name">
+          Data ePIN
+        </div>
+
+        <div class="product-price">
+          Coming Soon
+        </div>
+
+      </div>
+
+      <div class="product-description">
+        Digital data PIN products for supported
+        Nigerian networks.
+      </div>
+
+      <button
+        class="buy-button"
+        data-product="Data ePIN"
+      >
+        View Product
+      </button>
+
+    </div>
+
+
+    <!-- EDUCATION PIN -->
+
+    <div class="product">
+
+      <div class="product-top">
+
+        <div class="product-icon">
+          🎓
+        </div>
+
+        <div class="product-name">
+          Education ePIN
+        </div>
+
+        <div class="product-price">
+          Coming Soon
+        </div>
+
+      </div>
+
+      <div class="product-description">
+        Education-related PIN products will be
+        available here when the supplier is connected.
+      </div>
+
+      <button
+        class="buy-button"
+        data-product="Education ePIN"
+      >
+        View Product
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="info">
+
+    <h3>
+      How it works
+    </h3>
+
+    <p>
+      1. Choose the ePIN product you want.
+    </p>
+
+    <p>
+      2. Pay securely through Nexora Mobile.
+    </p>
+
+    <p>
+      3. Your digital PIN will be delivered to your
+      account when the supplier integration is active.
+    </p>
+
+    <p>
+      We will connect a real supplier before enabling
+      live purchases. No fake PINs or demo orders will
+      be created.
+    </p>
+
+  </div>
+
+</main>
+
+</div>
+
+
+<!-- MODAL -->
+
+<div
+  class="modal"
+  id="modal"
+>
+
+  <div class="modal-box">
+
+    <button
+      class="modal-close"
+      id="modalClose"
+    >
+      ×
+    </button>
+
+    <div id="modalContent"></div>
+
+  </div>
+
+</div>
+
+
+<script>
+
+const modal =
+  document.getElementById("modal");
+
+const modalContent =
+  document.getElementById("modalContent");
+
+const modalClose =
+  document.getElementById("modalClose");
+
+
+function openModal(title,content){
+
+  modalContent.innerHTML = `
+    <h2>${title}</h2>
+    ${content}
+  `;
+
+  modal.classList.add("show");
+
+}
+
+
+function closeModal(){
+
+  modal.classList.remove("show");
+
+}
+
+
+modalClose.addEventListener(
+  "click",
+  closeModal
+);
+
+
+modal.addEventListener(
+  "click",
+  (event)=>{
+
+    if(event.target === modal){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* BACK */
+
+document
+  .getElementById("backBtn")
+  .addEventListener(
+    "click",
+    ()=>{
+
+      window.location.href =
+        "dashboard.html";
+
+    }
+  );
+
+
+/* PRODUCTS */
+
+document
+  .querySelectorAll(".buy-button")
+  .forEach((button)=>{
+
+    button.addEventListener(
+      "click",
+      ()=>{
+
+        const product =
+          button.dataset.product;
+
+        openModal(
+          product,
+          `
+          <p>
+            This product is not available for
+            live purchase yet.
+          </p>
+
+          <p>
+            We are connecting a real ePIN supplier
+            and payment system before enabling
+            customer purchases.
+          </p>
+
+          <button
+            class="cancel-button"
+            onclick="closeModal()"
+          >
+            Close
+          </button>
+          `
+        );
+
+      }
+    );
+
+  });
+
+</script>
+
+</body>
+</html>
