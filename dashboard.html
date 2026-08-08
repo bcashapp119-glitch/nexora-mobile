@@ -392,6 +392,25 @@ button{
   margin-top:5px;
 }
 
+/* LOGOUT BUTTON */
+
+.logout-button{
+  width:100%;
+  margin-top:20px;
+  border:0;
+  border-radius:12px;
+  padding:14px;
+  background:#dc2626;
+  color:white;
+  font-size:15px;
+  font-weight:800;
+}
+
+.logout-button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+
 /* MOBILE */
 
 @media(max-width:390px){
@@ -409,7 +428,6 @@ button{
 </style>
 
 </head>
-
 
 <body>
 
@@ -467,9 +485,6 @@ button{
 
 <main class="content">
 
-
-<!-- QUICK SERVICES -->
-
 <div class="section-title">
   Quick Services
 </div>
@@ -477,60 +492,27 @@ button{
 <div class="quick-grid">
 
   <button class="quick" id="airtimeBtn">
-
-    <span class="quick-icon">
-      📞
-    </span>
-
-    <span class="quick-name">
-      Airtime
-    </span>
-
+    <span class="quick-icon">📞</span>
+    <span class="quick-name">Airtime</span>
   </button>
-
 
   <button class="quick" id="dataBtn">
-
-    <span class="quick-icon">
-      📶
-    </span>
-
-    <span class="quick-name">
-      Data
-    </span>
-
+    <span class="quick-icon">📶</span>
+    <span class="quick-name">Data</span>
   </button>
-
 
   <button class="quick" id="esimBtn">
-
-    <span class="quick-icon">
-      🌍
-    </span>
-
-    <span class="quick-name">
-      eSIM
-    </span>
-
+    <span class="quick-icon">🌍</span>
+    <span class="quick-name">eSIM</span>
   </button>
 
-
   <button class="quick" id="epinBtn">
-
-    <span class="quick-icon">
-      🎫
-    </span>
-
-    <span class="quick-name">
-      ePIN
-    </span>
-
+    <span class="quick-icon">🎫</span>
+    <span class="quick-name">ePIN</span>
   </button>
 
 </div>
 
-
-<!-- AI -->
 
 <div class="section-title">
   Nexora AI
@@ -555,8 +537,6 @@ button{
 </button>
 
 
-<!-- ESIM -->
-
 <div class="section-title">
   Travel eSIM
 </div>
@@ -580,8 +560,6 @@ button{
 </div>
 
 
-<!-- DESTINATIONS -->
-
 <div class="section-title">
   Popular Destinations
 </div>
@@ -589,98 +567,43 @@ button{
 <div class="destination-grid">
 
   <button class="destination" data-country="United States">
-
     <span class="flag">🇺🇸</span>
-
-    <strong>
-      United States
-    </strong>
-
-    <small>
-      View plans
-    </small>
-
+    <strong>United States</strong>
+    <small>View plans</small>
   </button>
-
 
   <button class="destination" data-country="United Kingdom">
-
     <span class="flag">🇬🇧</span>
-
-    <strong>
-      United Kingdom
-    </strong>
-
-    <small>
-      View plans
-    </small>
-
+    <strong>United Kingdom</strong>
+    <small>View plans</small>
   </button>
-
 
   <button class="destination" data-country="France">
-
     <span class="flag">🇫🇷</span>
-
-    <strong>
-      France
-    </strong>
-
-    <small>
-      View plans
-    </small>
-
+    <strong>France</strong>
+    <small>View plans</small>
   </button>
-
 
   <button class="destination" data-country="Spain">
-
     <span class="flag">🇪🇸</span>
-
-    <strong>
-      Spain
-    </strong>
-
-    <small>
-      View plans
-    </small>
-
+    <strong>Spain</strong>
+    <small>View plans</small>
   </button>
-
 
   <button class="destination" data-country="Europe">
-
     <span class="flag">🇪🇺</span>
-
-    <strong>
-      Europe
-    </strong>
-
-    <small>
-      Regional plans
-    </small>
-
+    <strong>Europe</strong>
+    <small>Regional plans</small>
   </button>
 
-
   <button class="destination" data-country="Asia">
-
     <span class="flag">🌏</span>
-
-    <strong>
-      Asia
-    </strong>
-
-    <small>
-      Regional plans
-    </small>
-
+    <strong>Asia</strong>
+    <small>Regional plans</small>
   </button>
 
 </div>
 
-
-<!-- TOOLS -->
 
 <div class="section-title">
   eSIM Tools
@@ -695,15 +618,9 @@ button{
     </span>
 
     <span>
-      <strong>
-        Check Compatibility
-      </strong>
-
+      <strong>Check Compatibility</strong>
       <br>
-
-      <small>
-        Check if your device supports eSIM
-      </small>
+      <small>Check if your device supports eSIM</small>
     </span>
 
   </button>
@@ -716,17 +633,9 @@ button{
     </span>
 
     <span>
-
-      <strong>
-        Installation Guide
-      </strong>
-
+      <strong>Installation Guide</strong>
       <br>
-
-      <small>
-        Learn how to install your eSIM
-      </small>
-
+      <small>Learn how to install your eSIM</small>
     </span>
 
   </button>
@@ -739,25 +648,15 @@ button{
     </span>
 
     <span>
-
-      <strong>
-        eSIM Diagnostics
-      </strong>
-
+      <strong>eSIM Diagnostics</strong>
       <br>
-
-      <small>
-        Get help with connection problems
-      </small>
-
+      <small>Get help with connection problems</small>
     </span>
 
   </button>
 
 </div>
 
-
-<!-- SUPPORT -->
 
 <div class="section-title">
   Support
@@ -775,8 +674,6 @@ button{
 
 </div>
 
-
-<!-- TRANSACTIONS -->
 
 <div class="section-title">
   Recent Transactions
@@ -802,74 +699,40 @@ button{
 
 </div>
 
-
 </main>
 
-
-<!-- BOTTOM NAV -->
 
 <nav class="bottom-nav">
 
   <button class="nav-button active" id="homeNav">
-
-    <span class="nav-icon">
-      🏠
-    </span>
-
+    <span class="nav-icon">🏠</span>
     Home
-
   </button>
-
 
   <button class="nav-button" id="exploreNav">
-
-    <span class="nav-icon">
-      🌍
-    </span>
-
+    <span class="nav-icon">🌍</span>
     Explore
-
   </button>
-
 
   <button class="nav-button" id="manageNav">
-
-    <span class="nav-icon">
-      📦
-    </span>
-
+    <span class="nav-icon">📦</span>
     Manage
-
   </button>
-
 
   <button class="nav-button" id="aiNav">
-
-    <span class="nav-icon">
-      🤖
-    </span>
-
+    <span class="nav-icon">🤖</span>
     Nexora AI
-
   </button>
 
-
   <button class="nav-button" id="profileNav">
-
-    <span class="nav-icon">
-      👤
-    </span>
-
+    <span class="nav-icon">👤</span>
     Profile
-
   </button>
 
 </nav>
 
 </div>
 
-
-<!-- MODAL -->
 
 <div class="modal" id="modal">
 
@@ -893,7 +756,8 @@ from "https://www.gstatic.com/firebasejs/12.17.1/firebase-app.js";
 
 import {
   getAuth,
-  onAuthStateChanged
+  onAuthStateChanged,
+  signOut
 }
 from "https://www.gstatic.com/firebasejs/12.17.1/firebase-auth.js";
 
@@ -933,7 +797,7 @@ const auth =
   getAuth(app);
 
 
-/* LOGIN */
+/* LOGIN PROTECTION */
 
 onAuthStateChanged(auth,(user)=>{
 
@@ -989,7 +853,6 @@ function closeModal(){
 
 modalClose.onclick=closeModal;
 
-
 modal.onclick=(event)=>{
 
   if(event.target===modal){
@@ -1003,8 +866,6 @@ modal.onclick=(event)=>{
 
 /* QUICK SERVICES */
 
-/* AIRTIME */
-
 document
   .getElementById("airtimeBtn")
   .addEventListener("click",()=>{
@@ -1013,8 +874,6 @@ document
 
   });
 
-
-/* DATA */
 
 document
   .getElementById("dataBtn")
@@ -1025,8 +884,6 @@ document
   });
 
 
-/* ESIM */
-
 document
   .getElementById("esimBtn")
   .addEventListener("click",()=>{
@@ -1036,8 +893,6 @@ document
   });
 
 
-/* EPIN */
-
 document
   .getElementById("epinBtn")
   .addEventListener("click",()=>{
@@ -1046,8 +901,6 @@ document
 
   });
 
-
-/* EXPLORE ESIM */
 
 document
   .getElementById("exploreEsimBtn")
@@ -1113,7 +966,6 @@ function openNexoraAI(){
 document
   .getElementById("aiBtn")
   .addEventListener("click",openNexoraAI);
-
 
 document
   .getElementById("aiNav")
@@ -1233,7 +1085,7 @@ document
   });
 
 
-/* PROFILE */
+/* PROFILE + REAL LOGOUT */
 
 function openProfile(){
 
@@ -1241,15 +1093,54 @@ function openProfile(){
     "👤 Profile",
     `
     <p>
-      Account management will appear here.
+      Account management
     </p>
 
-    <p>
-      Your profile, security, password and
-      notification settings will be connected here.
+    <p style="color:#6b7280;">
+      Your Nexora Mobile account is securely connected.
     </p>
+
+    <button
+      class="logout-button"
+      id="logoutBtn"
+    >
+      🚪 Log Out
+    </button>
     `
   );
+
+
+  document
+    .getElementById("logoutBtn")
+    .addEventListener("click",async()=>{
+
+      const logoutBtn =
+        document.getElementById("logoutBtn");
+
+      logoutBtn.disabled=true;
+      logoutBtn.textContent="Logging out...";
+
+
+      try{
+
+        await signOut(auth);
+
+        window.location.href="login.html";
+
+      }catch(error){
+
+        console.error("Logout error:",error);
+
+        logoutBtn.disabled=false;
+        logoutBtn.textContent="🚪 Log Out";
+
+        alert(
+          "Unable to log out right now. Please try again."
+        );
+
+      }
+
+    });
 
 }
 
