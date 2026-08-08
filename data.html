@@ -1,185 +1,221 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nexora Mobile - Buy Data</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: Arial, sans-serif;
-    }
-    body {
-      margin: 0;
-      background: #f5f7fb;
-      color: #111827;
-    }
-    .header {
-      background: #111827;
-      color: white;
-      padding: 20px;
-      text-align: center;
-    }
-    .header h1 {
-      margin: 0;
-      font-size: 24px;
-    }
-    .container {
-      max-width: 600px;
-      margin: 25px auto;
-      padding: 20px;
-    }
-    .wallet,
-    .card {
-      background: white;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 15px rgba(0,0,0,.08);
-    }
-    .wallet {
-      margin-bottom: 18px;
-    }
-    .wallet-title {
-      font-size: 14px;
-      color: #6b7280;
-      margin-bottom: 5px;
-    }
-    .wallet-balance {
-      font-size: 25px;
-      font-weight: bold;
-    }
-    label {
-      display: block;
-      font-weight: bold;
-      margin-top: 15px;
-      margin-bottom: 7px;
-    }
-    select,
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #d1d5db;
-      border-radius: 10px;
-      font-size: 16px;
-      background: white;
-    }
-    button {
-      width: 100%;
-      margin-top: 20px;
-      padding: 15px;
-      border: none;
-      border-radius: 10px;
-      background: #111827;
-      color: white;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-    button:disabled {
-      opacity: .6;
-      cursor: not-allowed;
-    }
-    .status {
-      text-align: center;
-      margin: 15px 0;
-      font-size: 14px;
-      color: #4b5563;
-    }
-    .plan-info {
-      margin-top: 12px;
-      padding: 12px;
-      border-radius: 10px;
-      background: #f3f4f6;
-      display: none;
-    }
-    .plan-info strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .message {
-      display: none;
-      padding: 14px;
-      margin-top: 15px;
-      border-radius: 10px;
-      text-align: center;
-      font-weight: bold;
-    }
-    .success {
-      background: #dcfce7;
-      color: #166534;
-    }
-    .error {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-    .footer {
-      text-align: center;
-      color: #6b7280;
-      font-size: 13px;
-      margin-top: 25px;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexora Mobile - Buy Data</title>
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
+}
+body{
+  margin:0;
+  background:#f5f7fb;
+  color:#111827;
+}
+.header{
+  background:#08152f;
+  color:white;
+  padding:20px;
+  text-align:center;
+}
+.header h1{
+  margin:0;
+  font-size:24px;
+}
+.container{
+  max-width:600px;
+  margin:25px auto;
+  padding:20px;
+}
+.wallet,
+.card{
+  background:white;
+  border-radius:16px;
+  padding:20px;
+  box-shadow:0 4px 15px rgba(0,0,0,.08);
+}
+.wallet{
+  margin-bottom:18px;
+}
+.wallet-title{
+  font-size:14px;
+  color:#6b7280;
+  margin-bottom:5px;
+}
+.wallet-balance{
+  font-size:25px;
+  font-weight:bold;
+}
+label{
+  display:block;
+  font-weight:bold;
+  margin-top:15px;
+  margin-bottom:7px;
+}
+select,
+input{
+  width:100%;
+  padding:14px;
+  border:1px solid #d1d5db;
+  border-radius:10px;
+  font-size:16px;
+  background:white;
+}
+button{
+  width:100%;
+  margin-top:20px;
+  padding:15px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:17px;
+  font-weight:bold;
+  cursor:pointer;
+}
+button:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.status{
+  text-align:center;
+  margin:15px 0;
+  font-size:14px;
+  color:#4b5563;
+}
+.plan-info{
+  margin-top:12px;
+  padding:14px;
+  border-radius:10px;
+  background:#eef4ff;
+  display:none;
+}
+.plan-info strong{
+  display:block;
+  margin-bottom:6px;
+}
+.badge{
+  display:inline-block;
+  margin-top:8px;
+  padding:5px 9px;
+  border-radius:20px;
+  background:#dbeafe;
+  color:#1d4ed8;
+  font-size:12px;
+  font-weight:bold;
+}
+.message{
+  display:none;
+  padding:14px;
+  margin-top:15px;
+  border-radius:10px;
+  text-align:center;
+  font-weight:bold;
+}
+.success{
+  background:#dcfce7;
+  color:#166534;
+}
+.error{
+  background:#fee2e2;
+  color:#991b1b;
+}
+.footer{
+  text-align:center;
+  color:#6b7280;
+  font-size:13px;
+  margin-top:25px;
+}
+</style>
 </head>
 <body>
-  <div class="header">
-    <h1>Buy Data</h1>
-  </div>
-  <div class="container">
-    <div class="wallet">
-      <div class="wallet-title">Wallet Balance</div>
-      <div class="wallet-balance" id="walletBalance">
-        ₦1,500.00
-      </div>
-    </div>
-    <div class="card">
-      <label for="network">Network</label>
-      <select id="network">
-        <option value="">Select Network</option>
-        <option value="mtn">MTN</option>
-        <option value="glo">Glo</option>
-        <option value="airtel">Airtel</option>
-        <option value="9mobile">9mobile</option>
-      </select>
-      <label for="plan">Data Plan</label>
-      <select id="plan" disabled>
-        <option value="">Loading live data plans...</option>
-      </select>
-      <div class="plan-info" id="planInfo">
-        <strong id="selectedPlanName"></strong>
-        <span id="selectedPlanPrice"></span>
-      </div>
-      <label for="phone">Phone Number</label>
-      <input
-        type="tel"
-        id="phone"
-        placeholder="08012345678"
-        maxlength="11"
-        inputmode="numeric"
-      >
-      <button id="buyButton" disabled>
-        Buy Data
-      </button>
-      <div class="status" id="status">
-        Loading live data plans...
-      </div>
-      <div
-        class="message success"
-        id="successMessage">
-      </div>
-      <div
-        class="message error"
-        id="errorMessage">
-      </div>
-    </div>
-    <div class="footer">
-      Nexora Mobile • Powered by VTUGate
+<div class="header">
+  <h1>Buy Data</h1>
+</div>
+<div class="container">
+  <div class="wallet">
+    <div class="wallet-title">Wallet Balance</div>
+    <div class="wallet-balance" id="walletBalance">
+      ₦1,500.00
     </div>
   </div>
+  <div class="card">
+<label for="network">
+  Network
+</label>
+<select id="network">
+  <option value="">Select Network</option>
+  <option value="mtn">MTN</option>
+  <option value="glo">Glo</option>
+  <option value="airtel">Airtel</option>
+  <option value="9mobile">9mobile</option>
+</select>
+<label for="dataType">
+  Data Type
+</label>
+<select id="dataType" disabled>
+  <option value="">
+    Select Data Type
+  </option>
+</select>
+<label for="plan">
+  Data Plan
+</label>
+<select id="plan" disabled>
+  <option value="">
+    Select Data Plan
+  </option>
+</select>
+<div class="plan-info" id="planInfo">
+  <strong id="selectedPlanName"></strong>
+  <span id="selectedPlanPrice"></span>
+  <div
+    class="badge"
+    id="selectedDataType">
+  </div>
+</div>
+<label for="phone">
+  Phone Number
+</label>
+<input
+  type="tel"
+  id="phone"
+  placeholder="08012345678"
+  maxlength="11"
+  inputmode="numeric"
+>
+<button
+  id="buyButton"
+  disabled>
+  Buy Data
+</button>
+<div
+  class="status"
+  id="status">
+  Loading live VTUGate data plans...
+</div>
+<div
+  class="message success"
+  id="successMessage">
+</div>
+<div
+  class="message error"
+  id="errorMessage">
+</div>
+  </div>
+  <div class="footer">
+    Nexora Mobile • Powered by VTUGate
+  </div>
+</div>
 <script>
 const API_BASE =
   "https://nexora-ai-backend-hvg7.onrender.com";
 const networkSelect =
   document.getElementById("network");
+const dataTypeSelect =
+  document.getElementById("dataType");
 const planSelect =
   document.getElementById("plan");
 const phoneInput =
@@ -194,48 +230,52 @@ const selectedPlanName =
   document.getElementById("selectedPlanName");
 const selectedPlanPrice =
   document.getElementById("selectedPlanPrice");
+const selectedDataType =
+  document.getElementById("selectedDataType");
 const successMessage =
   document.getElementById("successMessage");
 const errorMessage =
   document.getElementById("errorMessage");
 let allPlans = [];
+let filteredPlans = [];
 /* =========================
    MESSAGES
 ========================= */
-function showError(message) {
+function showError(message){
   errorMessage.textContent = message;
   errorMessage.style.display = "block";
   successMessage.style.display = "none";
 }
-function showSuccess(message) {
+function showSuccess(message){
   successMessage.textContent = message;
   successMessage.style.display = "block";
   errorMessage.style.display = "none";
 }
-function clearMessages() {
+function clearMessages(){
   successMessage.style.display = "none";
   errorMessage.style.display = "none";
 }
 /* =========================
    MONEY
 ========================= */
-function money(value) {
+function money(value){
   const amount = Number(value);
-  if (!Number.isFinite(amount)) {
+  if(!Number.isFinite(amount)){
     return "₦0.00";
   }
-  return "₦" + amount.toLocaleString(
-    "en-NG",
-    {
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }
-  );
+  return "₦" +
+    amount.toLocaleString(
+      "en-NG",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
 }
 /* =========================
    NORMALISE PLAN
 ========================= */
-function normalisePlan(plan) {
+function normalisePlan(plan){
   return {
     serviceId:
       plan.serviceId ??
@@ -246,6 +286,13 @@ function normalisePlan(plan) {
         plan.network ??
         plan.network_name ??
         ""
+      ).toLowerCase(),
+    dataType:
+      String(
+        plan.dataType ??
+        plan.data_type ??
+        plan.plan_type ??
+        "normal"
       ).toLowerCase(),
     code:
       plan.code ??
@@ -267,35 +314,35 @@ function normalisePlan(plan) {
 /* =========================
    LOAD LIVE PLANS
 ========================= */
-async function loadPlans() {
-  try {
+async function loadPlans(){
+  try{
     statusBox.textContent =
-      "Loading live data plans...";
+      "Loading live VTUGate data plans...";
     const response =
       await fetch(
         API_BASE + "/api/data",
         {
-          method: "GET",
-          headers: {
-            "Accept": "application/json"
+          method:"GET",
+          headers:{
+            "Accept":
+              "application/json"
           }
         }
       );
-    if (!response.ok) {
+    if(!response.ok){
       throw new Error(
-        "Unable to load data plans."
+        "Unable to load live data plans."
       );
     }
     const data =
       await response.json();
-    if (!data.success) {
+    if(!data.success){
       throw new Error(
         data.message ||
-        data.error ||
         "VTUGate returned an error."
       );
     }
-    if (!Array.isArray(data.plans)) {
+    if(!Array.isArray(data.plans)){
       throw new Error(
         "No data plans were returned."
       );
@@ -307,28 +354,24 @@ async function loadPlans() {
           plan.serviceId &&
           plan.code &&
           plan.network &&
-          Number.isFinite(plan.price)
+          plan.dataType
         );
-    if (allPlans.length === 0) {
+    if(allPlans.length === 0){
       throw new Error(
-        "No usable data plans were found."
+        "No usable VTUGate data plans were found."
       );
     }
-    planSelect.disabled = false;
     statusBox.textContent =
       "Live plans loaded: " +
       allPlans.length;
-    updatePlans();
   }
-  catch (error) {
+  catch(error){
     console.error(
       "LOAD PLANS ERROR:",
       error
     );
     statusBox.textContent =
       "Unable to load live data plans.";
-    planSelect.innerHTML =
-      '<option value="">No plans available</option>';
     showError(
       error.message ||
       "Unable to load data plans."
@@ -336,32 +379,103 @@ async function loadPlans() {
   }
 }
 /* =========================
-   UPDATE PLAN LIST
+   UPDATE DATA TYPES
 ========================= */
-function updatePlans() {
+function updateDataTypes(){
+  clearMessages();
   const network =
     networkSelect.value.toLowerCase();
+  dataTypeSelect.innerHTML =
+    '<option value="">Select Data Type</option>';
   planSelect.innerHTML =
     '<option value="">Select Data Plan</option>';
-  planInfo.style.display =
-    "none";
-  buyButton.disabled =
-    true;
-  if (!network) {
+  dataTypeSelect.disabled = true;
+  planSelect.disabled = true;
+  planInfo.style.display = "none";
+  buyButton.disabled = true;
+  if(!network){
     return;
   }
-  const filtered =
+  const networkPlans =
     allPlans.filter(
       plan =>
         plan.network === network
     );
-  if (filtered.length === 0) {
+  if(networkPlans.length === 0){
+    dataTypeSelect.innerHTML =
+      '<option value="">No data types available</option>';
+    return;
+  }
+  const types =
+    [
+      ...new Set(
+        networkPlans.map(
+          plan => plan.dataType
+        )
+      )
+    ];
+  const typeOrder = [
+    "sme",
+    "dg",
+    "awoof",
+    "normal"
+  ];
+  types.sort((a,b) => {
+    const ai =
+      typeOrder.indexOf(a);
+    const bi =
+      typeOrder.indexOf(b);
+    if(ai === -1 && bi === -1){
+      return a.localeCompare(b);
+    }
+    if(ai === -1){
+      return 1;
+    }
+    if(bi === -1){
+      return -1;
+    }
+    return ai - bi;
+  });
+  types.forEach(type => {
+    const option =
+      document.createElement("option");
+    option.value = type;
+    option.textContent =
+      type.toUpperCase();
+    dataTypeSelect.appendChild(option);
+  });
+  dataTypeSelect.disabled = false;
+}
+/* =========================
+   UPDATE PLANS
+========================= */
+function updatePlans(){
+  clearMessages();
+  const network =
+    networkSelect.value.toLowerCase();
+  const dataType =
+    dataTypeSelect.value.toLowerCase();
+  planSelect.innerHTML =
+    '<option value="">Select Data Plan</option>';
+  planSelect.disabled = true;
+  planInfo.style.display = "none";
+  buyButton.disabled = true;
+  if(!network || !dataType){
+    return;
+  }
+  filteredPlans =
+    allPlans.filter(
+      plan =>
+        plan.network === network &&
+        plan.dataType === dataType
+    );
+  if(filteredPlans.length === 0){
     planSelect.innerHTML =
       '<option value="">No plans available</option>';
     return;
   }
-  filtered.forEach(
-    (plan, index) => {
+  filteredPlans.forEach(
+    (plan,index) => {
       const option =
         document.createElement("option");
       option.value =
@@ -370,10 +484,6 @@ function updatePlans() {
         plan.name +
         " — " +
         money(plan.price);
-      /*
-        These are the exact values
-        needed for VTUGate purchase.
-      */
       option.dataset.serviceId =
         String(plan.serviceId);
       option.dataset.planCode =
@@ -384,25 +494,28 @@ function updatePlans() {
         plan.name;
       option.dataset.network =
         plan.network;
+      option.dataset.dataType =
+        plan.dataType;
       planSelect.appendChild(option);
     }
   );
+  planSelect.disabled = false;
 }
 /* =========================
-   SELECTED PLAN
+   SELECT PLAN
 ========================= */
-function updateSelectedPlan() {
+function updateSelectedPlan(){
   clearMessages();
   const option =
     planSelect.options[
       planSelect.selectedIndex
     ];
-  if (
+  if(
     !option ||
     !option.value ||
     !option.dataset.serviceId ||
     !option.dataset.planCode
-  ) {
+  ){
     planInfo.style.display =
       "none";
     buyButton.disabled =
@@ -413,7 +526,11 @@ function updateSelectedPlan() {
     option.dataset.name;
   selectedPlanPrice.textContent =
     "Price: " +
-    money(option.dataset.price);
+    money(
+      option.dataset.price
+    );
+  selectedDataType.textContent =
+    option.dataset.dataType.toUpperCase();
   planInfo.style.display =
     "block";
   checkForm();
@@ -421,10 +538,10 @@ function updateSelectedPlan() {
 /* =========================
    CHECK FORM
 ========================= */
-function checkForm() {
+function checkForm(){
   const phone =
     phoneInput.value
-      .replace(/\D/g, "");
+      .replace(/\D/g,"");
   const option =
     planSelect.options[
       planSelect.selectedIndex
@@ -444,19 +561,21 @@ function checkForm() {
 ========================= */
 networkSelect.addEventListener(
   "change",
-  () => {
-    clearMessages();
-    updatePlans();
-  }
+  updateDataTypes
+);
+/* =========================
+   DATA TYPE CHANGE
+========================= */
+dataTypeSelect.addEventListener(
+  "change",
+  updatePlans
 );
 /* =========================
    PLAN CHANGE
 ========================= */
 planSelect.addEventListener(
   "change",
-  () => {
-    updateSelectedPlan();
-  }
+  updateSelectedPlan
 );
 /* =========================
    PHONE INPUT
@@ -466,8 +585,8 @@ phoneInput.addEventListener(
   () => {
     phoneInput.value =
       phoneInput.value
-        .replace(/\D/g, "")
-        .slice(0, 11);
+        .replace(/\D/g,"")
+        .slice(0,11);
     checkForm();
   }
 );
@@ -480,30 +599,27 @@ buyButton.addEventListener(
     clearMessages();
     const phone =
       phoneInput.value
-        .replace(/\D/g, "");
+        .replace(/\D/g,"");
     const option =
       planSelect.options[
         planSelect.selectedIndex
       ];
-    if (!/^0\d{10}$/.test(phone)) {
+    if(!/^0\d{10}$/.test(phone)){
       showError(
         "Enter a valid 11-digit Nigerian phone number."
       );
       return;
     }
-    if (
+    if(
       !option ||
       !option.dataset.serviceId ||
       !option.dataset.planCode
-    ) {
+    ){
       showError(
         "Please select a data plan."
       );
       return;
     }
-    /*
-      EXACT VTUGATE FIELDS
-    */
     const serviceId =
       Number(
         option.dataset.serviceId
@@ -514,51 +630,43 @@ buyButton.addEventListener(
       Number(
         option.dataset.price
       );
-    const phoneNumber =
-      phone;
-    if (!serviceId) {
+    if(!serviceId){
       showError(
         "This plan has no service ID."
       );
       return;
     }
-    if (!planCode) {
+    if(!planCode){
       showError(
         "This plan has no plan code."
       );
       return;
     }
-    if (!Number.isFinite(amount) || amount <= 0) {
+    if(
+      !Number.isFinite(amount) ||
+      amount <= 0
+    ){
       showError(
         "Invalid data plan price."
       );
       return;
     }
-    buyButton.disabled =
-      true;
+    buyButton.disabled = true;
     buyButton.textContent =
       "Processing...";
-    try {
-      /*
-        Send the exact fields
-        required by VTUGate:
-        service_id
-        phone_number
-        amount
-        plan_code
-      */
+    try{
       const purchaseData = {
         service_id:
           serviceId,
         phone_number:
-          phoneNumber,
+          phone,
         amount:
           amount,
         plan_code:
           planCode
       };
       console.log(
-        "Nexora Mobile VTUGate purchase:",
+        "Nexora Mobile purchase:",
         purchaseData
       );
       const response =
@@ -566,8 +674,8 @@ buyButton.addEventListener(
           API_BASE +
           "/api/data/purchase",
           {
-            method: "POST",
-            headers: {
+            method:"POST",
+            headers:{
               "Content-Type":
                 "application/json",
               "Accept":
@@ -580,29 +688,28 @@ buyButton.addEventListener(
           }
         );
       let result;
-      try {
+      try{
         result =
           await response.json();
       }
-      catch {
+      catch{
         result = {
-          success: false,
+          success:false,
           message:
             "Server returned an invalid response."
         };
       }
       console.log(
-        "VTUGate purchase response:",
+        "Purchase response:",
         result
       );
-      if (
+      if(
         !response.ok ||
         result.success === false
-      ) {
+      ){
         throw new Error(
           result.message ||
           result.error ||
-          result.details ||
           "Data purchase failed."
         );
       }
@@ -613,7 +720,7 @@ buyButton.addEventListener(
       statusBox.textContent =
         "Data purchase completed successfully.";
     }
-    catch (error) {
+    catch(error){
       console.error(
         "PURCHASE ERROR:",
         error
@@ -623,7 +730,7 @@ buyButton.addEventListener(
         "Purchase failed. Please try again."
       );
     }
-    finally {
+    finally{
       buyButton.disabled =
         false;
       buyButton.textContent =
